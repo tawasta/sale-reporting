@@ -1,9 +1,1 @@
-account-invoicing https://github.com/tawasta/account-invoicing
-l10n-finland https://github.com/tawasta/l10n-finland
-mrp https://github.com/tawasta/mrp
-partner https://github.com/tawasta/partner
-product https://github.com/tawasta/product
-project https://github.com/oca/project
-purchase https://github.com/tawasta/purchase
-purchase-workflow https://github.com/oca/purchase-workflow
-stock https://github.com/tawasta/stock
+

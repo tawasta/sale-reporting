@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<odoo>
-    <data noupdate="1">
-        <!-- Initialize analytic accounts for all companies upon module installation -->
-        <function model="account.analytic.account" name="_init_analytic_accounts" />
-    </data>
-</odoo>
