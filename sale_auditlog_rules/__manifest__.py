@@ -24,7 +24,7 @@
     'description': "Log rules for Futural ERP Sale",
     'author': 'Oy Tawasta Technologies Ltd.',
     'license': 'AGPL-3',
-    'website': "https://tawasta.fi",
+    'website': "https://github.com/Tawasta/sale-reporting",
     'category': 'Logging',
     'application': False,
     'installable': True,
