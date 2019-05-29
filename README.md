@@ -1,6 +1,6 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Build Status](https://travis-ci.org/Tawasta/sale.svg?branch=10.0)](https://travis-ci.org/Tawasta/sale)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3b9f2bc62a34626809482ba44fc8e90)](https://www.codacy.com/app/Tawasta/sale?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Tawasta/sale&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/Tawasta/sale-reporting.svg?branch=12.0)](https://travis-ci.org/Tawasta/sale-reporting)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3b9f2bc62a34626809482ba44fc8e90)](https://www.codacy.com/app/Tawasta/sale-reporting?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Tawasta/sale-reporting&amp;utm_campaign=Badge_Grade)
 
 Odoo Sales reporting
 ====================
