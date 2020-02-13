@@ -30,6 +30,7 @@
     'installable': True,
     'version': '12.0.1.0.0',
     'depends': [
+        'sale_management',
         'auditlog',
     ],
     'data': [
