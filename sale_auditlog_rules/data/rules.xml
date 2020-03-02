@@ -11,5 +11,4 @@
         <field name="model_id" ref="sale.model_sale_order_line"></field>
     </record>
 
-
 </odoo>
