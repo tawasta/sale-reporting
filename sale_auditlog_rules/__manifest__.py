@@ -19,10 +19,9 @@
 ##############################################################################
 
 {
-    'name': "Futural Log Rules - Sales",
-    'summary': "Audit log rules for sales",
-    'description': "Log rules for Futural ERP Sale",
-    'author': 'Oy Tawasta Technologies Ltd.',
+    'name': "Audit Log Rules - Sales",
+    'summary': "Adds audit log rules for sale order and sale order line",
+    'author': 'Tawasta',
     'license': 'AGPL-3',
     'website': "https://github.com/Tawasta/sale-reporting",
     'category': 'Logging',
@@ -30,6 +29,7 @@
     'installable': True,
     'version': '12.0.1.0.0',
     'depends': [
+        'sale',
         'auditlog',
     ],
     'data': [
