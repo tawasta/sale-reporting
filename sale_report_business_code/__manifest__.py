@@ -33,7 +33,8 @@
         'bin': [],
     },
     'depends': [
-        'base',
+        'sale',
+        'l10n_fi_business_code',
     ],
     'data': [
         'report/sale_report_business_code.xml',
