@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="assets_report_elements"
+              name="Assets to modify element sizes"
+              inherit_id="web.report_assets_common" active="True"
+              priority="1">
+
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/srcc"
+                  href='/sale_report_element_sizes/static/src/less/custom.less'/>
+        </xpath>
+
+    </template>
+</odoo>
