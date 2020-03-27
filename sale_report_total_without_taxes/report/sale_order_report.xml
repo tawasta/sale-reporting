@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//tr[@class='border-black o_subtotal']/td[1]/strong" position="replace">
+            <strong>Total without taxes</strong>
+        </xpath>
+    </template>
+</odoo>
