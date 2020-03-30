@@ -19,8 +19,8 @@
 ##############################################################################
 
 {
-    "name": "Sale Order Report Hide payment term",
-    "summary": "Sale Order Report Hide payment term",
+    "name": "Sale Order Report Show Date Paid",
+    "summary": "Show date paid on sale order if there are invoices",
     "version": "12.0.1.0.0",
     "category": "Reporting",
     "website": "https://tawasta.fi",
