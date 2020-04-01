@@ -8,7 +8,7 @@
 
         <xpath expr="//t[@t-if='not line.display_type']/td[4]" position="before">
             <td class="text-left">
-                <span t-field="line.product_id.cn8_code"/>
+                <span t-field="line.product_id.hs_code_id"/>
             </td>
         </xpath>
     </template>

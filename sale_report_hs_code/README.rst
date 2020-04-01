@@ -14,7 +14,7 @@ Configuration
 
 Usage
 =====
-Just install this module
+Installing this module will also install modules product_harmonized_system and sale
 
 Known issues / Roadmap
 ======================
