@@ -28,6 +28,6 @@
     'license': 'AGPL-3',
     'application': False,
     'installable': True,
-    'depends': ["product_hs_code", "sale"],
+    'depends': ["product_harmonized_system", "sale"],
     'data': ["report/sale_order_report.xml"],
 }
