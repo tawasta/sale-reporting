@@ -60,5 +60,9 @@
         <xpath expr="//span[@t-field='doc.amount_total']" position="after">
             <t t-esc="doc.pricelist_id.currency_id.symbol"/>
         </xpath>
+
+        <xpath expr='//div[@t-attf-class="#{&apos;col-4&apos; if report_type != &apos;html&apos; else &apos;col-sm-7 col-md-5&apos;} ml-auto"]' position="attributes">
+            <attribute name="t-attf-class">#{'col-5' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto</attribute>
+        </xpath>
     </template>
 </odoo>
