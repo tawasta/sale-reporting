@@ -22,6 +22,10 @@
             <t t-esc="doc.pricelist_id.currency_id.symbol" groups="account.group_show_line_subtotals_tax_included"/>
         </xpath>
 
+        <xpath expr="//table[@class='table table-sm o_main_table']/thead/tr/th[last()]" position="attributes">
+            <attribute name="width">12%</attribute>
+        </xpath>
+
         <!--(conditional) Subtotal-->
         <xpath expr="//span[@t-esc='current_subtotal']" position="attributes">
             <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
