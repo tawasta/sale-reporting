@@ -3,10 +3,10 @@
    :alt: License: AGPL-3
 
 ============================
-Sale Order - Commitment Date 
+Sale Order - Commitment Date
 ============================
 
-Add commitment date to sale order report with title "Confirmation Date"
+Add commitment date to sale order report
 
 Installation
 ============
