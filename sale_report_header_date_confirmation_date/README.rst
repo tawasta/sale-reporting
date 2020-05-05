@@ -2,15 +2,12 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-============================
-Sale Order - Commitment Date
-============================
+===========================================
+Sale Report - Header Date Confirmation Date
+===========================================
 
-Add commitment date to sale order report
+Show sale order confirmation date in sale order report
 
-Installation
-============
-\-
 
 Configuration
 =============
@@ -18,7 +15,7 @@ Configuration
 
 Usage
 =====
-\-
+Just install the module
 
 Known issues / Roadmap
 ======================
