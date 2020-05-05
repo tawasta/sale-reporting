@@ -3,7 +3,7 @@
    :alt: License: AGPL-3
 
 ===========================================
-Sale Report - Header Time Confirmation Date
+Sale Report - Header Date Confirmation Date
 ===========================================
 
 Show sale order confirmation date in sale order report

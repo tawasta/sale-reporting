@@ -19,7 +19,7 @@
 ##############################################################################
 
 {
-    "name": "Sale Report - Header Time Confirmation Date",
+    "name": "Sale Report - Header Date Confirmation Date",
     "summary": "Put confirmation date to sale report header",
     "version": "12.0.1.0.0",
     "category": "Reporting",
