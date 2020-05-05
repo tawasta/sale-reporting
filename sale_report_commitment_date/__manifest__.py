@@ -20,7 +20,7 @@
 
 {
     "name": "Sale Report - Commitment Date",
-    "summary": "Add commitment date to sale report with title: Confirmed Date",
+    "summary": "Add commitment date to sale report",
     "category": "Sale",
     "version": "12.0.1.0.0",
     "website": "https://github.com/Tawasta/sale-workflow",
