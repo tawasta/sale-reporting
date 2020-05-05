@@ -5,7 +5,7 @@
         <xpath expr="//t[@t-call='web.external_layout']" position="before">
             <t t-if="doc.confirmation_date">
                 <t t-set="header_date_value"
-                    t-value="'{}.{}.{}.format(str(doc.confirmation_date.day), str(doc.confirmation_date.month), str(doc.confirmation_date.year))">
+                    t-value="'{}.{}.{}'.format(str(doc.confirmation_date.day), str(doc.confirmation_date.month), str(doc.confirmation_date.year))">
                 </t>
             </t>
         </xpath>
