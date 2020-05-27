@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 06:34+0000\n"
-"PO-Revision-Date: 2020-05-27 09:40+0300\n"
+"POT-Creation-Date: 2020-05-27 06:48+0000\n"
+"PO-Revision-Date: 2020-05-27 09:48+0300\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,5 +19,5 @@ msgstr ""
 
 #. module: sale_report_customer_title
 #: model_terms:ir.ui.view,arch_db:sale_report_customer_title.sale_order_report_report_title
-msgid "<strong>Customer</strong>"
-msgstr "<strong>Asiakas</strong>"
+msgid "<strong>Customer:</strong>"
+msgstr "<strong>Asiakas:</strong>"
