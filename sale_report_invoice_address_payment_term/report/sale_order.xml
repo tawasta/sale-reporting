@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@name='payment_term']"
+            position="replace">
+            <t t-set="payment_terms_temp"
+                t-value=""></t>
+
+            <t t-if="doc.payment_term_id">
+                <t t-set="payment_terms_temp"
+                    t-value="doc.payment_term_id"></t>
+            </t>
+
+            <t t-if="doc.partner_invoice_id">
+                <t t-if="doc.partner_invoice_id.property_supplier_payment_term_id">
+                    <t t-set="payment_terms_temp"
+                        t-value="doc.partner_invoice_id.property_supplier_payment_term_id"></t>
+                </t>
+            </t>
+
+            <div name="payment_term"
+                class="col-auto mw-100 mb-2">
+                <div>
+                    <strong>Payment terms:</strong>
+                </div>
+                <span t-field="payment_term_temp"></span>
+            </div>
+        </xpath>
+    </template>
+</odoo>
