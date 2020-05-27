@@ -7,8 +7,8 @@
             position="after">
             <t t-if="doc.partner_invoice_id">
                 <t t-if="doc.partner_invoice_id.business_id">
-                    <span t-field="doc.partner_invoice_id.business_id">
-                    </span>
+                    <div t-field="doc.partner_invoice_id.business_id">
+                    </div>
                 </t>
             </t>
         </xpath>
