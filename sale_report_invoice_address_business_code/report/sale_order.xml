@@ -5,9 +5,10 @@
         inherit_id="sale.report_saleorder_document">
         <xpath expr="//t[@t-field='doc.partner_invoice_id']"
             position="after">
-            <t t-if="doc.partner_invoice_id"
+            <t t-if="doc.partner_invoice_id">
                 <t t-if="doc.partner_invoice_id.business_id">
-                    <span t-field="doc.partner_invoice_id.business_id"/>
+                    <span t-field="doc.partner_invoice_id.business_id">
+                    </span>
                 </t>
             </t>
         </xpath>
