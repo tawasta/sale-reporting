@@ -9,7 +9,9 @@
                 class="col-auto mw-100 mb-2">
                 <strong>Payment terms:</strong>
                 <t t-if="doc.partner_invoice_id.property_supplier_payment_term_id">
-                    <span t-field="doc.partner_invoice_id.property_supplier_payment_term_id"></span>
+                    <p>
+                        <t t-esc="doc.partner_invoice_id.property_supplier_payment_term_id"></t>
+                    </p>
                 </t>
                 <t t-else="">
                     <t t-if="doc.payment_term_id">
