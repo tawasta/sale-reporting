@@ -28,6 +28,6 @@
     'license': 'AGPL-3',
     'application': False,
     'installable': True,
-    'depends': ["sale", ],
+    'depends': ["sale", "web_report_sfs"],
     'data': ["report/sale_order.xml"],
 }
