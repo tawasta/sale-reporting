@@ -10,7 +10,7 @@
                 <strong>Payment terms:</strong>
                 <t t-if="doc.partner_invoice_id.property_supplier_payment_term_id">
                     <p>
-                        <t t-esc="doc.partner_invoice_id.property_supplier_payment_term_id"></t>
+                        <span t-field="doc.partner_invoice_id.property_supplier_payment_term_id"></span>
                     </p>
                 </t>
                 <t t-else="">
