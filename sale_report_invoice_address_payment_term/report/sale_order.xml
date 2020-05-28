@@ -7,9 +7,7 @@
             position="replace">
             <div name="payment_term"
                 class="col-auto mw-100 mb-2">
-                <div>
-                    <strong>Payment terms:</strong>
-                </div>
+                <strong>Payment terms:</strong>
                 <t t-if="doc.partner_invoice_id.property_supplier_payment_term_id">
                     <span t-field="doc.partner_invoice_id.property_supplier_payment_term_id"></span>
                 </t>
@@ -17,7 +15,9 @@
                     <t t-if="doc.payment_term_id">
                         <t t-set="payment_terms_temp"
                             t-value="doc.payment_term_id"></t>
-                        <span t-field="doc.payment_term_id"></span>
+                        <p>
+                            <t t-esc="doc.payment_term_id"></t>
+                        </p>
                     </t>
                 </t>
             </div>
