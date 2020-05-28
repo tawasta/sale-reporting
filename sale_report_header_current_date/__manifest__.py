@@ -19,7 +19,7 @@
 ##############################################################################
 
 {
-    'name': 'Sale Order Report - Show print date',
+    'name': 'Sale Order Report - Show current date in header',
     'summary': '',
     'version': '12.0.1.0.0',
     'category': 'Reporting',
