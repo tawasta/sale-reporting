@@ -5,8 +5,8 @@
         inherit_id="sale.report_saleorder_document">
         <xpath expr="//div[@t-field='doc.partner_id']"
             position="before">
-            <div>
-                <strong>Customer:</strong>
+            <div id="sale_customer_title">
+                <strong>Customer</strong>
             </div>
         </xpath>
     </template>
