@@ -2,8 +2,10 @@
 
 <odoo>
     <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
-        <xpath expr="//p[@t-field='doc.date_order']" position="attributes">
-            <attribute name="t-options">{'widget': 'date'}</attribute>
+        <xpath expr="//p[@t-field='doc.date_order']" position="replace">
+            <p class="m-0"
+                t-field="doc.confirmation_date"
+                t-options="{'format': 'dd.MM.yyy'}"></span>
         </xpath>
     </template>
 </odoo>
