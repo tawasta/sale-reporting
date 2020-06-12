@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=============================
-Sale Order Report - Style fix
-=============================
+==========================
+Sale Order Report Incoterm
+==========================
 
-Sale Order Report - Style fix
+Sale Order Report Incoterm
 
 Configuration
 =============
@@ -14,7 +14,7 @@ Configuration
 
 Usage
 =====
-\-
+Just install the module
 
 Known issues / Roadmap
 ======================
@@ -26,7 +26,7 @@ Credits
 Contributors
 ------------
 
-* Joona Isoaho <joona.isoaho@tawasta.fi>
+* Timo Kekäläinen <timo.kekalainen@tawasta.fi>
 
 Maintainer
 ----------
