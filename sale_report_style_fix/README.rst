@@ -3,10 +3,10 @@
    :alt: License: AGPL-3
 
 ==========================
-Sale Order Report Incoterm
+Sale Order Report - Style fix
 ==========================
 
-Sale Order Report Incoterm
+Sale Order Report - Style fix
 
 Configuration
 =============
@@ -14,7 +14,7 @@ Configuration
 
 Usage
 =====
-Just install the module
+\-
 
 Known issues / Roadmap
 ======================
@@ -26,7 +26,7 @@ Credits
 Contributors
 ------------
 
-* Timo Kekäläinen <timo.kekalainen@tawasta.fi>
+* Joona Isoaho <joona.isoaho@tawasta.fi>
 
 Maintainer
 ----------
