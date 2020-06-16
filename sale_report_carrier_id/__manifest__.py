@@ -23,7 +23,7 @@
     "summary": "Add carrier id to sale report",
     "category": "Sale",
     "version": "12.0.1.0.0",
-    "website": "https://github.com/Tawasta/sale-reporting,
+    "website": "https://github.com/Tawasta/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,
