@@ -6,7 +6,7 @@
         <xpath expr="//div[@t-field='doc.partner_id']"
             position="before">
             <div id="sale_customer_title">
-                <strong>Customer</strong>
+                <strong>Customer:</strong>
             </div>
         </xpath>
     </template>
