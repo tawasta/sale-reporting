@@ -3,7 +3,7 @@
 <odoo>
     <template id="report_saleorder_document"
         inherit_id="sale_report_business_code.report_saleorder_document">
-        <xpath expr="//t[starts-with(@t-if, 'doc.validity_date and doc.state')]"
+        <xpath expr="//div[starts-with(@t-if, 'doc.validity_date and doc.state')]"
             position="replace">
         </xpath>
     </template>
