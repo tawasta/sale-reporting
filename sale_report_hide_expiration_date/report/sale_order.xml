@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[starts-with(@t-if, 'doc.validity_date and doc.state')]"
+            position="replace">
+        </xpath>
+    </template>
+</odoo>
