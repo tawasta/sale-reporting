@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=================================
-Sale Order Report - Hide business code
-=================================
+========================================
+Sale Order Report - Hide expiration date
+========================================
 
-Hides the partners business code in sale order report
+Hides the expiration date in sale order report
 
 Configuration
 =============
@@ -14,7 +14,7 @@ Configuration
 
 Usage
 =====
-Install from Apps
+Install
 
 Known issues / Roadmap
 ======================
