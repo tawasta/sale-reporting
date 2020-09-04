@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@class='clearfix']" position="after">
+            <tr t-foreach="doc.order_line" t-as="line">
+                <td t-if="line.product_id.website_cart_note and line.product_id.website_cart_note != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
+                    <div class="small col-8" style="padding: initial;">
+                    <strong><span t-esc="line.product_id.name"/>:</strong>
+                    <span t-raw="line.product_id.website_cart_note"/>
+                    </div>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>
