@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Oy Tawasta OS Technologies Ltd.
@@ -20,19 +19,15 @@
 ##############################################################################
 
 {
-    'name': 'Margin percents in Sales Order lines',
-    'summary': 'Adds margins (percent) in Sales Order lines',
-    'category': 'Sale',
-    'version': '12.0.1.0.0',
-    'website': "https://github.com/Tawasta/sale-reporting",
-    'author': 'Oy Tawasta Technologies Ltd.',
-    'license': 'AGPL-3',
-    'application': False,
-    'installable': True,
-    'depends': [
-        'sale_margin',
-    ],
-    'data': [
-        'views/sale_order.xml',
-    ],
+    "name": "Margin percents in Sales Order lines",
+    "summary": "Adds margins (percent) in Sales Order lines",
+    "category": "Sale",
+    "version": "12.0.1.1.0",
+    "website": "https://github.com/Tawasta/sale-reporting",
+    "author": "Tawasta",
+    "license": "AGPL-3",
+    "application": False,
+    "installable": True,
+    "depends": ["sale_margin"],
+    "data": ["views/sale_order.xml"],
 }
