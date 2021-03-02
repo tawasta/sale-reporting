@@ -5,5 +5,9 @@
         <xpath expr="//p[@t-field='doc.date_order']" position="attributes">
             <attribute name="t-options">{'widget': 'date'}</attribute>
         </xpath>
+
+        <xpath expr="//p[@t-field='doc.confirmation_date']" position="attributes">
+            <attribute name="t-options">{'widget': 'date'}</attribute>
+        </xpath>
     </template>
 </odoo>
