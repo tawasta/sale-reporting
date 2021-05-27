@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<odoo>
-    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
-        <xpath expr="//div[@t-if='doc.user_id.name']" position="attributes">
-            <attribute name="t-if">1 == 0</attribute>
-        </xpath>
-    </template>
-</odoo>
