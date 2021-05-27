@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@name='expiration_date']" position="after">
+            <div t-if="doc.incoterm" name="incoterm-field-value" class="col-auto mw-100 mb-2" groups="sale_stock.group_display_incoterm">
+                <strong>Terms of delivery:</strong>
+                <p class="m-0" t-field="doc.incoterm"/>
+                <p class="m-0" t-if="'incoterm_extra_info' in doc.fields_get()" t-field="doc.incoterm_extra_info"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="report_saleorder_document_inherit_sale_stock" inherit_id="sale_stock.report_saleorder_document_inherit_sale_stock">
+        <div class="col-3" position="attributes">
+            <attribute name="class">col-auto mw-100 mb-2</attribute>
+        </div>
+    </template>
+</odoo>
