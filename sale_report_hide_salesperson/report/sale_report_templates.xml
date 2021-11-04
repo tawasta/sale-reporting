@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_saleorder_document_hide_salesperson" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="attributes">
+            <attribute name="class">col-auto col-3 mw-100 mb-2 d-none</attribute>
+        </xpath>
+    </template>
+</odoo>
