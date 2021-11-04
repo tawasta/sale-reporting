@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale_order_header.report_saleorder_document">
+        <div id="header-text" position="attributes">
+            <attribute name="t-if">1 == 0</attribute>
+        </div>
+    </template>
+</odoo>
