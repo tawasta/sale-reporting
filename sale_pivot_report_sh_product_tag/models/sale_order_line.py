@@ -8,7 +8,7 @@ class SaleOrderLine(models.Model):
 
     # Field needs to be stored so that SO lines can be grouped by it
     sh_product_tag_ids = fields.Many2one(
-        comodel='sh.product.tag',
+        comodel_name='sh.product.tag',
         compute=lambda self: self._compute_sh_product_tag_ids(),
         search=lambda self: self._search_sh_product_tag_ids(),
         store=True,
@@ -29,4 +29,4 @@ class SaleOrderLine(models.Model):
         for order in self.env['sale.order'].search([]):
             for line in order.order_line:
                 tags = line.product_id.sh_product_tag_ids
-                line.sh_product_tag_ids = tags and tags[0] or False
+                line.sh_product_tag_ids = tags and tags[0].id or False
