@@ -2,11 +2,10 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==========================
-Sale Order Report Incoterm
-==========================
-
-Sale Order Report Incoterm
+=========================
+Sale Report Incoterm Name
+=========================
+* Show Incoterm name on Sale Report
 
 Configuration
 =============
@@ -14,7 +13,7 @@ Configuration
 
 Usage
 =====
-Just install the module
+\-
 
 Known issues / Roadmap
 ======================
@@ -27,6 +26,7 @@ Contributors
 ------------
 
 * Timo Kekäläinen <timo.kekalainen@tawasta.fi>
+* Miika Nissi <miika.nissi@tawasta.fi>
 
 Maintainer
 ----------
