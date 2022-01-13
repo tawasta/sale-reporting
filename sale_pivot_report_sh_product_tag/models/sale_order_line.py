@@ -41,7 +41,7 @@ class SaleOrderLine(models.Model):
         interval = 50
 
         for x in range(0, len(lines), interval):
-            batch_lines.append(our_list[x:x+interval])
+            batch_lines.append(lines[x:x+interval])
 
         for batch in batch_lines:
             job_desc = _(
