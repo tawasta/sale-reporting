@@ -18,8 +18,7 @@ class SaleOrderLine(models.Model):
     @api.onchange('product_id')
     def onchange_sh_product_tag_ids(self):
         tags = self.product_id.sh_product_tag_ids
-        if tags:
-            self.sh_product_tag_ids = tags and tags[0].id or False
+        self.sh_product_tag_ids = tags and tags[0].id or False
 
     @api.multi
     @job
@@ -27,8 +26,8 @@ class SaleOrderLine(models.Model):
         lines = self.env['sale.order.line'].search([('id', 'in', batch)])
         for line in lines:
             tags = line.product_id.sh_product_tag_ids
-            if tags:
-                line.sh_product_tag_ids = tags and tags[0].id or False
+            line.sh_product_tag_ids = tags and tags[0].id or False
+        return batch, 'Success'
 
     @api.multi
     @job
