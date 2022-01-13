@@ -21,13 +21,13 @@
 {
     "name": "Sale Analysis - Group by SH product tags",
     "summary": "Group by SH product tags in Sale analysis pivot report",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["sh_product_variant_tags", "sale"],
+    "depends": ["sh_product_variant_tags", "sale", "queue_job"],
     "data": ["data/ir_cron.xml", "views/sale_order.xml"],
 }
