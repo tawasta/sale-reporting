@@ -15,6 +15,15 @@ class SaleOrderLine(models.Model):
         store=True,
     )
 
+    @api.model
+    def create(self, vals):
+        product = vals.get('product_id', False)
+        if product:
+            prod = self.sudo().env['product.product'].search([('id', '=', product)])
+            tags = prod.sh_product_tag_ids
+            vals['sh_product_tag_ids'] = tags and tags[0].id or False
+        return super(SaleOrderLine, self).create(vals)
+
     @api.onchange('product_id')
     def onchange_sh_product_tag_ids(self):
         tags = self.product_id.sh_product_tag_ids
