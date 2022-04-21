@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='total']/div/table" position="inside">
+            <t t-foreach="doc.invoice_ids" t-as="invoice">
+                <t t-if="invoice.payment_state != 'invoicing_legacy'">
+                    <t t-set="payments_vals" t-value="invoice.sudo()._get_reconciled_info_JSON_values()"/>
+                    <t t-foreach="payments_vals" t-as="payment_vals">
+                        <tr>
+                            <td>
+                                <i class="oe_form_field text-right oe_payment_label">
+                                    <t t-esc="invoice.display_name"></t>
+                                    Paid on <t t-esc="payment_vals['date']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </i>
+                            </td>
+                            <td class="text-right">
+                                <span
+                                    t-esc="payment_vals['amount']"
+                                    t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: invoice.currency_id}"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-if="len(payments_vals) &gt; 0">
+                        <tr class="border-black">
+                            <td><strong>Amount Due</strong></td>
+                            <td class="text-right">
+                                <span t-field="invoice.amount_residual"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>
