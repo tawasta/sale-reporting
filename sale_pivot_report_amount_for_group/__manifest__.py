@@ -21,7 +21,7 @@
 {
     "name": "Adds a group that is used to hide amounts on sale report",
     "summary": "Adds a group that is used to hide amounts on sale report",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
@@ -30,6 +30,7 @@
     "installable": True,
     "depends": [
         "sale",
+        "sale_margin"
     ],
     "data": [
         "security/res_groups.xml"
