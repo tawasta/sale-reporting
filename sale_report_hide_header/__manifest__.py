@@ -23,7 +23,7 @@
     "summary": "Hides sale report header from sale order report",
     "version": "14.0.1.0.0",
     "category": "Reporting",
-    "website": "https://github.com/Tawasta/sale-reporting",
+    "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,
