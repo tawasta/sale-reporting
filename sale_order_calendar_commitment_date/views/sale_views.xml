@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="view_sale_order_calendar_commitment_date" model="ir.ui.view">
         <field name="name">sale.order.calendar.commitment.date</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_sale_order_calendar"/>
+        <field name="inherit_id" ref="sale.view_sale_order_calendar" />
         <field name="arch" type="xml">
             <xpath expr="//calendar" position="attributes">
                 <attribute name="date_start">commitment_date</attribute>

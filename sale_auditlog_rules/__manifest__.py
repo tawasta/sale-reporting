@@ -23,7 +23,7 @@
     "summary": "Adds audit log rules for sale order and sale order line",
     "author": "Tawasta",
     "license": "AGPL-3",
-    "website": "https://github.com/Tawasta/sale-reporting",
+    "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "category": "Logging",
     "application": False,
     "installable": True,
@@ -32,8 +32,6 @@
         "sale",
         "auditlog",
     ],
-    "data": [
-        "data/rules.xml"
-    ],
+    "data": ["data/rules.xml"],
     "demo": [],
 }

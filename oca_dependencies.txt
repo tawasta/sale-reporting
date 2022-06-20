@@ -1,1 +1,0 @@
-intrastat-extrastat https://github.com/OCA/intrastat-extrastat

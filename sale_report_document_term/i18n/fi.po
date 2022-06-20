@@ -29,3 +29,4 @@ msgstr "Tilausvahvistus #"
 #: model_terms:ir.ui.view,arch_db:sale_report_document_term.report_saleorder_document
 msgid "Order confirmation #"
 msgstr "Tilausvahvistus #"
+
