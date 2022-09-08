@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <span t-field='line.product_uom_qty' position="attributes">
+            <attribute
+                name="t-options"
+            >{'precision': doc.company_id.sale_report_decimal_precision}</attribute>
+        </span>
+    </template>
+</odoo>
