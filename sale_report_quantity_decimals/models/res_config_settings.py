@@ -9,4 +9,5 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.sale_report_decimal_precision",
         readonly=False,
         default=2,
+        store=True,
     )
