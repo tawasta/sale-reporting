@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [sale_report_hide_payment_term](sale_report_hide_payment_term/) | 14.0.1.0.0 |  | Hides payment term on Sale Order Report
 [sale_report_hide_salesperson](sale_report_hide_salesperson/) | 14.0.1.0.0 |  | Hides salesperson element from Sales reports
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 14.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
+[sale_report_incoterms_name_and_code](sale_report_incoterms_name_and_code/) | 14.0.1.0.0 |  | Show Incoterm name and code also on sale pdf print
 [sale_report_partner_overdue_interest](sale_report_partner_overdue_interest/) | 14.0.1.0.0 |  | Sale Report Partner overdue interest
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 14.0.1.0.0 |  | Sale Order Report Partner Phonenumber
 [sale_report_payment_term_header](sale_report_payment_term_header/) | 14.0.1.0.0 |  | Sale Order report - Payment term in header
