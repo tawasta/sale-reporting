@@ -20,9 +20,11 @@
                 groups="sale_stock.group_display_incoterm"
             >
                 <strong>Incoterms:</strong>
-                 <p class="m-0" t-esc="doc.incoterm.name" /> (<t
-                    t-esc="doc.incoterm.code"
-                />)
+                <p>
+                     <t class="m-0" t-esc="doc.incoterm.name" /> (<t
+                        t-esc="doc.incoterm.code"
+                    />)
+                </p>
             </div>
         </xpath>
     </template>
