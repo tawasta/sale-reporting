@@ -12,5 +12,26 @@
         >
             <attribute name="t-if">1 == 1</attribute>
         </xpath>
+
+        <strong
+            t-if="doc.partner_shipping_id == doc.partner_invoice_id"
+            position="attributes"
+        >
+            <attribute name="t-if">1 == 0</attribute>
+        </strong>
+
+        <strong
+            t-if="doc.partner_shipping_id != doc.partner_invoice_id"
+            position="attributes"
+        >
+            <attribute name="t-if">1 == 1</attribute>
+        </strong>
+
+        <t
+            t-if="doc.partner_shipping_id != doc.partner_invoice_id"
+            position="attributes"
+        >
+            <attribute name="t-if">1 == 1</attribute>
+        </t>
     </template>
 </odoo>
