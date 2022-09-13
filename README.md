@@ -16,6 +16,7 @@ addon | version | maintainers | summary
 [sale_order_line_margin_percent](sale_order_line_margin_percent/) | 14.0.1.0.0 |  | Adds margins (percent) in Sales Order lines
 [sale_pivot_report_amount_for_group](sale_pivot_report_amount_for_group/) | 14.0.1.0.0 |  | Adds a group that is used to hide amounts on sale report
 [sale_pivot_report_sh_product_tag](sale_pivot_report_sh_product_tag/) | 14.0.1.0.0 |  | Group by SH product tags in Sale analysis pivot report
+[sale_report_always_show_order_date](sale_report_always_show_order_date/) | 14.0.1.0.0 |  | Sale report - Always show Order Date
 [sale_report_business_code](sale_report_business_code/) | 14.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_carrier_id](sale_report_carrier_id/) | 14.0.1.0.0 |  | Add carrier id to sale report
 [sale_report_commitment_date](sale_report_commitment_date/) | 14.0.1.0.0 |  | Adds commitment date to sale order report
