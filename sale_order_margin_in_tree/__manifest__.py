@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Oy Tawasta OS Technologies Ltd.
@@ -24,7 +23,7 @@
     "summary": "Show the margin field in SO list",
     "category": "Sale",
     "version": "14.0.1.0.0",
-    "website": "https://github.com/Tawasta/sale-reporting",
+    "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,

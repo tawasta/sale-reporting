@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="view_order_tree_margin" model="ir.ui.view">
         <field name="name">sale.order.tree.margin</field>
@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale.view_order_tree" />
         <field name="arch" type="xml">
             <field name="amount_total" position="after">
-                <field name="margin" optional="show"/>
+                <field name="margin" optional="show" />
             </field>
         </field>
     </record>
@@ -16,7 +16,7 @@
         <field name="inherit_id" ref="sale.view_quotation_tree" />
         <field name="arch" type="xml">
             <field name="amount_total" position="after">
-                <field name="margin" optional="show"/>
+                <field name="margin" optional="show" />
             </field>
         </field>
     </record>
