@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//p[@id='fiscal_position_remark']" position="before">
+            <t
+                t-if="doc.company_id.proforma_info and (env.context.get('proforma', False) or is_pro_forma)"
+            >
+                <span t-field="doc.company_id.proforma_info" />
+            </t>
+        </xpath>
+    </template>
+</odoo>
