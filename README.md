@@ -21,6 +21,7 @@ addon | version | maintainers | summary
 [sale_report_business_code](sale_report_business_code/) | 14.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_carrier_id](sale_report_carrier_id/) | 14.0.1.0.0 |  | Add carrier id to sale report
 [sale_report_commitment_date](sale_report_commitment_date/) | 14.0.1.0.0 |  | Adds commitment date to sale order report
+[sale_report_country_of_origin](sale_report_country_of_origin/) | 14.0.1.0.0 |  | Product country of origin to sale order report product table
 [sale_report_customer_title](sale_report_customer_title/) | 14.0.1.0.0 |  | Add title to customer address
 [sale_report_date_order_to_date](sale_report_date_order_to_date/) | 14.0.1.0.0 |  | Show Order Date as date only on SO report
 [sale_report_date_paid](sale_report_date_paid/) | 14.0.1.0.0 |  | Show date paid on sale order if there are invoices
