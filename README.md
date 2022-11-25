@@ -20,7 +20,6 @@ addon | version | maintainers | summary
 [sale_report_always_show_order_date](sale_report_always_show_order_date/) | 14.0.1.0.0 |  | Sale report - Always show Order Date
 [sale_report_business_code](sale_report_business_code/) | 14.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_carrier_id](sale_report_carrier_id/) | 14.0.1.0.0 |  | Add carrier id to sale report
-[sale_report_commitment_date](sale_report_commitment_date/) | 14.0.1.0.0 |  | Adds commitment date to sale order report
 [sale_report_customer_title](sale_report_customer_title/) | 14.0.1.0.0 |  | Add title to customer address
 [sale_report_date_order_to_date](sale_report_date_order_to_date/) | 14.0.1.0.0 |  | Show Order Date as date only on SO report
 [sale_report_date_paid](sale_report_date_paid/) | 14.0.1.0.0 |  | Show date paid on sale order if there are invoices
@@ -40,6 +39,7 @@ addon | version | maintainers | summary
 [sale_report_quantity_decimals](sale_report_quantity_decimals/) | 14.0.1.0.0 |  | Modifications to Sale Report' decimal precision
 [sale_report_remove_multicompany_rule](sale_report_remove_multicompany_rule/) | 14.0.1.0.0 |  | Sale report remove multi company rule
 [sale_report_show_address](sale_report_show_address/) | 14.0.1.0.0 |  | Always show shipping and invoice address on sale report.
+[sale_report_show_commitment_date](sale_report_show_commitment_date/) | 14.0.1.0.0 |  | Adds commitment date to sale order report
 [sale_report_title](sale_report_title/) | 14.0.1.0.0 |  | Sale Report Title
 
 [//]: # (end addons)
