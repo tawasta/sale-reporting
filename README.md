@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [sale_report_hide_expiration_date](sale_report_hide_expiration_date/) | 14.0.1.0.0 |  | Hide expiration date on Sale Report
 [sale_report_hide_header](sale_report_hide_header/) | 14.0.1.0.0 |  | Hides sale report header from sale order report
 [sale_report_hide_header_text](sale_report_hide_header_text/) | 14.0.1.0.0 |  | Hides Header text on Sale Order Report
+[sale_report_hide_order_date](sale_report_hide_order_date/) | 14.0.1.0.0 |  | Hides order date from sales report
 [sale_report_hide_payment_term](sale_report_hide_payment_term/) | 14.0.1.0.0 |  | Hides payment term on Sale Order Report
 [sale_report_hide_salesperson](sale_report_hide_salesperson/) | 14.0.1.0.0 |  | Hides salesperson element from Sales reports
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 14.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
