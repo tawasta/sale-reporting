@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_hs_code"
+        inherit_id="sale.report_saleorder_document"
+        priority="50"
+    >
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_hs_code">HS Code</th>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <td name="td_hs_code">
+                <span t-field="line.product_id.hs_code_id" />
+            </td>
+        </xpath>
+    </template>
+</odoo>

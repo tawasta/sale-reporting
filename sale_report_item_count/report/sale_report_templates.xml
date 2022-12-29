@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_item_count"
+        inherit_id="sale.report_saleorder_document"
+        priority="10"
+    >
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_item_count">Item</th>
+        </xpath>
+        <xpath expr="//t[@t-as='line']" position="before">
+            <t t-set="current_item" t-value="0" />
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <td name="td_item_count">
+                <t t-set="current_item" t-value="current_item + 1" />
+                <span t-esc="current_item" />
+            </td>
+        </xpath>
+    </template>
+</odoo>
