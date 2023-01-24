@@ -35,6 +35,7 @@ addon | version | maintainers | summary
 [sale_report_hide_salesperson](sale_report_hide_salesperson/) | 14.0.1.0.0 |  | Hides salesperson element from Sales reports
 [sale_report_hs_code](sale_report_hs_code/) | 14.0.1.0.0 |  | Add HS code to sale report lines
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 14.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
+[sale_report_incoterm_style_fix](sale_report_incoterm_style_fix/) | 14.0.1.0.0 |  | Incoterm style fix to follow sale report style
 [sale_report_incoterms_name_and_code](sale_report_incoterms_name_and_code/) | 14.0.1.0.0 |  | Show Incoterm name and code also on sale pdf print
 [sale_report_item_count](sale_report_item_count/) | 14.0.1.0.0 |  | Add item count to sale report lines
 [sale_report_origin_country](sale_report_origin_country/) | 14.0.1.0.0 |  | Add country of origin to sale report lines
