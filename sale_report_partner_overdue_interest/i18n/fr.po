@@ -1,0 +1,28 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_report_partner_overdue_interest
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0-20221116\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-16 07:39+0000\n"
+"PO-Revision-Date: 2023-02-16 09:41+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: sale_report_partner_overdue_interest
+#: model_terms:ir.ui.view,arch_db:sale_report_partner_overdue_interest.report_saleorder_document
+msgid "<span>0,00</span>"
+msgstr "<span>0,00</span>"
+
+#. module: sale_report_partner_overdue_interest
+#: model_terms:ir.ui.view,arch_db:sale_report_partner_overdue_interest.report_saleorder_document
+msgid "<strong>Late payment interest:</strong>"
+msgstr "<strong>Taux de pénalité de retard:</strong>"
