@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <th name="th_discount" position="before">
+            <th name="th_delivery_date" class="text-right">Delivery</th>
+        </th>
+
+        <xpath expr="//span[@t-field='line.discount']/.." position="before">
+            <td name="td_delivery_date" class="text-right">
+                <span t-field="line.scheduled_date" t-options="{'widget': 'date'}" />
+            </td>
+        </xpath>
+    </template>
+</odoo>
