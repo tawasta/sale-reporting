@@ -38,6 +38,7 @@ addon | version | maintainers | summary
 [sale_report_incoterm_style_fix](sale_report_incoterm_style_fix/) | 14.0.1.0.0 |  | Incoterm style fix to follow sale report style
 [sale_report_incoterms_name_and_code](sale_report_incoterms_name_and_code/) | 14.0.1.0.0 |  | Show Incoterm name and code also on sale pdf print
 [sale_report_item_count](sale_report_item_count/) | 14.0.1.0.0 |  | Add item count to sale report lines
+[sale_report_line_delivery_date](sale_report_line_delivery_date/) | 14.0.1.0.0 |  | Show Delivery date on Sale print line
 [sale_report_origin_country](sale_report_origin_country/) | 14.0.1.0.0 |  | Add country of origin to sale report lines
 [sale_report_partner_overdue_interest](sale_report_partner_overdue_interest/) | 14.0.1.0.1 |  | Sale Report Partner overdue interest
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 14.0.1.0.0 |  | Sale Order Report Partner Phonenumber
