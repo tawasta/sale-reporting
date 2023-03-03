@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <!--Unit Price-->
+        <xpath expr="//span[@t-field='line.price_unit']" position="attributes">
+            <attribute name="t-options">{'precision': 2}</attribute>
+        </xpath>
+
+        <!--Amount-->
+        <xpath expr="//span[@t-field='line.price_subtotal']" position="attributes">
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='line.price_subtotal']" position="after">
+            <t
+                t-esc="doc.pricelist_id.currency_id.symbol"
+                groups="account.group_show_line_subtotals_tax_excluded"
+            />
+        </xpath>
+
+        <xpath expr="//span[@t-field='line.price_total']" position="attributes">
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='line.price_total']" position="after">
+            <t
+                t-esc="doc.pricelist_id.currency_id.symbol"
+                groups="account.group_show_line_subtotals_tax_included"
+            />
+        </xpath>
+
+        <xpath
+            expr="//table[@class='table table-sm o_main_table']/thead/tr/th[last()]"
+            position="attributes"
+        >
+            <attribute name="width">12%</attribute>
+        </xpath>
+
+        <!--(conditional) Subtotal-->
+        <xpath expr="//span[@t-esc='current_subtotal']" position="attributes">
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath expr="//span[@t-esc='current_subtotal']" position="after">
+            <t t-esc="doc.pricelist_id.currency_id.symbol" />
+        </xpath>
+
+        <!--Subtotal (or Total without taxes)-->
+        <xpath expr="//span[@t-field='doc.amount_untaxed']" position="attributes">
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.amount_untaxed']" position="after">
+            <t t-esc="doc.pricelist_id.currency_id.symbol" />
+        </xpath>
+
+        <!--Taxes-->
+        <xpath
+            expr="//t[@t-if='amount_by_group[5] == 1 and doc.amount_untaxed == amount_by_group[2]']//span[@t-esc='amount_by_group[1]']"
+            position="attributes"
+        >
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-if='amount_by_group[5] == 1 and doc.amount_untaxed == amount_by_group[2]']//span[@t-esc='amount_by_group[1]']"
+            position="after"
+        >
+            <t t-esc="doc.pricelist_id.currency_id.symbol" />
+        </xpath>
+
+        <xpath
+            expr="//t[@t-else='']//span[@t-esc='amount_by_group[1]']"
+            position="attributes"
+        >
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-else='']//span[@t-esc='amount_by_group[1]']"
+            position="after"
+        >
+            <t t-esc="doc.pricelist_id.currency_id.symbol" />
+        </xpath>
+
+        <!--Total-->
+        <xpath expr="//span[@t-field='doc.amount_total']" position="attributes">
+            <attribute name="t-options">{'widget': 'float', 'precision': 2}</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.amount_total']" position="after">
+            <t t-esc="doc.pricelist_id.currency_id.symbol" />
+        </xpath>
+    </template>
+</odoo>
