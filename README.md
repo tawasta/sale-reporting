@@ -43,6 +43,7 @@ addon | version | maintainers | summary
 [sale_report_partner_overdue_interest](sale_report_partner_overdue_interest/) | 14.0.1.0.1 |  | Sale Report Partner overdue interest
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 14.0.1.0.0 |  | Sale Order Report Partner Phonenumber
 [sale_report_payment_term_header](sale_report_payment_term_header/) | 14.0.1.0.0 |  | Sale Order report - Payment term in header
+[sale_report_price_decimal_precision](sale_report_price_decimal_precision/) | 14.0.1.0.0 |  | Sale Order Report - Price decimal precision
 [sale_report_proforma_info_field](sale_report_proforma_info_field/) | 14.0.1.0.0 |  | Sale reporting - Info field for Proforma print
 [sale_report_quantity_decimals](sale_report_quantity_decimals/) | 14.0.1.0.0 |  | Modifications to Sale Report' decimal precision
 [sale_report_remove_multicompany_rule](sale_report_remove_multicompany_rule/) | 14.0.1.0.0 |  | Sale report remove multi company rule
