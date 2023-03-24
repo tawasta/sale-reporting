@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [sale_report_date_paid](sale_report_date_paid/) | 14.0.1.0.0 |  | Show date paid on sale order if there are invoices
 [sale_report_document_term](sale_report_document_term/) | 14.0.1.0.0 |  | Sale Report Document Term
 [sale_report_eori](sale_report_eori/) | 14.0.1.0.0 |  | Adds customers EORI number to Saleorder Report
+[sale_report_header_date_confirmation_date](sale_report_header_date_confirmation_date/) | 14.0.1.0.0 |  | Put confirmation date to sale report header
 [sale_report_hide_expiration_date](sale_report_hide_expiration_date/) | 14.0.1.0.0 |  | Hide expiration date on Sale Report
 [sale_report_hide_header](sale_report_hide_header/) | 14.0.1.0.0 |  | Hides sale report header from sale order report
 [sale_report_hide_header_text](sale_report_hide_header_text/) | 14.0.1.0.0 |  | Hides Header text on Sale Order Report
