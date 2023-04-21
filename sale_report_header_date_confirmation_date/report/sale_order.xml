@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-if="doc.date_order">
+                <t
+                    t-set="header_date_value"
+                    t-value="'{}.{}.{}'.format(str(doc.date_order.day), str(doc.date_order.month), str(doc.date_order.year))"
+                >
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>
