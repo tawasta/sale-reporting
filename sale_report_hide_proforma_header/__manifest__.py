@@ -21,7 +21,7 @@
 {
     "name": "Sale Report hide Proforma header",
     "summary": "Sale Report hide Proforma header",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
