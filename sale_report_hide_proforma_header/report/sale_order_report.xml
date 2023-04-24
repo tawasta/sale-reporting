@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath
+            expr='//t[@t-if="env.context.get(&apos;proforma&apos;, False) or is_pro_forma"]'
+            position="attributes"
+        >
+            <attribute name="t-if">1 == 0</attribute>
+        </xpath>
+
+<!--         <xpath expr="//span[@t-field='doc.name']" position="attributes"> -->
+<!--             <attribute name="t-if">not (env.context.get('proforma', False) or is_pro_forma)</attribute> -->
+<!--             <attribute name="t-if">not is_pro_forma)</attribute> -->
+<!--         </xpath> -->
+    </template>
+
+    <template id="header" inherit_id="web_report_sfs.header">
+        <xpath expr="//div[@name='report-name']/span" position="attributes">
+            <attribute name="t-if">not env.context.get('proforma', False)</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale_report_title.report_saleorder_document"
+    >
+        <xpath expr="//t[@t-if='is_pro_forma']/t" position="replace">
+            <t t-set="report_title"> </t>
+        </xpath>
+    </template>
+</odoo>
