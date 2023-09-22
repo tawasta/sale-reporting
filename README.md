@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [sale_report_document_term](sale_report_document_term/) | 14.0.1.0.0 |  | Sale Report Document Term
 [sale_report_eori](sale_report_eori/) | 14.0.1.0.0 |  | Adds customers EORI number to Saleorder Report
 [sale_report_header_date_confirmation_date](sale_report_header_date_confirmation_date/) | 14.0.1.0.0 |  | Put confirmation date to sale report header
+[sale_report_hide_business_code](sale_report_hide_business_code/) | 14.0.1.0.0 |  | Sale Order Report - Hide business code
 [sale_report_hide_expiration_date](sale_report_hide_expiration_date/) | 14.0.1.0.0 |  | Hide expiration date on Sale Report
 [sale_report_hide_header](sale_report_hide_header/) | 14.0.1.0.0 |  | Hides sale report header from sale order report
 [sale_report_hide_header_text](sale_report_hide_header_text/) | 14.0.1.0.0 |  | Hides Header text on Sale Order Report
@@ -40,8 +41,10 @@ addon | version | maintainers | summary
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 14.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
 [sale_report_incoterm_style_fix](sale_report_incoterm_style_fix/) | 14.0.1.0.0 |  | Incoterm style fix to follow sale report style
 [sale_report_incoterms_name_and_code](sale_report_incoterms_name_and_code/) | 14.0.1.0.0 |  | Show Incoterm name and code also on sale pdf print
+[sale_report_invoice_address_business_code](sale_report_invoice_address_business_code/) | 14.0.1.0.0 |  | Add business code after invoice address
 [sale_report_item_count](sale_report_item_count/) | 14.0.1.0.0 |  | Add item count to sale report lines
 [sale_report_line_delivery_date](sale_report_line_delivery_date/) | 14.0.1.0.0 |  | Show Delivery date on Sale print line
+[sale_report_line_product_internal_reference](sale_report_line_product_internal_reference/) | 14.0.1.0.0 |  | Sale Order report - Product's internal reference
 [sale_report_origin_country](sale_report_origin_country/) | 14.0.1.0.0 |  | Add country of origin to sale report lines
 [sale_report_partner_overdue_interest](sale_report_partner_overdue_interest/) | 14.0.1.0.1 |  | Sale Report Partner overdue interest
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 14.0.1.0.0 |  | Sale Order Report Partner Phonenumber
