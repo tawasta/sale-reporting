@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="report_saleorder_document"
-        inherit_id="sale_report_business_code.report_saleorder_document">
-        <xpath expr="//t[@t-if='doc.partner_id.business_code']"
-            position="replace">
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale_report_business_code.report_saleorder_document"
+    >
+        <xpath expr="//t[@t-if='doc.partner_id.business_code']" position="replace">
         </xpath>
     </template>
 </odoo>

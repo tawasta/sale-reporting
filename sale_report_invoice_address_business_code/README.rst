@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-======================================
-Sale Order Report - Hide business code
-======================================
+=================================================
+Sale Order Report - Invoice address business code
+=================================================
 
-Hides the partners business code in sale order report
+Add business code after invoice address
 
 Configuration
 =============
@@ -14,7 +14,7 @@ Configuration
 
 Usage
 =====
-Install from Apps
+\-
 
 Known issues / Roadmap
 ======================
@@ -27,7 +27,6 @@ Contributors
 ------------
 
 * Joona Isoaho <joona.isoaho@tawasta.fi>
-* Valtteri Lattu <valtteri.lattu@tawasta.fi>
 
 Maintainer
 ----------
