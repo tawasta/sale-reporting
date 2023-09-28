@@ -22,7 +22,7 @@
     "name": "Sale Order Line Margin Percent",
     "summary": "Adds margins (percent) in Sales Order lines",
     "category": "Sale",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
