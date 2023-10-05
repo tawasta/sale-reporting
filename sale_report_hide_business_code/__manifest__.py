@@ -1,7 +1,7 @@
 ##############################################################################
 #
-#    Author: Oy Tawasta OS Technologies Ltd.
-#    Copyright 2018 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
+#    Author: Tawasta
+#    Copyright 2020 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,15 +19,24 @@
 ##############################################################################
 
 {
-    "name": "Sale Order Line Margin Percent",
-    "summary": "Adds margins (percent) in Sales Order lines",
-    "category": "Sale",
-    "version": "14.0.1.0.1",
+    "name": "Sale Order Report - Hide business code",
+    "summary": "",
+    "version": "14.0.1.0.0",
+    "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["sale_margin"],
-    "data": ["views/sale_order.xml"],
+    "external_dependencies": {
+        "python": [],
+        "bin": [],
+    },
+    "depends": [
+        "sale",
+        "sale_report_business_code",
+    ],
+    "data": [
+        "report/sale_order.xml",
+    ],
 }
