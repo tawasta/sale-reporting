@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_saleorder" inherit_id="sale.report_saleorder">
+        <t t-foreach="docs" position="attributes">
+            <attribute name="t-foreach">docs.sudo()</attribute>
+        </t>
+    </template>
+</odoo>
