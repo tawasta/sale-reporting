@@ -21,7 +21,7 @@
 {
     "name": "Customer Late payment field and filter",
     "summary": "Filter orders by late payments and show how late they are",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Sales",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
@@ -32,6 +32,7 @@
         "sale",
     ],
     "data": [
+        "data/ir_cron.xml",
         "views/sale_order.xml",
     ],
 }

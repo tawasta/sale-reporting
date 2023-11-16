@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale.view_order_tree" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="late_payments_dates" optional="hide" />
+                <field name="has_late_payments" optional="hide" />
             </field>
         </field>
     </record>
