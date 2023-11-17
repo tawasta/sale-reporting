@@ -21,12 +21,13 @@
 # 1. Standard library imports:
 import logging
 
-# 2. Known third party imports:
-
 # 3. Odoo imports (openerp):
 from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+
+# 2. Known third party imports:
+
 
 # 4. Imports from Odoo modules:
 
@@ -62,51 +63,65 @@ class SaleService(Component):
         records = self.env["sale.report"].search([])
         for rec in records:
             commercial = rec.commercial_partner_id
-            rows.append({
-                "id": rec.id,
-                "name": rec.name,
-                "line_count": rec.nbr or 0,
-                "state": rec.state,
-                "date": rec.date and rec.date.isoformat() or "",
-                "confirmation_date": rec.confirmation_date and rec.confirmation_date or "",
-                "commitment_date": rec.commitment_date and rec.commitment_date.isoformat() or "",
-                "salesperson": rec.user_id and rec.user_id.name or "",
-                "volume": rec.volume or 0.0,
-                "weight": rec.weight or 0.0,
-                "company": rec.company_id.name,
-                "country": rec.country_id and rec.country_id.name or "",
-                "commercial_partner": commercial and commercial.display_name or "",
-                "margin": rec.margin or 0.0,
-                "medium": rec.medium_id and rec.medium_id.name or "",
-                "delay": rec.delay or 0.0,
-                "partner": rec.partner_id and rec.partner_id.name or "",
-                "pricelist": rec.pricelist_id.with_context(lang="fi_FI").name,
-                "price_subtotal": rec.price_subtotal or 0.0,
-                "price_total": rec.price_total or 0.0,
-                "untaxed_amount_invoiced": rec.untaxed_amount_invoiced or 0.0,
-                "untaxed_amount_to_invoice": rec.untaxed_amount_to_invoice or 0.0,
-                "discount": rec.discount or 0.0,
-                "discount_amount": rec.discount_amount or 0.0,
-                "amt_invoiced": rec.amt_invoiced or 0.0,
-                "amt_to_invoice": rec.amt_to_invoice or 0.0,
-                "qty_delivered": rec.qty_delivered or 0.0,
-                "qty_invoiced": rec.qty_invoiced or 0.0,
-                "qty_to_invoice": rec.qty_to_invoice or 0.0,
-                "source": rec.source_id.name or "",
-                "product": rec.product_id and rec.product_id.with_context(
-                    lang="fi_FI").display_name or "",
-                "product_template": rec.product_tmpl_id and rec.product_tmpl_id.with_context(
-                    lang="fi_FI").display_name or "",
-                "category": rec.categ_id and rec.categ_id.with_context(lang="fi_FI").name or "",
-                "uom": rec.product_uom.name or "",
-                "quantity": rec.product_uom_qty or 0.0,
-                "product_tag": rec.sh_product_tag_ids and rec.sh_product_tag_ids.name or "",
-            })
+            rows.append(
+                {
+                    "id": rec.id,
+                    "name": rec.name,
+                    "line_count": rec.nbr or 0,
+                    "state": rec.state,
+                    "date": rec.date and rec.date.isoformat() or "",
+                    "confirmation_date": rec.confirmation_date
+                    and rec.confirmation_date
+                    or "",
+                    "commitment_date": rec.commitment_date
+                    and rec.commitment_date.isoformat()
+                    or "",
+                    "salesperson": rec.user_id and rec.user_id.name or "",
+                    "volume": rec.volume or 0.0,
+                    "weight": rec.weight or 0.0,
+                    "company": rec.company_id.name,
+                    "country": rec.country_id and rec.country_id.name or "",
+                    "commercial_partner": commercial and commercial.display_name or "",
+                    "margin": rec.margin or 0.0,
+                    "medium": rec.medium_id and rec.medium_id.name or "",
+                    "delay": rec.delay or 0.0,
+                    "partner": rec.partner_id and rec.partner_id.name or "",
+                    "pricelist": rec.pricelist_id.with_context(lang="fi_FI").name,
+                    "price_subtotal": rec.price_subtotal or 0.0,
+                    "price_total": rec.price_total or 0.0,
+                    "untaxed_amount_invoiced": rec.untaxed_amount_invoiced or 0.0,
+                    "untaxed_amount_to_invoice": rec.untaxed_amount_to_invoice or 0.0,
+                    "discount": rec.discount or 0.0,
+                    "discount_amount": rec.discount_amount or 0.0,
+                    "amt_invoiced": rec.amt_invoiced or 0.0,
+                    "amt_to_invoice": rec.amt_to_invoice or 0.0,
+                    "qty_delivered": rec.qty_delivered or 0.0,
+                    "qty_invoiced": rec.qty_invoiced or 0.0,
+                    "qty_to_invoice": rec.qty_to_invoice or 0.0,
+                    "source": rec.source_id.name or "",
+                    "product": rec.product_id
+                    and rec.product_id.with_context(lang="fi_FI").display_name
+                    or "",
+                    "product_template": rec.product_tmpl_id
+                    and rec.product_tmpl_id.with_context(lang="fi_FI").display_name
+                    or "",
+                    "category": rec.categ_id
+                    and rec.categ_id.with_context(lang="fi_FI").name
+                    or "",
+                    "uom": rec.product_uom.name or "",
+                    "quantity": rec.product_uom_qty or 0.0,
+                    "product_tag": rec.sh_product_tag_ids
+                    and rec.sh_product_tag_ids.name
+                    or "",
+                }
+            )
         res = {
             "count": len(rows),
             "rows": rows,
         }
-        _logger.info("Sale REST API: JSON with {} rows about sale reports".format(len(rows)))
+        _logger.info(
+            "Sale REST API: JSON with {} rows about sale reports".format(len(rows))
+        )
         return res
 
     # Validators

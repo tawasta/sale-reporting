@@ -21,12 +21,13 @@
 # 1. Standard library imports:
 import logging
 
-# 2. Known third party imports:
-
 # 3. Odoo imports (openerp):
 from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+
+# 2. Known third party imports:
+
 
 # 4. Imports from Odoo modules:
 
@@ -63,49 +64,67 @@ class InvoiceService(Component):
         for rec in records:
             tmpl = rec.product_template_id
             commercial = rec.commercial_partner_id
-            rows.append({
-                "id": rec.id,
-                "name": rec.name,
-                "line_count": rec.nbr or 0,
-                "currency_id": rec.currency_id and rec.currency_id.name or "",
-                "date": rec.invoice_date and rec.invoice_date.isoformat() or "",
-                "date_due": rec.invoice_date_due and rec.invoice_date_due.isoformat() or "",
-                "state": rec.state,
-                "commercial_partner": commercial and commercial.display_name or "",
-                "partner": rec.partner_id and rec.partner_id.name or "",
-                "partner_shipping": rec.partner_shipping_id and rec.partner_shipping_id.name or "",
-                "price_average": rec.price_average or 0.0,
-                "price_subtotal": rec.price_subtotal or 0.0,
-                "price_total": rec.price_total or 0.0,
-                "salesperson": rec.invoice_user_id and rec.invoice_user_id.name or "",
-                "residual": rec.residual or 0.0,
-                "sales_agent": rec.sales_agent and rec.sales_agent.name or "",
-                "shipping_country": rec.shipping_country_id and rec.shipping_country_id.name or "",
-                "user_currency_price_average": rec.user_currency_price_average or 0.0,
-                "user_currency_price_total": rec.user_currency_price_total or 0.0,
-                "user_currency_residual": rec.user_currency_residual or 0.0,
-                "type": rec.type,
-                "volume": rec.volume or 0.0,
-                "weight": rec.weight or 0.0,
-                "company": rec.company_id.name,
-                "country": rec.country_id and rec.country_id.name or "",
-                "journal": rec.journal_id and rec.journal_id.name or "",
-                "move": rec.move_id and rec.move_id.name or "",
-                "move_type": rec.move_type or "",
-                "payment_state": rec.payment_state or "",
-                "payment_term": rec.payment_term and rec.payment_term.name or "",
-                "product": rec.product_id and rec.product_id.with_context(
-                    lang="fi_FI").display_name or "",
-                "quantity": rec.quantity or 0.0,
-                "product_template": tmpl and tmpl.with_context(lang="fi_FI").display_name or "",
-                "category": rec.categ_id and rec.categ_id.with_context(lang="fi_FI").name or "",
-                "uom": rec.uom_name or "",
-            })
+            rows.append(
+                {
+                    "id": rec.id,
+                    "name": rec.name,
+                    "line_count": rec.nbr or 0,
+                    "currency_id": rec.currency_id and rec.currency_id.name or "",
+                    "date": rec.invoice_date and rec.invoice_date.isoformat() or "",
+                    "date_due": rec.invoice_date_due
+                    and rec.invoice_date_due.isoformat()
+                    or "",
+                    "state": rec.state,
+                    "commercial_partner": commercial and commercial.display_name or "",
+                    "partner": rec.partner_id and rec.partner_id.name or "",
+                    "partner_shipping": rec.partner_shipping_id
+                    and rec.partner_shipping_id.name
+                    or "",
+                    "price_average": rec.price_average or 0.0,
+                    "price_subtotal": rec.price_subtotal or 0.0,
+                    "price_total": rec.price_total or 0.0,
+                    "salesperson": rec.invoice_user_id
+                    and rec.invoice_user_id.name
+                    or "",
+                    "residual": rec.residual or 0.0,
+                    "sales_agent": rec.sales_agent and rec.sales_agent.name or "",
+                    "shipping_country": rec.shipping_country_id
+                    and rec.shipping_country_id.name
+                    or "",
+                    "user_currency_price_average": rec.user_currency_price_average
+                    or 0.0,
+                    "user_currency_price_total": rec.user_currency_price_total or 0.0,
+                    "user_currency_residual": rec.user_currency_residual or 0.0,
+                    "type": rec.type,
+                    "volume": rec.volume or 0.0,
+                    "weight": rec.weight or 0.0,
+                    "company": rec.company_id.name,
+                    "country": rec.country_id and rec.country_id.name or "",
+                    "journal": rec.journal_id and rec.journal_id.name or "",
+                    "move": rec.move_id and rec.move_id.name or "",
+                    "move_type": rec.move_type or "",
+                    "payment_state": rec.payment_state or "",
+                    "payment_term": rec.payment_term and rec.payment_term.name or "",
+                    "product": rec.product_id
+                    and rec.product_id.with_context(lang="fi_FI").display_name
+                    or "",
+                    "quantity": rec.quantity or 0.0,
+                    "product_template": tmpl
+                    and tmpl.with_context(lang="fi_FI").display_name
+                    or "",
+                    "category": rec.categ_id
+                    and rec.categ_id.with_context(lang="fi_FI").name
+                    or "",
+                    "uom": rec.uom_name or "",
+                }
+            )
         res = {
             "count": len(rows),
             "rows": rows,
         }
-        _logger.info("Sale REST API: JSON with {} rows about invoice reports".format(len(rows)))
+        _logger.info(
+            "Sale REST API: JSON with {} rows about invoice reports".format(len(rows))
+        )
         return res
 
     # Validators
