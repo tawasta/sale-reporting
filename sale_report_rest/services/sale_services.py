@@ -281,11 +281,6 @@ class SaleService(Component):
                             "required": True,
                             "empty": False,
                         },
-                        "product": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
                         "product_template": {
                             "type": "string",
                             "required": True,
