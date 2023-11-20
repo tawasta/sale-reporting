@@ -82,16 +82,10 @@ class InvoiceService(Component):
         journal_dict = {journal.id: journal.name for journal in journals}
         moves = self.env["account.move"].search([])
         move_dict = {move.id: move.name for move in moves}
-        moves = self.env["account.move"].search([])
-        move_dict = {move.id: move.name for move in moves}
         products = (
             self.env["product.product"].with_context(active_test=False).search([])
         )
-        product_dict = {product.id: product.display_name for product in products}
-        templates = (
-            self.env["product.template"].with_context(active_test=False).search([])
-        )
-        template_dict = {tmpl.id: tmpl.display_name for tmpl in templates}
+        product_dict = {product.id: product for product in products}
         categories = (
             self.env["product.category"].with_context(active_test=False).search([])
         )
@@ -100,6 +94,13 @@ class InvoiceService(Component):
         uom_dict = {uom.id: uom.name for uom in uoms}
 
         for rec in records:
+            product_name = ""
+            tmpl_name = ""
+            product = product_dict.get(rec.get("product_id"), "")
+            if product:
+                product_name = product.display_name
+                tmpl_name = product.product_tmpl_id.display_name
+
             rows.append(
                 {
                     "id": rec.get("id"),
@@ -117,39 +118,17 @@ class InvoiceService(Component):
                         rec.get("commercial_partner_id"), ""
                     ),
                     "partner": partner_dict.get(rec.get("partner_id"), ""),
-                    "partner_shipping": partner_dict.get(
-                        rec.get("partner_shipping_id"), ""
-                    ),
                     "price_average": rec.get("price_average", 0.0),
                     "price_subtotal": rec.get("price_subtotal", 0.0),
-                    "price_total": rec.get("price_total", 0.0),
                     "salesperson": user_dict.get(rec.get("invoice_user_id"), ""),
                     "residual": rec.get("residual", 0.0),
-                    "sales_agent": partner_dict.get(rec.get("sales_agent"), ""),
-                    "shipping_country": country_dict.get(
-                        rec.get("shipping_country"), ""
-                    ),
-                    "user_currency_price_average": rec.get(
-                        "user_currency_price_average", 0.0
-                    ),
-                    "user_currency_price_total": rec.get(
-                        "user_currency_price_total", 0.0
-                    ),
-                    "user_currency_residual": rec.get("user_currency_residual", 0.0),
                     "type": rec.get("type"),
-                    "volume": rec.get("volume", 0.0),
-                    "weight": rec.get("weight", 0.0),
                     "company": company_dict.get(rec.get("company_id"), ""),
                     "country": country_dict.get(rec.get("country_id"), ""),
                     "journal": journal_dict.get(rec.get("journal_id"), ""),
                     "move": move_dict.get(rec.get("move_id"), ""),
-                    "move_type": rec.get("move_type", ""),
-                    "payment_state": rec.get("payment_state", ""),
-                    "payment_term": rec.get("payment_term", ""),
-                    "product": product_dict.get(rec.get("product_id"), ""),
-                    "product_template": template_dict.get(
-                        rec.get("product_template_id"), ""
-                    ),
+                    "product": product_name,
+                    "product_template": tmpl_name,
                     "quantity": rec.get("quantity", 0.0),
                     "category": category_dict.get(rec.get("product_categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom_id"), ""),
