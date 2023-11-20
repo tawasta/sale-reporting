@@ -23,7 +23,6 @@ import logging
 
 # 3. Odoo imports (openerp):
 from odoo.addons.base_rest import restapi
-from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 # 2. Known third party imports:
@@ -51,71 +50,109 @@ class InvoiceService(Component):
     @restapi.method(
         [(["/report"], "GET")],
         input_param=restapi.CerberusValidator(schema="_validator_report"),
-        output_param=restapi.CerberusValidator(schema="_validator_return_report"),
     )
     def report(self):
         """
-        GET: Get invoice analysis data
+        GET: Get invoice analysis data. No validator for return
+        since it takes so long to validate with large amount.
 
         :return: JSON
         """
         rows = []
-        records = self.env["account.invoice.report"].search([])
+        sql_query = "select * from account_invoice_report"
+        self.env.cr.execute(sql_query)
+        records = self.env.cr.dictfetchall()
+        _logger.info(
+            "Started account.invoice.report REST API, {} records".format(len(records))
+        )
+
+        currencies = self.env["res.currency"].search([])
+        currency_dict = {cur.id: cur.name for cur in currencies}
+        partners = self.env["res.partner"].with_context(active_test=False).search([])
+        partner_dict = {part.id: part.name for part in partners}
+        users = self.env["res.users"].with_context(active_test=False).search([])
+        user_dict = {user.id: user.name for user in users}
+        partners = self.env["res.partner"].with_context(active_test=False).search([])
+        partner_dict = {part.id: part.name for part in partners}
+        countries = self.env["res.country"].search([])
+        country_dict = {country.id: country.name for country in countries}
+        companies = self.env["res.company"].search([])
+        company_dict = {comp.id: comp.name for comp in companies}
+        journals = self.env["account.journal"].search([])
+        journal_dict = {journal.id: journal.name for journal in journals}
+        moves = self.env["account.move"].search([])
+        move_dict = {move.id: move.name for move in moves}
+        moves = self.env["account.move"].search([])
+        move_dict = {move.id: move.name for move in moves}
+        products = (
+            self.env["product.product"].with_context(active_test=False).search([])
+        )
+        product_dict = {product.id: product.display_name for product in products}
+        templates = (
+            self.env["product.template"].with_context(active_test=False).search([])
+        )
+        template_dict = {tmpl.id: tmpl.display_name for tmpl in templates}
+        categories = (
+            self.env["product.category"].with_context(active_test=False).search([])
+        )
+        category_dict = {categ.id: categ.name for categ in categories}
+        uoms = self.env["uom.uom"].search([])
+        uom_dict = {uom.id: uom.name for uom in uoms}
+
         for rec in records:
-            tmpl = rec.product_template_id
-            commercial = rec.commercial_partner_id
             rows.append(
                 {
-                    "id": rec.id,
-                    "name": rec.name,
-                    "line_count": rec.nbr or 0,
-                    "currency_id": rec.currency_id and rec.currency_id.name or "",
-                    "date": rec.invoice_date and rec.invoice_date.isoformat() or "",
-                    "date_due": rec.invoice_date_due
-                    and rec.invoice_date_due.isoformat()
+                    "id": rec.get("id"),
+                    "name": rec.get("name"),
+                    "line_count": rec.get("nbr_lines", 0),
+                    "currency": currency_dict.get(rec.get("currency_id"), ""),
+                    "date": rec.get("invoice_date")
+                    and rec.get("invoice_date").isoformat()
                     or "",
-                    "state": rec.state,
-                    "commercial_partner": commercial and commercial.display_name or "",
-                    "partner": rec.partner_id and rec.partner_id.name or "",
-                    "partner_shipping": rec.partner_shipping_id
-                    and rec.partner_shipping_id.name
+                    "date_due": rec.get("invoice_date_due")
+                    and rec.get("invoice_date_due").isoformat()
                     or "",
-                    "price_average": rec.price_average or 0.0,
-                    "price_subtotal": rec.price_subtotal or 0.0,
-                    "price_total": rec.price_total or 0.0,
-                    "salesperson": rec.invoice_user_id
-                    and rec.invoice_user_id.name
-                    or "",
-                    "residual": rec.residual or 0.0,
-                    "sales_agent": rec.sales_agent and rec.sales_agent.name or "",
-                    "shipping_country": rec.shipping_country_id
-                    and rec.shipping_country_id.name
-                    or "",
-                    "user_currency_price_average": rec.user_currency_price_average
-                    or 0.0,
-                    "user_currency_price_total": rec.user_currency_price_total or 0.0,
-                    "user_currency_residual": rec.user_currency_residual or 0.0,
-                    "type": rec.type,
-                    "volume": rec.volume or 0.0,
-                    "weight": rec.weight or 0.0,
-                    "company": rec.company_id.name,
-                    "country": rec.country_id and rec.country_id.name or "",
-                    "journal": rec.journal_id and rec.journal_id.name or "",
-                    "move": rec.move_id and rec.move_id.name or "",
-                    "move_type": rec.move_type or "",
-                    "payment_state": rec.payment_state or "",
-                    "payment_term": rec.payment_term and rec.payment_term.name or "",
-                    "product": rec.product_id
-                    and rec.product_id.with_context(lang="fi_FI").display_name
-                    or "",
-                    "quantity": rec.quantity or 0.0,
-                    "product_template": tmpl
-                    and tmpl.with_context(lang="fi_FI").display_name
-                    or "",
-                    "category": rec.categ_id
-                    and rec.categ_id.with_context(lang="fi_FI").name
-                    or "",
-                    "uom": rec.uom_name or "",
+                    "state": rec.get("state"),
+                    "commercial_partner": partner_dict.get(
+                        rec.get("commercial_partner_id"), ""
+                    ),
+                    "partner": partner_dict.get(rec.get("partner_id"), ""),
+                    "partner_shipping": partner_dict.get(
+                        rec.get("partner_shipping_id"), ""
+                    ),
+                    "price_average": rec.get("price_average", 0.0),
+                    "price_subtotal": rec.get("price_subtotal", 0.0),
+                    "price_total": rec.get("price_total", 0.0),
+                    "salesperson": user_dict.get(rec.get("invoice_user_id"), ""),
+                    "residual": rec.get("residual", 0.0),
+                    "sales_agent": partner_dict.get(rec.get("sales_agent"), ""),
+                    "shipping_country": country_dict.get(
+                        rec.get("shipping_country"), ""
+                    ),
+                    "user_currency_price_average": rec.get(
+                        "user_currency_price_average", 0.0
+                    ),
+                    "user_currency_price_total": rec.get(
+                        "user_currency_price_total", 0.0
+                    ),
+                    "user_currency_residual": rec.get("user_currency_residual", 0.0),
+                    "type": rec.get("type"),
+                    "volume": rec.get("volume", 0.0),
+                    "weight": rec.get("weight", 0.0),
+                    "company": company_dict.get(rec.get("company_id"), ""),
+                    "country": country_dict.get(rec.get("country_id"), ""),
+                    "journal": journal_dict.get(rec.get("journal_id"), ""),
+                    "move": move_dict.get(rec.get("move_id"), ""),
+                    "move_type": rec.get("move_type", ""),
+                    "payment_state": rec.get("payment_state", ""),
+                    "payment_term": rec.get("payment_term", ""),
+                    "product": product_dict.get(rec.get("product_id"), ""),
+                    "product_template": template_dict.get(
+                        rec.get("product_template_id"), ""
+                    ),
+                    "quantity": rec.get("quantity", 0.0),
+                    "category": category_dict.get(rec.get("product_categ_id"), ""),
+                    "uom": uom_dict.get(rec.get("product_uom_id"), ""),
                 }
             )
         res = {
@@ -131,195 +168,3 @@ class InvoiceService(Component):
     def _validator_report(self):
         """Validator for report endpoint"""
         return {}
-
-    def _validator_return_search(self):
-        """Validator for report return endpoint"""
-        return {
-            "count": {"type": "integer", "required": True},
-            "rows": {
-                "type": "list",
-                "required": True,
-                "schema": {
-                    "type": "dict",
-                    "schema": {
-                        "id": {
-                            "type": "integer",
-                            "coerce": to_int,
-                            "required": True,
-                            "empty": False,
-                        },
-                        "name": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "line_count": {
-                            "type": "integer",
-                            "coerce": to_int,
-                            "required": True,
-                            "empty": False,
-                        },
-                        "currency_id": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "date": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "date_due": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "state": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "commercial_partner": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "partner": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "partner_shipping": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "price_average": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "price_subtotal": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "price_total": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "salesperson": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "residual": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "sales_agent": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "shipping_country": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "user_currency_price_average": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "user_currency_price_total": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "user_currency_residual": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "type": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "volume": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "weight": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "company": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "country": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "journal": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "move": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "move_type": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "payment_state": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "payment_term": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "product": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "quantity": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "product_template": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "category": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "uom": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                    },
-                },
-            },
-        }

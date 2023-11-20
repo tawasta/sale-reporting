@@ -23,7 +23,6 @@ import logging
 
 # 3. Odoo imports (openerp):
 from odoo.addons.base_rest import restapi
-from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 # 2. Known third party imports:
@@ -51,68 +50,98 @@ class SaleService(Component):
     @restapi.method(
         [(["/report"], "GET")],
         input_param=restapi.CerberusValidator(schema="_validator_report"),
-        output_param=restapi.CerberusValidator(schema="_validator_return_report"),
     )
     def report(self):
         """
-        GET: Get sale analysis data
+        GET: Get sale analysis data. No validator for return
+        since it takes so long to validate with large amount.
 
         :return: JSON
         """
         rows = []
-        records = self.env["sale.report"].search([])
+        # Get data from view directly with SQL
+        sql_query = "select * from sale_report"
+        self.env.cr.execute(sql_query)
+        records = self.env.cr.dictfetchall()
+        _logger.info("Started sale.report REST API, {} records".format(len(records)))
+
+        partners = self.env["res.partner"].with_context(active_test=False).search([])
+        partner_dict = {part.id: part.name for part in partners}
+        users = self.env["res.users"].with_context(active_test=False).search([])
+        users_dict = {user.id: user.name for user in users}
+        companies = self.env["res.company"].search([])
+        company_dict = {comp.id: comp.name for comp in companies}
+        countries = self.env["res.country"].search([])
+        country_dict = {country.id: country.name for country in countries}
+        mediums = self.env["utm.medium"].search([])
+        medium_dict = {medium.id: medium.name for medium in mediums}
+        pricelists = self.env["product.pricelist"].search([])
+        pricelist_dict = {pricelist.id: pricelist.name for pricelist in pricelists}
+        sources = self.env["utm.source"].search([])
+        source_dict = {source.id: source.name for source in sources}
+        products = (
+            self.env["product.product"].with_context(active_test=False).search([])
+        )
+        product_dict = {product.id: product.display_name for product in products}
+        templates = (
+            self.env["product.template"].with_context(active_test=False).search([])
+        )
+        template_dict = {tmpl.id: tmpl.display_name for tmpl in templates}
+        categories = (
+            self.env["product.category"].with_context(active_test=False).search([])
+        )
+        category_dict = {categ.id: categ.name for categ in categories}
+        uoms = self.env["uom.uom"].search([])
+        uom_dict = {uom.id: uom.name for uom in uoms}
+        tags = self.env["sh.product.tag"].search([])
+        tag_dict = {tag.id: tag.name for tag in tags}
+
         for rec in records:
-            commercial = rec.commercial_partner_id
             rows.append(
                 {
-                    "id": rec.id,
-                    "name": rec.name,
-                    "line_count": rec.nbr or 0,
-                    "state": rec.state,
-                    "date": rec.date and rec.date.isoformat() or "",
-                    "confirmation_date": rec.confirmation_date
-                    and rec.confirmation_date
+                    "id": rec.get("id"),
+                    "name": rec.get("name"),
+                    "line_count": rec.get("nbr") or 0,
+                    "state": rec.get("state"),
+                    "date": rec.get("date") and rec.get("date").isoformat() or "",
+                    "commitment_date": rec.get("commitment_date")
+                    and rec.get("commitment_date").isoformat()
                     or "",
-                    "commitment_date": rec.commitment_date
-                    and rec.commitment_date.isoformat()
-                    or "",
-                    "salesperson": rec.user_id and rec.user_id.name or "",
-                    "volume": rec.volume or 0.0,
-                    "weight": rec.weight or 0.0,
-                    "company": rec.company_id.name,
-                    "country": rec.country_id and rec.country_id.name or "",
-                    "commercial_partner": commercial and commercial.display_name or "",
-                    "margin": rec.margin or 0.0,
-                    "medium": rec.medium_id and rec.medium_id.name or "",
-                    "delay": rec.delay or 0.0,
-                    "partner": rec.partner_id and rec.partner_id.name or "",
-                    "pricelist": rec.pricelist_id.with_context(lang="fi_FI").name,
-                    "price_subtotal": rec.price_subtotal or 0.0,
-                    "price_total": rec.price_total or 0.0,
-                    "untaxed_amount_invoiced": rec.untaxed_amount_invoiced or 0.0,
-                    "untaxed_amount_to_invoice": rec.untaxed_amount_to_invoice or 0.0,
-                    "discount": rec.discount or 0.0,
-                    "discount_amount": rec.discount_amount or 0.0,
-                    "amt_invoiced": rec.amt_invoiced or 0.0,
-                    "amt_to_invoice": rec.amt_to_invoice or 0.0,
-                    "qty_delivered": rec.qty_delivered or 0.0,
-                    "qty_invoiced": rec.qty_invoiced or 0.0,
-                    "qty_to_invoice": rec.qty_to_invoice or 0.0,
-                    "source": rec.source_id.name or "",
-                    "product": rec.product_id
-                    and rec.product_id.with_context(lang="fi_FI").display_name
-                    or "",
-                    "product_template": rec.product_tmpl_id
-                    and rec.product_tmpl_id.with_context(lang="fi_FI").display_name
-                    or "",
-                    "category": rec.categ_id
-                    and rec.categ_id.with_context(lang="fi_FI").name
-                    or "",
-                    "uom": rec.product_uom.name or "",
-                    "quantity": rec.product_uom_qty or 0.0,
-                    "product_tag": rec.sh_product_tag_ids
-                    and rec.sh_product_tag_ids.name
-                    or "",
+                    "salesperson": users_dict.get(rec.get("user_id"), ""),
+                    "volume": rec.get("volume"),
+                    "weight": rec.get("weight"),
+                    "company": company_dict.get(rec.get("company_id"), ""),
+                    "country": country_dict.get(rec.get("country_id"), ""),
+                    "commercial_partner": partner_dict.get(
+                        rec.get("commercial_partner_id"), ""
+                    ),
+                    "margin": rec.get("margin"),
+                    "medium": medium_dict.get(rec.get("medium_id"), ""),
+                    "delay": rec.get("delay"),
+                    "partner": partner_dict.get(rec.get("partner_id"), ""),
+                    "pricelist": pricelist_dict.get(rec.get("pricelist_id"), ""),
+                    "price_subtotal": rec.get("price_subtotal") or 0.0,
+                    "price_total": rec.get("price_total") or 0.0,
+                    "untaxed_amount_invoiced": rec.get("untaxed_amount_invoiced")
+                    or 0.0,
+                    "untaxed_amount_to_invoice": rec.get("untaxed_amount_to_invoice")
+                    or 0.0,
+                    "discount": rec.get("discount") or 0.0,
+                    "discount_amount": rec.get("discount_amount") or 0.0,
+                    "amt_invoiced": rec.get("amt_invoiced") or 0.0,
+                    "amt_to_invoice": rec.get("amt_to_invoice") or 0.0,
+                    "qty_delivered": rec.get("qty_delivered") or 0.0,
+                    "qty_invoiced": rec.get("qty_invoiced") or 0.0,
+                    "qty_to_invoice": rec.get("qty_to_invoice") or 0.0,
+                    "source": source_dict.get(rec.get("source_id"), ""),
+                    "product": product_dict.get(rec.get("product_id"), ""),
+                    "product_template": template_dict.get(
+                        rec.get("product_tmpl_id"), ""
+                    ),
+                    "category": category_dict.get(rec.get("categ_id"), ""),
+                    "uom": uom_dict.get(rec.get("product_uom"), ""),
+                    "quantity": rec.get("product_uom_qty") or 0.0,
+                    "product_tag": tag_dict.get(rec.get("sh_product_tag_ids"), ""),
                 }
             )
         res = {
@@ -128,200 +157,3 @@ class SaleService(Component):
     def _validator_report(self):
         """Validator for report endpoint"""
         return {}
-
-    def _validator_return_search(self):
-        """Validator for report return endpoint"""
-        return {
-            "count": {"type": "integer", "required": True},
-            "rows": {
-                "type": "list",
-                "required": True,
-                "schema": {
-                    "type": "dict",
-                    "schema": {
-                        "id": {
-                            "type": "integer",
-                            "coerce": to_int,
-                            "required": True,
-                            "empty": False,
-                        },
-                        "name": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "line_count": {
-                            "type": "integer",
-                            "coerce": to_int,
-                            "required": True,
-                            "empty": False,
-                        },
-                        "state": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "date": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "untaxed_amount_invoiced": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "untaxed_amount_to_invoice": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "salesperson": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "volume": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "weight": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "qty_delivered": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "qty_invoiced": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "qty_to_invoice": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "commercial_partner": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "confirmation_date": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "commitment_date": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "discount": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "discount_amount": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "margin": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "medium": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "delay": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "partner": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "pricelist": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "price_subtotal": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "price_total": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "company": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "country": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "amt_invoiced": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "amt_to_invoice": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "source": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "product": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "product_template": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "category": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "uom": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "quantity": {
-                            "type": "float",
-                            "required": True,
-                            "empty": False,
-                        },
-                        "product_tag": {
-                            "type": "string",
-                            "required": True,
-                            "empty": False,
-                        },
-                    },
-                },
-            },
-        }
