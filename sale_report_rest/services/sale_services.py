@@ -73,12 +73,8 @@ class SaleService(Component):
         company_dict = {comp.id: comp.name for comp in companies}
         countries = self.env["res.country"].search([])
         country_dict = {country.id: country.name for country in countries}
-        mediums = self.env["utm.medium"].search([])
-        medium_dict = {medium.id: medium.name for medium in mediums}
         pricelists = self.env["product.pricelist"].search([])
         pricelist_dict = {pricelist.id: pricelist.name for pricelist in pricelists}
-        sources = self.env["utm.source"].search([])
-        source_dict = {source.id: source.name for source in sources}
         products = (
             self.env["product.product"].with_context(active_test=False).search([])
         )
@@ -93,8 +89,6 @@ class SaleService(Component):
         category_dict = {categ.id: categ.name for categ in categories}
         uoms = self.env["uom.uom"].search([])
         uom_dict = {uom.id: uom.name for uom in uoms}
-        tags = self.env["sh.product.tag"].search([])
-        tag_dict = {tag.id: tag.name for tag in tags}
 
         for rec in records:
             rows.append(
@@ -116,7 +110,6 @@ class SaleService(Component):
                         rec.get("commercial_partner_id"), ""
                     ),
                     "margin": rec.get("margin"),
-                    "medium": medium_dict.get(rec.get("medium_id"), ""),
                     "delay": rec.get("delay"),
                     "partner": partner_dict.get(rec.get("partner_id"), ""),
                     "pricelist": pricelist_dict.get(rec.get("pricelist_id"), ""),
@@ -128,12 +121,9 @@ class SaleService(Component):
                     or 0.0,
                     "discount": rec.get("discount") or 0.0,
                     "discount_amount": rec.get("discount_amount") or 0.0,
-                    "amt_invoiced": rec.get("amt_invoiced") or 0.0,
-                    "amt_to_invoice": rec.get("amt_to_invoice") or 0.0,
                     "qty_delivered": rec.get("qty_delivered") or 0.0,
                     "qty_invoiced": rec.get("qty_invoiced") or 0.0,
                     "qty_to_invoice": rec.get("qty_to_invoice") or 0.0,
-                    "source": source_dict.get(rec.get("source_id"), ""),
                     "product": product_dict.get(rec.get("product_id"), ""),
                     "product_template": template_dict.get(
                         rec.get("product_tmpl_id"), ""
@@ -141,7 +131,6 @@ class SaleService(Component):
                     "category": category_dict.get(rec.get("categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom"), ""),
                     "quantity": rec.get("product_uom_qty") or 0.0,
-                    "product_tag": tag_dict.get(rec.get("sh_product_tag_ids"), ""),
                 }
             )
         res = {
