@@ -59,8 +59,7 @@ class InvoiceService(Component):
         :return: JSON
         """
         rows = []
-        sql_query = "select * from account_invoice_report"
-        self.env.cr.execute(sql_query)
+        self.env.cr.execute(self.env["account.invoice.report"]._table_query)
         records = self.env.cr.dictfetchall()
         _logger.info(
             "Started account.invoice.report REST API, {} records".format(len(records))
@@ -104,9 +103,7 @@ class InvoiceService(Component):
             rows.append(
                 {
                     "id": rec.get("id"),
-                    "name": rec.get("name"),
-                    "line_count": rec.get("nbr_lines", 0),
-                    "currency": currency_dict.get(rec.get("currency_id"), ""),
+                    "currency": currency_dict.get(rec.get("company_currency_id"), ""),
                     "date": rec.get("invoice_date")
                     and rec.get("invoice_date").isoformat()
                     or "",
@@ -121,8 +118,7 @@ class InvoiceService(Component):
                     "price_average": rec.get("price_average", 0.0),
                     "price_subtotal": rec.get("price_subtotal", 0.0),
                     "salesperson": user_dict.get(rec.get("invoice_user_id"), ""),
-                    "residual": rec.get("residual", 0.0),
-                    "type": rec.get("type"),
+                    "type": rec.get("move_type"),
                     "company": company_dict.get(rec.get("company_id"), ""),
                     "country": country_dict.get(rec.get("country_id"), ""),
                     "journal": journal_dict.get(rec.get("journal_id"), ""),
