@@ -15,7 +15,7 @@ addon | version | maintainers | summary
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 14.0.1.0.0 |  | Show sale order calendar start date as commitment date
 [sale_order_customer_late_payment_info](sale_order_customer_late_payment_info/) | 14.0.1.0.1 |  | Filter orders by late payments and show how late they are
 [sale_order_default_my](sale_order_default_my/) | 14.0.1.0.0 |  | Show my sale orders by default
-[sale_order_line_margin_percent](sale_order_line_margin_percent/) | 14.0.1.0.2 |  | Adds margins (percent) in Sales Order lines
+[sale_order_line_margin_percent](sale_order_line_margin_percent/) | 14.0.1.0.3 |  | Adds margins (percent) in Sales Order lines
 [sale_order_margin_in_tree](sale_order_margin_in_tree/) | 14.0.1.0.0 |  | Show the margin field in SO list
 [sale_pivot_report_amount_for_group](sale_pivot_report_amount_for_group/) | 14.0.1.0.0 |  | Adds a group that is used to hide amounts on sale report
 [sale_pivot_report_sh_product_tag](sale_pivot_report_sh_product_tag/) | 14.0.1.0.0 |  | Group by SH product tags in Sale analysis pivot report
