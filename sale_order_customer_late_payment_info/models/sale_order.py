@@ -43,7 +43,7 @@ class SaleOrder(models.Model):
         difference = 0
         late_payments = False
 
-        for invoice in partner.invoice_ids.filtered(lambda o: o.state == "draft"):
+        for invoice in partner.invoice_ids.filtered(lambda o: o.state == "posted"):
             date_due = invoice.invoice_date_due
             if date_due:
                 difference = date_due - now_date
