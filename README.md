@@ -11,6 +11,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[sale_report_hide_header](sale_report_hide_header/) | 17.0.1.0.0 |  | Hides sale report header from sale order report
 [sale_report_title](sale_report_title/) | 17.0.1.0.0 |  | Sale Report Title
 
 [//]: # (end addons)
