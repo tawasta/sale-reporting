@@ -21,7 +21,7 @@
 {
     "name": "Sale Report Title",
     "summary": "Sale Report Title",
-    "version": "14.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
