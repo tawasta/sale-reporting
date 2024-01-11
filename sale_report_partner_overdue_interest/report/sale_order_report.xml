@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath
+            expr='//div[@t-if="doc.validity_date and doc.state in [&apos;draft&apos;, &apos;sent&apos;]"]'
+            position="after"
+        >
+            <div class="col-auto mw-100 mb-2">
+                <strong>Late payment interest:</strong>
+                <p class="m-0" id="overdue-interest-field-value">
+                <t t-if="'overdue_interest' in doc.partner_id.fields_get()">
+                    <span
+                            t-if="doc.partner_id.overdue_interest"
+                            t-field="doc.partner_id.overdue_interest"
+                        />
+                    <span
+                            t-if="not doc.partner_id.overdue_interest"
+                            t-field="doc.company_id.overdue_interest"
+                        />
+                </t>
+                <t t-if="'overdue_interest' not in doc.partner_id.fields_get()">
+                    <span>0,00</span>
+                </t>
+                %
+                </p>
+            </div>
+        </xpath>
+    </template>
+</odoo>
