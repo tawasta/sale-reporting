@@ -92,7 +92,7 @@ class InvoiceService(Component):
                     "city": move.partner_shipping_id.city or "",
                     "zip": move.partner_shipping_id.zip or "",
                     "country": move.partner_shipping_id.country_id.name or "",
-                }
+                },
             }
 
         products = (
@@ -142,8 +142,12 @@ class InvoiceService(Component):
                     "quantity": rec.get("quantity", 0.0),
                     "category": category_dict.get(rec.get("product_categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom_id"), ""),
-                    "order_ref": move_dict.get(rec.get("move_id"), {}).get("order_ref", ""),
-                    "shipping": move_dict.get(rec.get("move_id"), {}).get("shipping", {}),
+                    "order_ref": move_dict.get(rec.get("move_id"), {}).get(
+                        "order_ref", ""
+                    ),
+                    "shipping": move_dict.get(rec.get("move_id"), {}).get(
+                        "shipping", {}
+                    ),
                 }
             )
         res = {

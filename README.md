@@ -56,7 +56,7 @@ addon | version | maintainers | summary
 [sale_report_proforma_info_field](sale_report_proforma_info_field/) | 14.0.1.0.0 |  | Sale reporting - Info field for Proforma print
 [sale_report_quantity_decimals](sale_report_quantity_decimals/) | 14.0.1.0.0 |  | Modifications to Sale Report' decimal precision
 [sale_report_remove_multicompany_rule](sale_report_remove_multicompany_rule/) | 14.0.1.0.0 |  | Sale report remove multi company rule
-[sale_report_rest](sale_report_rest/) | 14.0.1.0.0 |  | REST API for sales analysis and invoice analysis
+[sale_report_rest](sale_report_rest/) | 14.0.1.1.0 |  | REST API for sales analysis and invoice analysis
 [sale_report_show_address](sale_report_show_address/) | 14.0.1.0.0 |  | Always show shipping and invoice address on sale report.
 [sale_report_show_commitment_date](sale_report_show_commitment_date/) | 14.0.1.0.0 |  | Adds commitment date to sale order report
 [sale_report_show_product_name](sale_report_show_product_name/) | 14.0.1.0.0 |  | Always show product on SO print lines
