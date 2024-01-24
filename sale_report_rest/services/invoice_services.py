@@ -79,22 +79,8 @@ class InvoiceService(Component):
         company_dict = {comp.id: comp.name for comp in companies}
         journals = self.env["account.journal"].search([])
         journal_dict = {journal.id: journal.name for journal in journals}
-
         moves = self.env["account.move"].search([])
-        move_dict = {}
-        for move in moves:
-            move_dict[move.id] = {
-                "name": move.name or "",
-                "order_ref": move.sale_id.name or "",
-                "shipping": {
-                    "name": move.partner_shipping_id.name or "",
-                    "street": move.partner_shipping_id.street or "",
-                    "city": move.partner_shipping_id.city or "",
-                    "zip": move.partner_shipping_id.zip or "",
-                    "country": move.partner_shipping_id.country_id.name or "",
-                },
-            }
-
+        move_dict = {move.id: move.name for move in moves}
         products = (
             self.env["product.product"].with_context(active_test=False).search([])
         )
@@ -136,18 +122,12 @@ class InvoiceService(Component):
                     "company": company_dict.get(rec.get("company_id"), ""),
                     "country": country_dict.get(rec.get("country_id"), ""),
                     "journal": journal_dict.get(rec.get("journal_id"), ""),
-                    "move": move_dict.get(rec.get("move_id"), {}).get("name", ""),
+                    "move": move_dict.get(rec.get("move_id"), ""),
                     "product": product_name,
                     "product_template": tmpl_name,
                     "quantity": rec.get("quantity", 0.0),
                     "category": category_dict.get(rec.get("product_categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom_id"), ""),
-                    "order_ref": move_dict.get(rec.get("move_id"), {}).get(
-                        "order_ref", ""
-                    ),
-                    "shipping": move_dict.get(rec.get("move_id"), {}).get(
-                        "shipping", {}
-                    ),
                 }
             )
         res = {
