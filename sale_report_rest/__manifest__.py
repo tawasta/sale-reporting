@@ -21,7 +21,7 @@
 {
     "name": "Sale reports REST API",
     "summary": "REST API for sales analysis and invoice analysis",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.0.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
