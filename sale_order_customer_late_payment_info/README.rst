@@ -6,7 +6,8 @@
 Customer Late payment field and filter
 ======================================
 
-Filter orders by late payments and show how late they are
+Filter orders by late payments and show how late they are.
+Changing a partner on sale order will trigger the computation.
 
 Configuration
 =============
