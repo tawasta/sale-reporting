@@ -89,6 +89,16 @@ class SaleService(Component):
         category_dict = {categ.id: categ.name for categ in categories}
         uoms = self.env["uom.uom"].search([])
         uom_dict = {uom.id: uom.name for uom in uoms}
+        orders = self.env["sale.order"].search([])
+        order_shipping_dict = {}
+        for order in orders:
+            order_shipping_dict[order.id] = {
+                "name": order.partner_shipping_id.name or "",
+                "street": order.partner_shipping_id.street or "",
+                "city": order.partner_shipping_id.city or "",
+                "zip": order.partner_shipping_id.zip or "",
+                "country": order.partner_shipping_id.country_id.name or "",
+            }
 
         for rec in records:
             rows.append(
@@ -131,6 +141,7 @@ class SaleService(Component):
                     "category": category_dict.get(rec.get("categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom"), ""),
                     "quantity": rec.get("product_uom_qty") or 0.0,
+                    "shipping": order_shipping_dict.get(rec.get("order_id")),
                 }
             )
         res = {
