@@ -13,7 +13,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_auditlog_rules](sale_auditlog_rules/) | 14.0.1.1.0 |  | Adds audit log rules for sale order and sale order line
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 14.0.1.0.0 |  | Show sale order calendar start date as commitment date
-[sale_order_customer_late_payment_info](sale_order_customer_late_payment_info/) | 14.0.1.0.4 |  | Filter orders by late payments and show how late they are
+[sale_order_customer_late_payment_info](sale_order_customer_late_payment_info/) | 14.0.1.0.5 |  | Filter orders by late payments and show how late they are
 [sale_order_default_my](sale_order_default_my/) | 14.0.1.0.0 |  | Show my sale orders by default
 [sale_order_line_margin_percent](sale_order_line_margin_percent/) | 14.0.1.0.3 |  | Adds margins (percent) in Sales Order lines
 [sale_order_margin_in_tree](sale_order_margin_in_tree/) | 14.0.1.0.0 |  | Show the margin field in SO list
