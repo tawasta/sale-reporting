@@ -21,8 +21,11 @@ class SaleOrder(models.Model):
             order.onchange_has_late_payments()
         return batch, "Success"
 
-    def cron_has_late_payments(self):
-        orders = self.env["sale.order"].search([]).ids
+    def cron_has_late_payments(self, sales=None):
+        if sales:
+            orders = sales.ids
+        else:
+            orders = self.env["sale.order"].search([]).ids
         batch_orders = list()
         interval = 50
         for x in range(0, len(orders), interval):
@@ -57,3 +60,32 @@ class SaleOrder(models.Model):
             self.has_late_payments = True
         else:
             self.has_late_payments = False
+
+    @api.model
+    def create(self, vals):
+
+        partner = vals.get("partner_id", False)
+        partner = self.env["res.partner"].browse(partner)
+
+        if partner:
+            now_date = fields.Datetime.now().date()
+
+            difference = 0
+            late_payments = False
+
+            for invoice in partner.invoice_ids.filtered(
+                lambda o: o.state == "posted"
+            ).filtered(lambda o: o.payment_state not in ["paid", "reversed"]):
+                date_due = invoice.invoice_date_due
+                if date_due:
+                    difference = date_due - now_date
+
+                if difference and difference.days < 0:
+                    late_payments = True
+
+            if late_payments:
+                vals["has_late_payments"] = True
+            else:
+                vals["has_late_payments"] = False
+
+        return super().create(vals)
