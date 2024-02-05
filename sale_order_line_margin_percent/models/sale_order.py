@@ -13,6 +13,6 @@ class SaleOrder(models.Model):
             for line in order.order_line:
                 if not line.product_id.margin_ignore:
                     margin += line.margin
-                    amount_untaxed += line.product_uom_qty * line.price_unit
+                    amount_untaxed += line.price_subtotal
             order.margin = margin
             order.margin_percent = amount_untaxed and margin / amount_untaxed
