@@ -90,15 +90,39 @@ class SaleService(Component):
         uoms = self.env["uom.uom"].search([])
         uom_dict = {uom.id: uom.name for uom in uoms}
         orders = self.env["sale.order"].search([])
-        order_shipping_dict = {}
+        order_dict = {}
         for order in orders:
-            order_shipping_dict[order.id] = {
-                "name": order.partner_shipping_id.name or "",
-                "street": order.partner_shipping_id.street or "",
-                "city": order.partner_shipping_id.city or "",
-                "zip": order.partner_shipping_id.zip or "",
-                "country": order.partner_shipping_id.country_id.name or "",
+            order_dict[order.id] = {
+                "partner": {
+                    "name": order.partner_id.name or "",
+                    "street": order.partner_id.street or "",
+                    "city": order.partner_id.city or "",
+                    "zip": order.partner_id.zip or "",
+                    "country": order.partner_id.country_id.name or "",
+                },
+                "invoice": {
+                    "name": order.partner_invoice_id.name or "",
+                    "street": order.partner_invoice_id.street or "",
+                    "city": order.partner_invoice_id.city or "",
+                    "zip": order.partner_invoice_id.zip or "",
+                    "country": order.partner_invoice_id.country_id.name or "",
+                },
+                "shipping": {
+                    "name": order.partner_shipping_id.name or "",
+                    "street": order.partner_shipping_id.street or "",
+                    "city": order.partner_shipping_id.city or "",
+                    "zip": order.partner_shipping_id.zip or "",
+                    "country": order.partner_shipping_id.country_id.name or "",
+                },
+                "carriers": [],
             }
+            for car in order.picking_ids:
+                order_dict[order.id]["carriers"].append(
+                    {
+                        "id": car.carrier_id.id,
+                        "name": car.carrier_id.name,
+                    }
+                )
 
         for rec in records:
             rows.append(
@@ -141,7 +165,20 @@ class SaleService(Component):
                     "category": category_dict.get(rec.get("categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom"), ""),
                     "quantity": rec.get("product_uom_qty") or 0.0,
-                    "shipping": order_shipping_dict.get(rec.get("order_id")),
+                    "addresses": {
+                        "partner": order_dict.get(rec.get("order_id"), {}).get(
+                            "partner", {}
+                        ),
+                        "invoice": order_dict.get(rec.get("order_id"), {}).get(
+                            "invoice", {}
+                        ),
+                        "shipping": order_dict.get(rec.get("order_id"), {}).get(
+                            "shipping", {}
+                        ),
+                    },
+                    "carriers": order_dict.get(rec.get("order_id"), {}).get(
+                        "carriers", []
+                    ),
                 }
             )
         res = {
