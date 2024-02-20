@@ -86,6 +86,20 @@ class InvoiceService(Component):
             move_dict[move.id] = {
                 "name": move.name or "",
                 "order_ref": move.sale_id.name or "",
+                "partner": {
+                    "name": move.sale_partner_id.name or "",
+                    "street": move.sale_partner_id.street or "",
+                    "city": move.sale_partner_id.city or "",
+                    "zip": move.sale_partner_id.zip or "",
+                    "country": move.sale_partner_id.country_id.name or "",
+                },
+                "invoice": {
+                    "name": move.partner_id.name or "",
+                    "street": move.partner_id.street or "",
+                    "city": move.partner_id.city or "",
+                    "zip": move.partner_id.zip or "",
+                    "country": move.partner_id.country_id.name or "",
+                },
                 "shipping": {
                     "name": move.partner_shipping_id.name or "",
                     "street": move.partner_shipping_id.street or "",
@@ -93,7 +107,15 @@ class InvoiceService(Component):
                     "zip": move.partner_shipping_id.zip or "",
                     "country": move.partner_shipping_id.country_id.name or "",
                 },
+                "carriers": [],
             }
+            for car in move.stock_picking_ids:
+                move_dict[move.id]["carriers"].append(
+                    {
+                        "id": car.carrier_id.id,
+                        "name": car.carrier_id.name,
+                    }
+                )
 
         products = (
             self.env["product.product"].with_context(active_test=False).search([])
@@ -145,8 +167,19 @@ class InvoiceService(Component):
                     "order_ref": move_dict.get(rec.get("move_id"), {}).get(
                         "order_ref", ""
                     ),
-                    "shipping": move_dict.get(rec.get("move_id"), {}).get(
-                        "shipping", {}
+                    "addresses": {
+                        "partner": move_dict.get(rec.get("move_id"), {}).get(
+                            "partner", {}
+                        ),
+                        "invoice": move_dict.get(rec.get("move_id"), {}).get(
+                            "invoice", {}
+                        ),
+                        "shipping": move_dict.get(rec.get("move_id"), {}).get(
+                            "shipping", {}
+                        ),
+                    },
+                    "carriers": move_dict.get(rec.get("move_id"), {}).get(
+                        "carriers", []
                     ),
                 }
             )
