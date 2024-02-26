@@ -20,6 +20,7 @@
 
 # 1. Standard library imports:
 import logging
+from datetime import datetime
 
 # 3. Odoo imports (openerp):
 from odoo.addons.base_rest import restapi
@@ -37,6 +38,12 @@ from odoo.addons.component.core import Component
 _logger = logging.getLogger(__name__)
 
 
+def to_date(val):
+    if datetime.strptime(val, "%Y-%m-%d"):
+        return val
+    return None
+
+
 class InvoiceService(Component):
     _inherit = "base.rest.service"
     _name = "invoice.service"
@@ -51,19 +58,31 @@ class InvoiceService(Component):
         [(["/report"], "GET")],
         input_param=restapi.CerberusValidator(schema="_validator_report"),
     )
-    def report(self):
+    def report(self, start, end=None):
         """
         GET: Get invoice analysis data. No validator for return
         since it takes so long to validate with large amount.
 
+        :param start: string, start date of return data
+        :param end: string, end date of return data
         :return: JSON
         """
         rows = []
-        self.env.cr.execute(self.env["account.invoice.report"]._table_query)
+
+        move_domain = [
+            ("create_date", ">=", start),
+        ]
+        if end:
+            move_domain.append(("create_date", "<=", end))
+
+        moves = self.env["account.move"].search(move_domain)
+
+        table_query = self.env["account.invoice.report"]._table_query
+        # pylint: disable=E8103
+        table_query = "{} AND move.id IN {}".format(table_query, tuple(moves.ids))
+
+        self.env.cr.execute(table_query)
         records = self.env.cr.dictfetchall()
-        _logger.info(
-            "Started account.invoice.report REST API, {} records".format(len(records))
-        )
 
         currencies = self.env["res.currency"].search([])
         currency_dict = {cur.id: cur.name for cur in currencies}
@@ -80,7 +99,6 @@ class InvoiceService(Component):
         journals = self.env["account.journal"].search([])
         journal_dict = {journal.id: journal.name for journal in journals}
 
-        moves = self.env["account.move"].search([])
         move_dict = {}
         for move in moves:
             move_dict[move.id] = {
@@ -129,6 +147,10 @@ class InvoiceService(Component):
         uom_dict = {uom.id: uom.name for uom in uoms}
 
         for rec in records:
+            # Skip records that aren't in time range
+            if not move_dict.get(rec.get("move_id")):
+                continue
+
             product_name = ""
             tmpl_name = ""
             product = product_dict.get(rec.get("product_id"), "")
@@ -195,4 +217,18 @@ class InvoiceService(Component):
     # Validators
     def _validator_report(self):
         """Validator for report endpoint"""
-        return {}
+        schema = {
+            "start": {
+                "type": "string",
+                "nullable": False,
+                "required": True,
+                "coerce": to_date,
+            },
+            "end": {
+                "type": "string",
+                "nullable": True,
+                "required": False,
+                "coerce": to_date,
+            },
+        }
+        return schema
