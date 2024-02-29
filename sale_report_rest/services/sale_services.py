@@ -20,6 +20,7 @@
 
 # 1. Standard library imports:
 import logging
+from datetime import datetime
 
 # 3. Odoo imports (openerp):
 from odoo.addons.base_rest import restapi
@@ -37,6 +38,12 @@ from odoo.addons.component.core import Component
 _logger = logging.getLogger(__name__)
 
 
+def to_date(val):
+    if datetime.strptime(val, "%Y-%m-%d"):
+        return val
+    return None
+
+
 class SaleService(Component):
     _inherit = "base.rest.service"
     _name = "sale.service"
@@ -51,19 +58,35 @@ class SaleService(Component):
         [(["/report"], "GET")],
         input_param=restapi.CerberusValidator(schema="_validator_report"),
     )
-    def report(self):
+    def report(self, start, end=None):
         """
         GET: Get sale analysis data. No validator for return
         since it takes so long to validate with large amount.
 
+        :param start: string, start date of return data
+        :param end: string, end date of return data
         :return: JSON
         """
         rows = []
+
+        order_domain = [
+            ("create_date", ">=", start),
+        ]
+        if end:
+            order_domain.append(("create_date", "<=", end))
+
+        orders = self.env["sale.order"].search(order_domain)
         # Get data from view directly with SQL
-        sql_query = "select * from sale_report"
+        # pylint: disable=E8103
+        sql_query = """
+            SELECT *
+            FROM sale_report
+            WHERE order_id IN {}
+        """.format(
+            tuple(orders.ids)
+        )
         self.env.cr.execute(sql_query)
         records = self.env.cr.dictfetchall()
-        _logger.info("Started sale.report REST API, {} records".format(len(records)))
 
         partners = self.env["res.partner"].with_context(active_test=False).search([])
         partner_dict = {part.id: part.name for part in partners}
@@ -89,7 +112,7 @@ class SaleService(Component):
         category_dict = {categ.id: categ.name for categ in categories}
         uoms = self.env["uom.uom"].search([])
         uom_dict = {uom.id: uom.name for uom in uoms}
-        orders = self.env["sale.order"].search([])
+
         order_dict = {}
         for order in orders:
             order_dict[order.id] = {
@@ -125,6 +148,10 @@ class SaleService(Component):
                 )
 
         for rec in records:
+            # Skip records that aren't in time range
+            if not order_dict.get(rec.get("order_id")):
+                continue
+
             rows.append(
                 {
                     "id": rec.get("id"),
@@ -193,4 +220,18 @@ class SaleService(Component):
     # Validators
     def _validator_report(self):
         """Validator for report endpoint"""
-        return {}
+        schema = {
+            "start": {
+                "type": "string",
+                "nullable": False,
+                "required": True,
+                "coerce": to_date,
+            },
+            "end": {
+                "type": "string",
+                "nullable": True,
+                "required": False,
+                "coerce": to_date,
+            },
+        }
+        return schema
