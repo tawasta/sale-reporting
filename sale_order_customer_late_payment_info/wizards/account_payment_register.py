@@ -11,6 +11,7 @@ class AccountPaymentRegister(models.TransientModel):
         sale_model = self.env["sale.order"]
         sale_ids = sale_model.search([("partner_id", "=", partner.id)])
 
-        sale_model.cron_has_late_payments(sales=sale_ids)
+        if sale_ids:
+            sale_model.cron_has_late_payments(sales=sale_ids)
 
         return super().action_create_payments()
