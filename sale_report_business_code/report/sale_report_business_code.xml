@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//p[@t-if='doc.partner_id.vat']" position="before">
+            <t t-if="'company_registry' in doc.partner_id.fields_get()">
+                <t t-if="doc.partner_id.company_registry">
+                    Business ID: <span t-field="doc.partner_id.company_registry" />
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>
