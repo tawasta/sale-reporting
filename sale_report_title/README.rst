@@ -2,11 +2,14 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=======================
-Sale Order Report Title
-=======================
+==================================
+Different Sale Order Report Titles
+==================================
 
-Sale Order Report Title
+Set different report title fos sale print:
+* Pro-Forma Invoice
+* Quotation
+* Confirmation of order
 
 Configuration
 =============

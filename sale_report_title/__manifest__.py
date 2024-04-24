@@ -20,14 +20,14 @@
 
 {
     "name": "Sale Report Title",
-    "summary": "Sale Report Title",
-    "version": "17.0.1.0.0",
+    "summary": "Sale Report Title is set",
+    "version": "17.0.1.0.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["sale", "report_element_sizes", "web_report_sfs"],
+    "depends": ["sale", "web_report_sfs"],
     "data": ["report/sale_order_report.xml"],
 }
