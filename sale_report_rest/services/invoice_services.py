@@ -134,6 +134,13 @@ class InvoiceService(Component):
                         "name": car.carrier_id.name,
                     }
                 )
+            if move.sales_agent:
+                move_dict[move.id]["sales_agent"] = {
+                    "id": move.sales_agent.id,
+                    "name": move.sales_agent.name or "",
+                    "invoicing": move.sales_agent.customer_default_invoice_address
+                    or "",
+                }
 
         products = (
             self.env["product.product"].with_context(active_test=False).search([])
@@ -202,6 +209,9 @@ class InvoiceService(Component):
                     },
                     "carriers": move_dict.get(rec.get("move_id"), {}).get(
                         "carriers", []
+                    ),
+                    "sales_agent": move_dict.get(rec.get("move_id"), {}).get(
+                        "sales_agent", {}
                     ),
                 }
             )
