@@ -138,12 +138,28 @@ class SaleService(Component):
                     "country": order.partner_shipping_id.country_id.name or "",
                 },
                 "carriers": [],
+                "tags": [],
             }
             for car in order.picking_ids:
                 order_dict[order.id]["carriers"].append(
                     {
                         "id": car.carrier_id.id,
                         "name": car.carrier_id.name,
+                    }
+                )
+
+            if order.sales_agent:
+                order_dict[order.id]["sales_agent"] = {
+                    "id": order.sales_agent.id,
+                    "name": order.sales_agent.name or "",
+                    "invoicing": order.sales_agent.customer_default_invoice_address
+                    or "",
+                }
+            for tag in order.tag_ids:
+                order_dict[order.id]["tags"].append(
+                    {
+                        "id": tag.id,
+                        "name": tag.name or "",
                     }
                 )
 
@@ -206,6 +222,10 @@ class SaleService(Component):
                     "carriers": order_dict.get(rec.get("order_id"), {}).get(
                         "carriers", []
                     ),
+                    "sales_agent": order_dict.get(rec.get("order_id"), {}).get(
+                        "sales_agent", {}
+                    ),
+                    "tags": order_dict.get(rec.get("order_id"), {}).get("tags", []),
                 }
             )
         res = {
