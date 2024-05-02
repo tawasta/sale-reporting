@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [sale_report_date_paid](sale_report_date_paid/) | 14.0.1.0.0 |  | Show date paid on sale order if there are invoices
 [sale_report_document_term](sale_report_document_term/) | 14.0.1.0.0 |  | Sale Report Document Term
 [sale_report_eori](sale_report_eori/) | 14.0.1.0.0 |  | Adds customers EORI number to Saleorder Report
+[sale_report_general_sales_terms](sale_report_general_sales_terms/) | 14.0.1.0.0 |  | Configurable text for sale/invoice prints
 [sale_report_header_current_date](sale_report_header_current_date/) | 14.0.1.0.0 |  | Sale Order Report - Show current date in header
 [sale_report_header_date_confirmation_date](sale_report_header_date_confirmation_date/) | 14.0.1.0.0 |  | Put confirmation date to sale report header
 [sale_report_hide_business_code](sale_report_hide_business_code/) | 14.0.1.0.0 |  | Sale Order Report - Hide business code
@@ -56,7 +57,7 @@ addon | version | maintainers | summary
 [sale_report_proforma_info_field](sale_report_proforma_info_field/) | 14.0.1.0.0 |  | Sale reporting - Info field for Proforma print
 [sale_report_quantity_decimals](sale_report_quantity_decimals/) | 14.0.1.0.0 |  | Modifications to Sale Report' decimal precision
 [sale_report_remove_multicompany_rule](sale_report_remove_multicompany_rule/) | 14.0.1.0.0 |  | Sale report remove multi company rule
-[sale_report_rest](sale_report_rest/) | 14.0.1.2.0 |  | REST API for sales analysis and invoice analysis
+[sale_report_rest](sale_report_rest/) | 14.0.1.3.0 |  | REST API for sales analysis and invoice analysis
 [sale_report_show_address](sale_report_show_address/) | 14.0.1.0.0 |  | Always show shipping and invoice address on sale report.
 [sale_report_show_commitment_date](sale_report_show_commitment_date/) | 14.0.1.0.0 |  | Adds commitment date to sale order report
 [sale_report_show_product_name](sale_report_show_product_name/) | 14.0.1.0.0 |  | Always show product on SO print lines

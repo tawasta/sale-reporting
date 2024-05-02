@@ -1,7 +1,7 @@
 ##############################################################################
 #
 #    Author: Oy Tawasta OS Technologies Ltd.
-#    Copyright 2023- Oy Tawasta OS Technologies Ltd. (http://www.tawasta.fi)
+#    Copyright 2024 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,22 +19,19 @@
 ##############################################################################
 
 {
-    "name": "Sale reports REST API",
-    "summary": "REST API for sales analysis and invoice analysis",
-    "version": "14.0.1.3.0",
+    "name": "Sale and Invoice Report: Configurable General Sales Terms Text",
+    "summary": "Configurable text for sale/invoice prints",
+    "version": "14.0.1.0.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
-    "data": [],
-    "depends": [
-        "base_rest_auth_api_key",
-        "sale_pivot_report_sh_product_tag",
-        "account_invoice_pivot_report_delivery_address",
-        "account_invoice_pivot_report_delivery_address_country",
-        "account_invoice_pivot_report_product_template",
-        "sales_agent",
-    ],
     "application": False,
     "installable": True,
+    "depends": ["sale", "account"],
+    "data": [
+        "views/res_config_settings.xml",
+        "report/sale_order_report.xml",
+        "report/account_move_report.xml",
+    ],
 }
