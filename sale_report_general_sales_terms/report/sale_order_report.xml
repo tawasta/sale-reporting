@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath
+            expr='//div[@t-if="doc.validity_date and doc.state in [&apos;draft&apos;, &apos;sent&apos;]"]'
+            position="after"
+        >
+            <div
+                class="col-auto mw-100 mb-2"
+                id="general-sales-terms-container"
+                t-if="doc.company_id.sale_report_general_sales_terms_text"
+            >
+
+                <strong>General Sales Terms:</strong>
+
+                <!-- render as hyperlink, if target was provided. otherwise as text -->
+                <p class="m-0">
+                    <t
+                        t-if="doc.company_id.sale_report_general_sales_terms_hyperlink_target"
+                    >
+                        <a
+                            t-att-href="doc.company_id.sale_report_general_sales_terms_hyperlink_target"
+                            target="_blank"
+                        >
+                            <t
+                                t-esc="doc.company_id.sale_report_general_sales_terms_text"
+                            />
+                        </a>
+                    </t>
+                    <t t-else="">
+                        <t
+                            t-esc="doc.company_id.sale_report_general_sales_terms_text"
+                        />
+                    </t>
+                </p>
+            </div>
+        </xpath>
+    </template>
+</odoo>
