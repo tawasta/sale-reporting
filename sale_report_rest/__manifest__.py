@@ -26,7 +26,9 @@
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
-    "data": [],
+    "data": [
+        "views/carrier.xml",
+    ],
     "depends": [
         "base_rest_auth_api_key",
         "sale_pivot_report_sh_product_tag",
