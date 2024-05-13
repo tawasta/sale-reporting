@@ -134,12 +134,16 @@ class InvoiceService(Component):
                         carrier_id = car.carrier_id.id
                         carrier_name = car.carrier_id.name
                     else:
-                        other_carrier = self.env['delivery.carrier'].search([('is_alternative_carrier', '=', True)], limit=1)
+                        other_carrier = self.env["delivery.carrier"].search(
+                            [("is_alternative_carrier", "=", True)], limit=1
+                        )
                         if other_carrier:
                             carrier_name = other_carrier.name
                             carrier_id = other_carrier.id
                 else:
-                    other_carrier = self.env['delivery.carrier'].search([('is_alternative_carrier', '=', True)], limit=1)
+                    other_carrier = self.env["delivery.carrier"].search(
+                        [("is_alternative_carrier", "=", True)], limit=1
+                    )
                     if other_carrier:
                         carrier_name = other_carrier.name
                         carrier_id = other_carrier.id
