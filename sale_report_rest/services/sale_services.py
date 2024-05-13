@@ -138,13 +138,32 @@ class SaleService(Component):
                     "country": order.partner_shipping_id.country_id.name or "",
                 },
                 "carriers": [],
-                "tags": [],
             }
             for car in order.picking_ids:
+                if car.carrier_id:
+                    if car.carrier_id.is_default_carrier:
+                        carrier_id = car.carrier_id.id
+                        carrier_name = car.carrier_id.name
+                    else:
+                        other_carrier = self.env["delivery.carrier"].search(
+                            [("is_alternative_carrier", "=", True)], limit=1
+                        )
+                        if other_carrier:
+                            carrier_name = other_carrier.name
+                            carrier_id = other_carrier.id
+
+                else:
+                    other_carrier = self.env["delivery.carrier"].search(
+                        [("is_alternative_carrier", "=", True)], limit=1
+                    )
+                    if other_carrier:
+                        carrier_name = other_carrier.name
+                        carrier_id = other_carrier.id
+
                 order_dict[order.id]["carriers"].append(
                     {
-                        "id": car.carrier_id.id,
-                        "name": car.carrier_id.name,
+                        "id": carrier_id,
+                        "name": carrier_name,
                     }
                 )
 
@@ -155,13 +174,6 @@ class SaleService(Component):
                     "invoicing": order.sales_agent.customer_default_invoice_address
                     or "",
                 }
-            for tag in order.tag_ids:
-                order_dict[order.id]["tags"].append(
-                    {
-                        "id": tag.id,
-                        "name": tag.name or "",
-                    }
-                )
 
         for rec in records:
             # Skip records that aren't in time range
@@ -225,7 +237,6 @@ class SaleService(Component):
                     "sales_agent": order_dict.get(rec.get("order_id"), {}).get(
                         "sales_agent", {}
                     ),
-                    "tags": order_dict.get(rec.get("order_id"), {}).get("tags", []),
                 }
             )
         res = {
