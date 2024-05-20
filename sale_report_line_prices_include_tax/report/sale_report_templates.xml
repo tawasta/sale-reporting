@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- oca-hooks:disable=xml-dangerous-qweb-replace-low-priority -->
+<odoo>
+    <template
+        id="report_saleorder_document_hide_salesperson"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <!-- swap price_subtotal field to price_total -->
+        <xpath expr="//td[@name='td_subtotal']" position="replace">
+            <td
+                t-if="not line.is_downpayment"
+                name="td_subtotal"
+                class="text-end o_price_total"
+            >
+                <span t-field="line.price_total" />
+            </td>
+        </xpath>
+    </template>
+</odoo>
