@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_hide_salesperson"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <!-- Add a class so we can target it specifically. the ID "informations"
+        is used across multiple reports. -->
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="class">row mt-4 mb-2 sale-order-informations</attribute>
+        </xpath>
+    </template>
+</odoo>
