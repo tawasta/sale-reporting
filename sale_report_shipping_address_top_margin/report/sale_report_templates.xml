@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_hide_salesperson"
+        inherit_id="sale.report_saleorder_document"
+    >
+
+        <!-- add a line break between invoicing and shipping addresses -->
+        <xpath
+            expr="//t[@t-if='doc.partner_shipping_id != doc.partner_invoice_id']/strong"
+            position="before"
+        >
+            <br />
+        </xpath>
+    </template>
+</odoo>
