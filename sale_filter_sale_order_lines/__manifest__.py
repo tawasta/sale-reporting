@@ -29,7 +29,6 @@
     "application": False,
     "installable": True,
     "depends": ["sale"],
-    "data": ["views/sale_order_line.xml",
-             "security/ir.model.access.csv"],
-    'post_init_hook': 'create_cron_job'
+    "data": ["views/sale_order_line.xml", "security/ir.model.access.csv"],
+    "post_init_hook": "create_cron_job",
 }
