@@ -154,19 +154,33 @@ class InvoiceService(Component):
                         "name": carrier_name,
                     }
                 )
-            if move.sales_agent:
-                move_dict[move.id]["sales_agent"] = {
-                    "id": move.sales_agent.id,
-                    "name": move.sales_agent.name or "",
-                    "invoicing": move.sales_agent.customer_default_invoice_address
-                    or "",
-                }
+
+            if not move.stock_picking_ids:
+                move_dict[move.id]["carriers"].append(
+                    {
+                        "id": 0,
+                        "name": "",
+                    }
+                )
+
+            move_dict[move.id]["sales_agent"] = {
+                "id": move.sales_agent.id or 0,
+                "name": move.sales_agent.name or "",
+                "invoicing": move.sales_agent.customer_default_invoice_address or "",
+            }
 
             for tag in move.sale_id.tag_ids:
                 move_dict[move.id]["tags"].append(
                     {
                         "id": tag.id,
                         "name": tag.name or "",
+                    }
+                )
+            if not move.sale_id.tag_ids:
+                move_dict[move.id]["tags"].append(
+                    {
+                        "id": 0,
+                        "name": "",
                     }
                 )
 
