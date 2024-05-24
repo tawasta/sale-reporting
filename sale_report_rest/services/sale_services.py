@@ -166,14 +166,19 @@ class SaleService(Component):
                         "name": carrier_name,
                     }
                 )
+            if not order.picking_ids:
+                order_dict[order.id]["carriers"].append(
+                    {
+                        "id": 0,
+                        "name": "",
+                    }
+                )
 
-            if order.sales_agent:
-                order_dict[order.id]["sales_agent"] = {
-                    "id": order.sales_agent.id,
-                    "name": order.sales_agent.name or "",
-                    "invoicing": order.sales_agent.customer_default_invoice_address
-                    or "",
-                }
+            order_dict[order.id]["sales_agent"] = {
+                "id": order.sales_agent.id or 0,
+                "name": order.sales_agent.name or "",
+                "invoicing": order.sales_agent.customer_default_invoice_address or "",
+            }
 
         for rec in records:
             # Skip records that aren't in time range
