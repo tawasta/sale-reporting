@@ -17,6 +17,27 @@ class OrderBookLog(models.Model):
         store=True,
     )
 
+    currency_id = fields.Many2one(
+        "res.currency",
+        string="Currency",
+        related="sale_order_line.currency_id",
+        readonly=True,
+        store=True,
+    )
+
+    untaxed_total = fields.Monetary(
+        string="Untaxed Total",
+        compute="_compute_untaxed_amount",
+        currency_field="currency_id",
+        readonly=True,
+        store=True,
+    )
+
+    @api.depends("sale_order_line")
+    def _compute_untaxed_amount(self):
+        for rec in self:
+            rec.untaxed_total = rec.sale_order_line.price_subtotal
+
     def filter_order_lines(self):
         domain = [
             ("untaxed_amount_to_invoice", ">", 0),

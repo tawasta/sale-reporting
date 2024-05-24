@@ -7,6 +7,7 @@
             <tree>
                 <field name="datetime" />
                 <field name="sale_order_line" />
+                <field name="untaxed_total" />
             </tree>
         </field>
     </record>
@@ -19,6 +20,7 @@
                 <group>
                     <field name="datetime" />
                     <field name="sale_order_line" />
+                    <field name="untaxed_total" />
                 </group>
             </form>
         </field>
