@@ -89,8 +89,6 @@ class InvoiceService(Component):
 
         currencies = self.env["res.currency"].search([])
         currency_dict = {cur.id: cur.name for cur in currencies}
-        partners = self.env["res.partner"].with_context(active_test=False).search([])
-        partner_dict = {part.id: part.name for part in partners}
         users = self.env["res.users"].with_context(active_test=False).search([])
         user_dict = {user.id: user.name for user in users}
         partners = self.env["res.partner"].with_context(active_test=False).search([])
