@@ -67,6 +67,7 @@ class InvoiceService(Component):
         :param end: string, end date of return data
         :return: JSON
         """
+        _logger.info("Generating invoice report")
         rows = []
 
         move_domain = [
@@ -76,6 +77,7 @@ class InvoiceService(Component):
             move_domain.append(("create_date", "<=", end))
 
         moves = self.env["account.move"].search(move_domain)
+        _logger.info("Found {} moves".format(len(moves)))
 
         table_query = self.env["account.invoice.report"]._table_query
         # pylint: disable=E8103
@@ -83,6 +85,7 @@ class InvoiceService(Component):
 
         self.env.cr.execute(table_query)
         records = self.env.cr.dictfetchall()
+        _logger.info("Found {} records".format(len(records)))
 
         currencies = self.env["res.currency"].search([])
         currency_dict = {cur.id: cur.name for cur in currencies}
@@ -98,6 +101,8 @@ class InvoiceService(Component):
         company_dict = {comp.id: comp.name for comp in companies}
         journals = self.env["account.journal"].search([])
         journal_dict = {journal.id: journal.name for journal in journals}
+
+        _logger.info("Generating move dict")
 
         move_dict = {}
         for move in moves:
@@ -184,6 +189,8 @@ class InvoiceService(Component):
                     }
                 )
 
+        _logger.info("Move dict generated")
+
         products = (
             self.env["product.product"].with_context(active_test=False).search([])
         )
@@ -195,6 +202,7 @@ class InvoiceService(Component):
         uoms = self.env["uom.uom"].search([])
         uom_dict = {uom.id: uom.name for uom in uoms}
 
+        _logger.info("Generating response")
         for rec in records:
             # Skip records that aren't in time range
             if not move_dict.get(rec.get("move_id")):
@@ -258,6 +266,9 @@ class InvoiceService(Component):
                     "tags": move_dict.get(rec.get("move_id"), {}).get("tags", []),
                 }
             )
+
+        _logger.info("Response generated")
+
         res = {
             "count": len(rows),
             "rows": rows,
