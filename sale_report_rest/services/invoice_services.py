@@ -79,6 +79,9 @@ class InvoiceService(Component):
         moves = self.env["account.move"].search(move_domain)
         _logger.info("Found {} moves".format(len(moves)))
 
+        if not moves:
+            return {"error": "No invoices found"}
+
         table_query = self.env["account.invoice.report"]._table_query
         # pylint: disable=E8103
         table_query = "{} AND move.id IN {}".format(table_query, tuple(moves.ids))

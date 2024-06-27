@@ -78,6 +78,10 @@ class SaleService(Component):
 
         orders = self.env["sale.order"].search(order_domain)
         _logger.info("Found {} orders".format(len(orders)))
+
+        if not orders:
+            return {"error": "No sale orders found"}
+
         # Get data from view directly with SQL
         # pylint: disable=E8103
         sql_query = """
