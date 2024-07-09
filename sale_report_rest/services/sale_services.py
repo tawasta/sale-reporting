@@ -67,6 +67,7 @@ class SaleService(Component):
         :param end: string, end date of return data
         :return: JSON
         """
+        _logger.info("Generating sale report")
         rows = []
 
         order_domain = [
@@ -76,6 +77,11 @@ class SaleService(Component):
             order_domain.append(("create_date", "<=", end))
 
         orders = self.env["sale.order"].search(order_domain)
+        _logger.info("Found {} orders".format(len(orders)))
+
+        if not orders:
+            return {"error": "No sale orders found"}
+
         # Get data from view directly with SQL
         # pylint: disable=E8103
         sql_query = """
@@ -87,6 +93,7 @@ class SaleService(Component):
         )
         self.env.cr.execute(sql_query)
         records = self.env.cr.dictfetchall()
+        _logger.info("Found {} records".format(len(records)))
 
         partners = self.env["res.partner"].with_context(active_test=False).search([])
         partner_dict = {part.id: part.name for part in partners}
@@ -112,6 +119,8 @@ class SaleService(Component):
         category_dict = {categ.id: categ.name for categ in categories}
         uoms = self.env["uom.uom"].search([])
         uom_dict = {uom.id: uom.name for uom in uoms}
+
+        _logger.info("Generating order dict")
 
         order_dict = {}
         for order in orders:
@@ -180,6 +189,9 @@ class SaleService(Component):
                 "invoicing": order.sales_agent.customer_default_invoice_address or "",
             }
 
+        _logger.info("Order dict generated")
+
+        _logger.info("Generating response")
         for rec in records:
             # Skip records that aren't in time range
             if not order_dict.get(rec.get("order_id")):
@@ -244,6 +256,9 @@ class SaleService(Component):
                     ),
                 }
             )
+
+        _logger.info("Response generated")
+
         res = {
             "count": len(rows),
             "rows": rows,
