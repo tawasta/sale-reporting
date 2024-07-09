@@ -12,7 +12,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_auditlog_rules](sale_auditlog_rules/) | 14.0.1.1.0 |  | Adds audit log rules for sale order and sale order line
-[sale_filter_sale_order_lines](sale_filter_sale_order_lines/) | 14.0.1.0.0 |  | Filter sale.order.line records and display them in list view
+[sale_filter_sale_order_lines](sale_filter_sale_order_lines/) | 14.0.1.1.0 |  | Filter sale.order.line records and display them in list view
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 14.0.1.0.0 |  | Show sale order calendar start date as commitment date
 [sale_order_customer_late_payment_info](sale_order_customer_late_payment_info/) | 14.0.1.0.7 |  | Filter orders by late payments and show how late they are
 [sale_order_default_my](sale_order_default_my/) | 14.0.1.0.0 |  | Show my sale orders by default

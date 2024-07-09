@@ -21,7 +21,7 @@
 {
     "name": "Sale Filter Sale Order Lines",
     "summary": "Filter sale.order.line records and display them in list view",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "category": "Sales",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
