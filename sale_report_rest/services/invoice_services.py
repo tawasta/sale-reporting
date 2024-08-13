@@ -106,7 +106,7 @@ class InvoiceService(Component):
         _logger.info("Generating move dict")
 
         move_dict = {}
-        for move in moves:
+        for move in moves.sorted(key=lambda t: t.name):
             move_dict[move.id] = {
                 "name": move.name or "",
                 "order_ref": move.sale_id.name or "",
@@ -134,7 +134,7 @@ class InvoiceService(Component):
                 "carriers": [],
                 "tags": [],
             }
-            for car in move.stock_picking_ids:
+            for car in move.picking_ids:
                 if car.carrier_id:
                     if car.carrier_id.is_default_carrier:
                         carrier_id = car.carrier_id.id
@@ -161,7 +161,7 @@ class InvoiceService(Component):
                     }
                 )
 
-            if not move.stock_picking_ids:
+            if not move.picking_ids:
                 move_dict[move.id]["carriers"].append(
                     {
                         "id": 0,
