@@ -21,7 +21,7 @@
 {
     "name": "Sale reports REST API",
     "summary": "REST API for sales analysis and invoice analysis",
-    "version": "14.0.1.4.0",
+    "version": "14.0.1.5.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
@@ -36,6 +36,7 @@
         "account_invoice_pivot_report_delivery_address_country",
         "account_invoice_pivot_report_product_template",
         "sales_agent",
+        "stock_picking_invoice_link",
     ],
     "application": False,
     "installable": True,
