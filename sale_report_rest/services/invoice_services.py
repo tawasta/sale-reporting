@@ -54,6 +54,7 @@ class InvoiceService(Component):
         Access to the invoice services is only allowed to authenticated users.
     """
 
+    # flake8: noqa: C901
     @restapi.method(
         [(["/report"], "GET")],
         input_param=restapi.CerberusValidator(schema="_validator_report"),
@@ -106,10 +107,19 @@ class InvoiceService(Component):
         _logger.info("Generating move dict")
 
         move_dict = {}
-        for move in moves.sorted(key=lambda t: t.name):
+
+        for move in moves:
+            order_refs = []
+            # Update invoice lines can each have different orders
+            # make order instances to be list of strings
+            for so in move.invoice_line_ids:
+                so_ref = so.sale_order_id and so.sale_order_id.name or ""
+                if so_ref and so_ref not in order_refs:
+                    order_refs.append(so_ref)
+
             move_dict[move.id] = {
                 "name": move.name or "",
-                "order_ref": move.sale_id.name or "",
+                "order_refs": order_refs,
                 "partner": {
                     "name": move.sale_partner_id.name or "",
                     "street": move.sale_partner_id.street or "",
@@ -244,8 +254,8 @@ class InvoiceService(Component):
                     "quantity": rec.get("quantity", 0.0),
                     "category": category_dict.get(rec.get("product_categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom_id"), ""),
-                    "order_ref": move_dict.get(rec.get("move_id"), {}).get(
-                        "order_ref", ""
+                    "order_refs": move_dict.get(rec.get("move_id"), {}).get(
+                        "order_refs", []
                     ),
                     "addresses": {
                         "partner": move_dict.get(rec.get("move_id"), {}).get(
