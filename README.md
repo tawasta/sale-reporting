@@ -12,6 +12,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_auditlog_rules](sale_auditlog_rules/) | 17.0.1.0.0 |  | Adds audit log rules for sale order and sale order line
+[sale_order_margin_in_tree](sale_order_margin_in_tree/) | 17.0.1.0.0 |  | Show the margin field in SO list
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_customer_title](sale_report_customer_title/) | 17.0.1.0.0 |  | Add title to customer address
 [sale_report_hide_header](sale_report_hide_header/) | 17.0.1.0.0 |  | Hides sale report header from sale order report
