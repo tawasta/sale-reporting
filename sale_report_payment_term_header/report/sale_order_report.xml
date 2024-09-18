@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//span[@t-field='doc.user_id']/.." position="before">
+            <div
+                t-if="doc.payment_term_id.note"
+                name="payment-term-id"
+                class="col-auto col-3 mw-100 mb-2"
+            >
+                <strong>Payment Terms:</strong>
+                <p class="m-0" t-field="doc.payment_term_id.note" />
+            </div>
+        </xpath>
+    </template>
+</odoo>
