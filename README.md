@@ -26,6 +26,7 @@ addon | version | maintainers | summary
 [sale_report_payment_term_header](sale_report_payment_term_header/) | 17.0.1.0.0 |  | Sale Order report - Payment term in header
 [sale_report_shipping_address_top_margin](sale_report_shipping_address_top_margin/) | 17.0.1.0.0 |  | Add margin between invoicing and shipping addresses for readability
 [sale_report_show_address](sale_report_show_address/) | 17.0.1.0.0 |  | Always show shipping and invoice address on sale report.
+[sale_report_show_commitment_date](sale_report_show_commitment_date/) | 17.0.1.0.0 |  | Adds commitment date to sale order report
 [sale_report_title](sale_report_title/) | 17.0.1.0.1 |  | Sale Report Title is set
 
 [//]: # (end addons)
