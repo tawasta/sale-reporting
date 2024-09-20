@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_incoterm_name"
+        inherit_id="sale_stock.report_saleorder_document_inherit_sale_stock"
+    >
+        <xpath expr="//span[@t-field='doc.incoterm.code']" position="attributes">
+            <attribute name="t-field">doc.incoterm.name</attribute>
+        </xpath>
+
+        <xpath expr="//p[@t-field='doc.incoterm.code']" position="attributes">
+            <attribute name="t-field">doc.incoterm.name</attribute>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath
+            expr="//div[@name='incoterm_id']//p[@t-if='o.incoterm_location']//span[@t-field='o.invoice_incoterm_id.code']"
+            position="attributes"
+        >
+            <attribute name="t-field">o.invoice_incoterm_id.name</attribute>
+        </xpath>
+
+        <xpath
+            expr="//div[@name='incoterm_id']//span[@t-else='']"
+            position="attributes"
+        >
+            <attribute name="t-field">o.invoice_incoterm_id.name</attribute>
+        </xpath>
+    </template>
+</odoo>
