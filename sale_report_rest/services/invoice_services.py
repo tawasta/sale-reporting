@@ -72,199 +72,134 @@ class InvoiceService(Component):
 
         move_domain = [
             ("create_date", ">=", start),
+            ("exclude_from_invoice_tab", "=", False),
+            ("move_id.move_type", "in", ["out_invoice", "out_refund"]),
         ]
         if end:
             move_domain.append(("create_date", "<=", end))
 
-        moves = self.env["account.move"].search(move_domain)
-        _logger.info("Found {} moves".format(len(moves)))
+        move_lines = self.env["account.move.line"].search(move_domain)
+        _logger.info("Found {} move lines".format(len(move_lines)))
 
-        if not moves:
-            return {"error": "No invoices found"}
+        if not move_lines:
+            return {"error": "No invoice lines found"}
 
-        table_query = self.env["account.invoice.report"]._table_query
-        # pylint: disable=E8103
-        table_query = "{} AND move.id IN {}".format(table_query, tuple(moves.ids))
+        other_carrier = self.env["delivery.carrier"].search(
+            [("is_alternative_carrier", "=", True)], limit=1
+        )
+        _logger.info("Generating response")
+        for line in move_lines:
+            product_name = line.product_id.display_name or ""
+            tmpl_name = line.product_tmpl_id.display_name or ""
 
-        self.env.cr.execute(table_query)
-        records = self.env.cr.dictfetchall()
-        _logger.info("Found {} records".format(len(records)))
+            tag_ids = []
+            for tag in line.sale_order_id.tag_ids:
+                tag_ids.append(
+                    {
+                        "id": tag.id,
+                        "name": tag.name,
+                    }
+                )
+            if not line.sale_order_id.tag_ids:
+                tag_ids.append(
+                    {
+                        "id": 0,
+                        "name": "",
+                    }
+                )
 
-        currencies = self.env["res.currency"].search([])
-        currency_dict = {cur.id: cur.name for cur in currencies}
-        users = self.env["res.users"].with_context(active_test=False).search([])
-        user_dict = {user.id: user.name for user in users}
-        partners = self.env["res.partner"].with_context(active_test=False).search([])
-        partner_dict = {part.id: part.name for part in partners}
-        countries = self.env["res.country"].search([])
-        country_dict = {country.id: country.name for country in countries}
-        companies = self.env["res.company"].search([])
-        company_dict = {comp.id: comp.name for comp in companies}
-        journals = self.env["account.journal"].search([])
-        journal_dict = {journal.id: journal.name for journal in journals}
-
-        _logger.info("Generating move dict")
-
-        move_dict = {}
-        for move in moves.sorted(key=lambda t: t.name):
-            move_dict[move.id] = {
-                "name": move.name or "",
-                "order_ref": move.sale_id.name or "",
-                "partner": {
-                    "name": move.sale_partner_id.name or "",
-                    "street": move.sale_partner_id.street or "",
-                    "city": move.sale_partner_id.city or "",
-                    "zip": move.sale_partner_id.zip or "",
-                    "country": move.sale_partner_id.country_id.name or "",
-                },
-                "invoice": {
-                    "name": move.partner_id.name or "",
-                    "street": move.partner_id.street or "",
-                    "city": move.partner_id.city or "",
-                    "zip": move.partner_id.zip or "",
-                    "country": move.partner_id.country_id.name or "",
-                },
-                "shipping": {
-                    "name": move.partner_shipping_id.name or "",
-                    "street": move.partner_shipping_id.street or "",
-                    "city": move.partner_shipping_id.city or "",
-                    "zip": move.partner_shipping_id.zip or "",
-                    "country": move.partner_shipping_id.country_id.name or "",
-                },
-                "carriers": [],
-                "tags": [],
-            }
-            for car in move.picking_ids:
+            carriers = []
+            for car in line.move_id.picking_ids:
                 if car.carrier_id:
                     if car.carrier_id.is_default_carrier:
                         carrier_id = car.carrier_id.id
                         carrier_name = car.carrier_id.name
-                    else:
-                        other_carrier = self.env["delivery.carrier"].search(
-                            [("is_alternative_carrier", "=", True)], limit=1
-                        )
-                        if other_carrier:
-                            carrier_name = other_carrier.name
-                            carrier_id = other_carrier.id
-                else:
-                    other_carrier = self.env["delivery.carrier"].search(
-                        [("is_alternative_carrier", "=", True)], limit=1
-                    )
-                    if other_carrier:
+                    elif other_carrier:
                         carrier_name = other_carrier.name
                         carrier_id = other_carrier.id
+                elif other_carrier:
+                    carrier_name = other_carrier.name
+                    carrier_id = other_carrier.id
 
-                move_dict[move.id]["carriers"].append(
+                carriers.append(
                     {
                         "id": carrier_id,
                         "name": carrier_name,
                     }
                 )
 
-            if not move.picking_ids:
-                move_dict[move.id]["carriers"].append(
+            if not line.move_id.picking_ids:
+                carriers.append(
                     {
                         "id": 0,
                         "name": "",
                     }
                 )
-
-            move_dict[move.id]["sales_agent"] = {
-                "id": move.sales_agent.id or 0,
-                "name": move.sales_agent.name or "",
-                "invoicing": move.sales_agent.customer_default_invoice_address or "",
-            }
-
-            for tag in move.sale_id.tag_ids:
-                move_dict[move.id]["tags"].append(
-                    {
-                        "id": tag.id,
-                        "name": tag.name or "",
-                    }
-                )
-            if not move.sale_id.tag_ids:
-                move_dict[move.id]["tags"].append(
-                    {
-                        "id": 0,
-                        "name": "",
-                    }
-                )
-
-        _logger.info("Move dict generated")
-
-        products = (
-            self.env["product.product"].with_context(active_test=False).search([])
-        )
-        product_dict = {product.id: product for product in products}
-        categories = (
-            self.env["product.category"].with_context(active_test=False).search([])
-        )
-        category_dict = {categ.id: categ.name for categ in categories}
-        uoms = self.env["uom.uom"].search([])
-        uom_dict = {uom.id: uom.name for uom in uoms}
-
-        _logger.info("Generating response")
-        for rec in records:
-            # Skip records that aren't in time range
-            if not move_dict.get(rec.get("move_id")):
-                continue
-
-            product_name = ""
-            tmpl_name = ""
-            product = product_dict.get(rec.get("product_id"), "")
-            if product:
-                product_name = product.display_name
-                tmpl_name = product.product_tmpl_id.display_name
 
             rows.append(
                 {
-                    "id": rec.get("id"),
-                    "currency": currency_dict.get(rec.get("company_currency_id"), ""),
-                    "date": rec.get("invoice_date")
-                    and rec.get("invoice_date").isoformat()
+                    "id": line.id,
+                    "currency": line.currency_id.name,
+                    "date": line.create_date.date().isoformat() or "",
+                    "date_due": line.date_invoice
+                    and line.date_invoice.isoformat()
                     or "",
-                    "date_due": rec.get("invoice_date_due")
-                    and rec.get("invoice_date_due").isoformat()
-                    or "",
-                    "state": rec.get("state"),
-                    "commercial_partner": partner_dict.get(
-                        rec.get("commercial_partner_id"), ""
-                    ),
-                    "partner": partner_dict.get(rec.get("partner_id"), ""),
-                    "price_average": rec.get("price_average", 0.0),
-                    "price_subtotal": rec.get("price_subtotal", 0.0),
-                    "salesperson": user_dict.get(rec.get("invoice_user_id"), ""),
-                    "type": rec.get("move_type"),
-                    "company": company_dict.get(rec.get("company_id"), ""),
-                    "country": country_dict.get(rec.get("country_id"), ""),
-                    "journal": journal_dict.get(rec.get("journal_id"), ""),
-                    "move": move_dict.get(rec.get("move_id"), {}).get("name", ""),
+                    "state": line.state,
+                    "commercial_partner": line.commercial_partner_id.name,
+                    "partner": line.move_partner_id.name,
+                    "price_unit": line.price_unit or 0.0,
+                    "price_subtotal": line.price_unit or 0.0,
+                    "price_total": line.price_total or 0.0,
+                    "salesperson": line.move_id.invoice_user_id.name or "",
+                    "type": line.move_id.move_type or "",
+                    "company": line.company_id.name or "",
+                    "country": line.move_id.src_dest_country_id.name or "",
+                    "journal": line.journal_id.name or "",
+                    "move": line.move_id.name or "",
+                    "move_id": line.move_id.id or 0,
                     "product": product_name,
                     "product_template": tmpl_name,
-                    "quantity": rec.get("quantity", 0.0),
-                    "category": category_dict.get(rec.get("product_categ_id"), ""),
-                    "uom": uom_dict.get(rec.get("product_uom_id"), ""),
-                    "order_ref": move_dict.get(rec.get("move_id"), {}).get(
-                        "order_ref", ""
-                    ),
+                    "quantity": line.quantity or 0.0,
+                    "category": line.product_categ_id.name or "",
+                    "uom": line.product_uom_id.name or "",
+                    "order_ref": line.sale_order_id and line.sale_order_id.name or "",
                     "addresses": {
-                        "partner": move_dict.get(rec.get("move_id"), {}).get(
-                            "partner", {}
-                        ),
-                        "invoice": move_dict.get(rec.get("move_id"), {}).get(
-                            "invoice", {}
-                        ),
-                        "shipping": move_dict.get(rec.get("move_id"), {}).get(
-                            "shipping", {}
-                        ),
+                        "partner": {
+                            "name": line.move_id.sale_partner_id.name or "",
+                            "street": line.move_id.sale_partner_id.street or "",
+                            "city": line.move_id.sale_partner_id.city or "",
+                            "zip": line.move_id.sale_partner_id.zip or "",
+                            "country": line.move_id.sale_partner_id.country_id.name
+                            or "",
+                        },
+                        "invoice": {
+                            "name": line.move_id.partner_id.name or "",
+                            "street": line.move_id.partner_id.street or "",
+                            "city": line.move_id.partner_id.city or "",
+                            "zip": line.move_id.partner_id.zip or "",
+                            "country": line.move_id.partner_id.country_id.name or "",
+                        },
+                        "shipping": {
+                            "name": line.move_id.partner_shipping_id.name or "",
+                            "street": line.move_id.partner_shipping_id.street or "",
+                            "city": line.move_id.partner_shipping_id.city or "",
+                            "zip": line.move_id.partner_shipping_id.zip or "",
+                            "country": line.move_id.partner_shipping_id.country_id.name
+                            or "",
+                        },
                     },
-                    "carriers": move_dict.get(rec.get("move_id"), {}).get(
-                        "carriers", []
-                    ),
-                    "sales_agent": move_dict.get(rec.get("move_id"), {}).get(
-                        "sales_agent", {}
-                    ),
-                    "tags": move_dict.get(rec.get("move_id"), {}).get("tags", []),
+                    "carriers": carriers,
+                    "sales_agent": {
+                        "id": line.sales_agent.id or 0,
+                        "name": line.sales_agent.name or "",
+                        "invoicing": line.sales_agent.customer_default_invoice_address
+                        or "",
+                    },
+                    "tags": tag_ids,
+                    "sale_type": line.sale_order_id
+                    and line.sale_order_id.sale_type
+                    and line.sale_order_id.sale_type.code
+                    or "",
                 }
             )
 
