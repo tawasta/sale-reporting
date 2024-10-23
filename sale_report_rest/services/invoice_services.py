@@ -198,6 +198,7 @@ class InvoiceService(Component):
                     "tags": tag_ids,
                     "sale_type": line.sale_order_id
                     and line.sale_order_id.sale_type
+                    and line.sale_order_id.sale_type.code
                     or "",
                 }
             )
