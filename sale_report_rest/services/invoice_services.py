@@ -71,12 +71,12 @@ class InvoiceService(Component):
         rows = []
 
         move_domain = [
-            ("create_date", ">=", start),
+            ("date_invoice", ">=", start),
             ("exclude_from_invoice_tab", "=", False),
             ("move_id.move_type", "in", ["out_invoice", "out_refund"]),
         ]
         if end:
-            move_domain.append(("create_date", "<=", end))
+            move_domain.append(("date_invoice", "<=", end))
 
         move_lines = self.env["account.move.line"].search(move_domain)
         _logger.info("Found {} move lines".format(len(move_lines)))
@@ -136,13 +136,21 @@ class InvoiceService(Component):
                     }
                 )
 
+            quantity = (
+                -line.quantity
+                if line.move_id.move_type == "out_refund"
+                else line.quantity or 0.0
+            )
             rows.append(
                 {
                     "id": line.id,
                     "currency": line.currency_id.name,
-                    "date": line.create_date.date().isoformat() or "",
-                    "date_due": line.date_invoice
+                    "date": line.date and line.date.isoformat() or "",
+                    "date_invoice": line.date_invoice
                     and line.date_invoice.isoformat()
+                    or "",
+                    "date_due": line.date_maturity
+                    and line.date_maturity.isoformat()
                     or "",
                     "state": line.state,
                     "commercial_partner": line.commercial_partner_id.name,
@@ -159,7 +167,7 @@ class InvoiceService(Component):
                     "move_id": line.move_id.id or 0,
                     "product": product_name,
                     "product_template": tmpl_name,
-                    "quantity": line.quantity or 0.0,
+                    "quantity": quantity,
                     "category": line.product_categ_id.name or "",
                     "uom": line.product_uom_id.name or "",
                     "order_ref": line.sale_order_id and line.sale_order_id.name or "",
