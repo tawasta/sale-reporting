@@ -54,6 +54,7 @@ class InvoiceService(Component):
         Access to the invoice services is only allowed to authenticated users.
     """
 
+    # flake8: noqa: C901
     @restapi.method(
         [(["/report"], "GET")],
         input_param=restapi.CerberusValidator(schema="_validator_report"),
