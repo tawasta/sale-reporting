@@ -41,7 +41,7 @@ addon | version | maintainers | summary
 [sale_report_hide_payment_term](sale_report_hide_payment_term/) | 14.0.1.0.0 |  | Hides payment term on Sale Order Report
 [sale_report_hide_proforma_header](sale_report_hide_proforma_header/) | 14.0.1.0.1 |  | Sale Report hide Proforma header
 [sale_report_hide_salesperson](sale_report_hide_salesperson/) | 14.0.1.0.0 |  | Hides salesperson element from Sales reports
-[sale_report_hs_code](sale_report_hs_code/) | 14.0.1.0.0 |  | Add HS code to sale report lines
+[sale_report_hs_code](sale_report_hs_code/) | 14.0.1.0.1 |  | Add HS code to sale report lines
 [sale_report_incoterm](sale_report_incoterm/) | 14.0.1.0.0 |  | Sale Order Report Incoterm
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 14.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
 [sale_report_incoterm_style_fix](sale_report_incoterm_style_fix/) | 14.0.1.0.0 |  | Incoterm style fix to follow sale report style
