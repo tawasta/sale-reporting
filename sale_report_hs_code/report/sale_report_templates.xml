@@ -10,7 +10,7 @@
         </xpath>
         <xpath expr="//td[@name='td_name']" position="before">
             <td name="td_hs_code">
-                <span t-field="line.product_id.hs_code_id" />
+                <span t-field="line.sudo().product_id.hs_code_id" />
             </td>
         </xpath>
     </template>
