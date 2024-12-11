@@ -20,7 +20,7 @@ msgstr ""
 #. module: sale_report_title
 #: model_terms:ir.ui.view,arch_db:sale_report_title.report_saleorder_document
 msgid "Confirmation of order"
-msgstr "Myyntivahvistus"
+msgstr "Tilausvahvistus"
 
 #. module: sale_report_title
 #: model_terms:ir.ui.view,arch_db:sale_report_title.report_saleorder_document
