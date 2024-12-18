@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============================
-Sale Order Report - User title
-==============================
+===================================================
+Sale Order Report - Customer title change to 'User'
+===================================================
 
-* Add "User" title to partner address
+* Rename partner address title from "Customer" to "User"
 
 Configuration
 =============

@@ -3,12 +3,11 @@
 
     <template
         id="sale_order_report_report_title"
-        inherit_id="sale.report_saleorder_document"
+        inherit_id="sale_report_customer_title.sale_order_report_report_title"
+        priority="101"
     >
-        <xpath expr="//div[@t-field='doc.partner_id']" position="before">
-            <div id="sale_customer_title">
-                <strong>User:</strong>
-            </div>
+        <xpath expr="//div[@id='sale_customer_title']/strong" position="replace">
+            <strong>User:</strong>
         </xpath>
     </template>
 
