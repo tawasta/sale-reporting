@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="sale_order_report_report_title"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//div[@t-field='doc.partner_id']" position="before">
+            <div id="sale_customer_title">
+                <strong>User:</strong>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
