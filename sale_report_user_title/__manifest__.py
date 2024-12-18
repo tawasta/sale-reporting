@@ -19,8 +19,8 @@
 ##############################################################################
 
 {
-    "name": "Sale Order Report - User title",
-    "summary": "Add 'User' title to partner address",
+    "name": "Sale Order Report - Customer title change to 'User'",
+    "summary": "Rename customer address title to user",
     "version": "17.0.1.0.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
@@ -28,6 +28,6 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["sale"],
+    "depends": ["sale_report_customer_title"],
     "data": ["report/sale_order.xml"],
 }
