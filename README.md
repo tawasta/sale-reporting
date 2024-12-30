@@ -13,6 +13,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_auditlog_rules](sale_auditlog_rules/) | 17.0.1.0.0 |  | Adds audit log rules for sale order and sale order line
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 17.0.1.0.0 |  | Show sale order calendar start date as commitment date
+[sale_order_default_my](sale_order_default_my/) | 17.0.1.0.0 |  | Show my sale orders by default
 [sale_order_margin_in_tree](sale_order_margin_in_tree/) | 17.0.1.0.0 |  | Show the margin field in SO list
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_customer_title](sale_report_customer_title/) | 17.0.1.0.0 |  | Add title to customer address
