@@ -13,6 +13,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_auditlog_rules](sale_auditlog_rules/) | 17.0.1.0.0 |  | Adds audit log rules for sale order and sale order line
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 17.0.1.0.0 |  | Show sale order calendar start date as commitment date
+[sale_order_default_my](sale_order_default_my/) | 17.0.1.0.0 |  | Show my sale orders by default
 [sale_order_margin_in_tree](sale_order_margin_in_tree/) | 17.0.1.0.0 |  | Show the margin field in SO list
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_customer_title](sale_report_customer_title/) | 17.0.1.0.0 |  | Add title to customer address
@@ -30,6 +31,7 @@ addon | version | maintainers | summary
 [sale_report_shipping_address_top_margin](sale_report_shipping_address_top_margin/) | 17.0.1.0.0 |  | Add margin between invoicing and shipping addresses for readability
 [sale_report_show_address](sale_report_show_address/) | 17.0.1.0.0 |  | Always show shipping and invoice address on sale report.
 [sale_report_show_commitment_date](sale_report_show_commitment_date/) | 17.0.1.0.0 |  | Adds commitment date to sale order report
+[sale_report_show_product_name](sale_report_show_product_name/) | 17.0.1.0.0 |  | Always show product on SO print lines
 [sale_report_title](sale_report_title/) | 17.0.1.0.1 |  | Sale Report Title is set
 [sale_report_user_title](sale_report_user_title/) | 17.0.1.0.0 |  | Rename customer address title to user
 
