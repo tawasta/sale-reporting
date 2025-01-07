@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_thank_you"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//div[@id='informations']" position="before">
+            <t t-if="doc.state not in ['draft', 'sent']">
+                <div name="thank-you-note-order-div" style="font-weight: bold">
+                    We thank you for your order.<br /><br />
+                </div>
+            </t>
+            <t t-if="doc.state in ['draft', 'sent']">
+                <div name="thank-you-note-quotation-div" style="font-weight: bold">
+                    We thank you for your request for quotation, our offer is as follows:<br
+                    /><br />
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[@name='signature']" position="after">
+            <div class="mt32 mr4" name="thank_you">
+                <div class="col-xs-4">
+                    With regards,
+                    <br /><br />
+                    <div name="kind-regards-note-div" style="font-weight: bold">
+                        <span t-field="doc.company_id.name" />
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
