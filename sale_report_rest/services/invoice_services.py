@@ -157,7 +157,7 @@ class InvoiceService(Component):
                     "commercial_partner": line.commercial_partner_id.name,
                     "partner": line.move_partner_id.name,
                     "price_unit": line.price_unit or 0.0,
-                    "price_subtotal": line.price_unit or 0.0,
+                    "price_subtotal": line.price_subtotal or 0.0,
                     "price_total": line.price_total or 0.0,
                     "salesperson": line.move_id.invoice_user_id.name or "",
                     "type": line.move_id.move_type or "",
