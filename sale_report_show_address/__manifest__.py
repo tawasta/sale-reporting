@@ -21,7 +21,7 @@
 {
     "name": "Sale Report Show Address",
     "summary": "Always show shipping and invoice address on sale report.",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "category": "Sales",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",

@@ -20,6 +20,13 @@
             <attribute name="t-if">1 == 0</attribute>
         </xpath>
 
+        <xpath
+            expr="//t[@t-if='doc.partner_shipping_id != doc.partner_invoice_id']/strong"
+            position="before"
+        >
+            <br />
+        </xpath>
+
         <t
             t-if="doc.partner_shipping_id != doc.partner_invoice_id"
             position="attributes"
