@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template
-        id="report_saleorder_document_hide_salesperson"
+        id="report_saleorder_document"
         inherit_id="sale.report_saleorder_document"
     >
         <!-- Add a class so we can target it specifically. the ID "informations"
         is used across multiple reports. -->
         <xpath expr="//div[@id='informations']" position="attributes">
             <attribute name="class">row mt-4 mb-2 sale-order-informations</attribute>
+        </xpath>
+
+        <!-- Use <p> elements instead of <span> elements. This adjusts how the
+        information is shown. -->
+        <xpath expr="//span[@t-field='doc.client_order_ref']" position="attributes">
+            <attribute name="t-if">1 == 0</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.client_order_ref']" position="after">
+            <p class="m-0" t-field="doc.client_order_ref">SO0000</p>
+        </xpath>
+
+        <xpath expr="//span[@t-field='doc.date_order']" position="attributes">
+            <attribute name="t-if">1 == 0</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.date_order']" position="after">
+            <p
+                class="m-0"
+                t-field="doc.date_order"
+                t-options='{"widget": "date"}'
+            >2023-12-31</p>
+        </xpath>
+
+        <xpath expr="//span[@t-field='doc.validity_date']" position="attributes">
+            <attribute name="t-if">1 == 0</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.validity_date']" position="after">
+            <p class="m-0" t-field="doc.validity_date">2023-12-31</p>
+        </xpath>
+
+        <xpath expr="//span[@t-field='doc.user_id']" position="attributes">
+            <attribute name="t-if">1 == 0</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.user_id']" position="after">
+            <p class="m-0" t-field="doc.user_id">Mitchell Admin</p>
         </xpath>
     </template>
 </odoo>
