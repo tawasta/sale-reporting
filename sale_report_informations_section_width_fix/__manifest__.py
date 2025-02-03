@@ -21,7 +21,7 @@
 {
     "name": "Sale Report: Information Section Width Fix",
     "summary": "Fixes the wrapping of elements spacing gets too tight",
-    "version": "17.0.1.0.1",
+    "version": "17.0.1.1.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
