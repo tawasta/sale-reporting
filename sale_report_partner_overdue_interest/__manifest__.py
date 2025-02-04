@@ -21,7 +21,7 @@
 {
     "name": "Sale Report Partner overdue interest",
     "summary": "Sale Report Partner overdue interest",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
