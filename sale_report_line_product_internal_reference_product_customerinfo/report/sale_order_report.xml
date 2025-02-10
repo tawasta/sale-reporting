@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale_report_line_product_internal_reference.report_saleorder_document"
+        priority="101"
+    >
+        <xpath
+            expr="//td[@name='td_name']//span[@name='span_default_code']"
+            position="replace"
+        />
+
+        <!--
+        Modify formatting so that the end result is the following (when customerinfo is set for the product)
+
+        [CUST-CODE] Customer Product Name
+        Our code: [OUR-CODE] Our Product Name
+        -->
+        <xpath expr="//td[@name='td_name']" position="inside">
+            <!-- Check if customer specific code or name set-->
+            <t
+                t-if="(line.product_customer_code or line.product_customer_name) and doc.company_id.sale_report_line_internal_reference_position == 'single_column'"
+            >
+                <span
+                    class="own-product-internal-reference-and-name fst-italic text-muted"
+                >
+                    <br />
+                    Our code: [<span t-esc="line.product_id.default_code" />]
+                    <span t-esc="line.product_id.name" />
+                </span>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>

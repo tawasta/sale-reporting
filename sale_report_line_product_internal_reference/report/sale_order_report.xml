@@ -4,17 +4,60 @@
         id="report_saleorder_document"
         inherit_id="sale.report_saleorder_document"
     >
-        <xpath
+
+            <!-- show the original Description header only conditionally -->
+            <xpath expr="//th[@name='th_description']" position="attributes">
+                <attribute
+                name="t-if"
+            >doc.company_id.sale_report_line_internal_reference_position == 'separate_columns'</attribute>
+            </xpath>
+
+            <!-- ...or replace it with a differently titled one -->
+            <xpath expr="//th[@name='th_description']" position="after">
+                <t
+                t-if="doc.company_id.sale_report_line_internal_reference_position == 'single_column'"
+            >
+                    <th name="th_description" class="text-start">
+                        Internal reference and <br />
+                        Description
+                    </th>
+                </t>
+            </xpath>
+
+            <!-- Put internal reference above description -->
+            <xpath expr="//td[@name='td_name']/span" position="before">
+                <t
+                t-if="doc.company_id.sale_report_line_internal_reference_position == 'single_column'"
+            >
+                    <span name="span_default_code">
+                        <span t-field="line.product_id.default_code" />
+                        <br />
+                    </span>
+                </t>
+            </xpath>
+
+
+            <!-- Put internal reference as the leftmost column -->
+            <xpath
             expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/thead/tr/th[1]"
             position="before"
         >
-            <th class="text-left">Internal reference</th>
-        </xpath>
+                <t
+                t-if="doc.company_id.sale_report_line_internal_reference_position == 'separate_columns'"
+            >
+                    <th class="text-start">Internal reference</th>
+                </t>
+            </xpath>
 
-        <xpath expr="//t[@t-if='not line.display_type']/td[1]" position="before">
-            <td class="text-left">
-                <span t-field="line.product_id.default_code" />
-            </td>
-        </xpath>
+            <xpath expr="//t[@t-if='not line.display_type']/td[1]" position="before">
+                <t
+                t-if="doc.company_id.sale_report_line_internal_reference_position == 'separate_columns'"
+            >
+                    <td class="text-start">
+                        <span t-field="line.product_id.default_code" />
+                    </td>
+                </t>
+            </xpath>
+
     </template>
 </odoo>
