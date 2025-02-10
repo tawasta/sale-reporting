@@ -21,7 +21,7 @@
 {
     "name": "Sale Order report - Product's internal reference",
     "summary": "Sale Order report - Product's internal reference",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.1.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
@@ -29,5 +29,5 @@
     "application": False,
     "installable": True,
     "depends": ["sale"],
-    "data": ["report/sale_order_report.xml"],
+    "data": ["report/sale_order_report.xml", "views/res_config_settings.xml"],
 }
