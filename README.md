@@ -24,7 +24,8 @@ addon | version | maintainers | summary
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 17.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
 [sale_report_informations_section_width_fix](sale_report_informations_section_width_fix/) | 17.0.1.0.1 |  | Fixes the wrapping of elements spacing gets too tight
 [sale_report_line_prices_include_tax](sale_report_line_prices_include_tax/) | 17.0.1.0.0 |  | Show SO Line prices with tax instead of without
-[sale_report_line_product_internal_reference](sale_report_line_product_internal_reference/) | 17.0.1.1.0 |  | Sale Order report - Product's internal reference
+[sale_report_line_product_internal_reference](sale_report_line_product_internal_reference/) | 17.0.1.1.1 |  | Sale Order report - Product's internal reference
+[sale_report_line_product_internal_reference_product_customerinfo](sale_report_line_product_internal_reference_product_customerinfo/) | 17.0.1.0.0 |  | Integrate with OCA's 'Product Supplierinfo for Customers' module
 [sale_report_partner_overdue_interest](sale_report_partner_overdue_interest/) | 17.0.1.0.0 |  | Sale Report Partner overdue interest
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 17.0.1.0.0 |  | Sale Order Report Partner Phonenumber
 [sale_report_payment_term_header](sale_report_payment_term_header/) | 17.0.1.0.0 |  | Sale Order report - Payment term in header

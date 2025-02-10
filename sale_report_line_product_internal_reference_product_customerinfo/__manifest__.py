@@ -1,7 +1,7 @@
 ##############################################################################
 #
 #    Author: Oy Tawasta OS Technologies Ltd.
-#    Copyright 2020 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
+#    Copyright 2025- Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,15 +19,20 @@
 ##############################################################################
 
 {
-    "name": "Sale Order report - Product's internal reference",
-    "summary": "Sale Order report - Product's internal reference",
-    "version": "17.0.1.1.1",
+    "name": "Sale Order report - Product's internal reference / Customer Code integration",
+    "summary": "Integrate with OCA's 'Product Supplierinfo for Customers' module",
+    "version": "17.0.1.0.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["sale"],
-    "data": ["report/sale_order_report.xml", "views/res_config_settings.xml"],
+    "depends": [
+        "sale_report_line_product_internal_reference",
+        "product_supplierinfo_for_customer",
+    ],
+    "data": [
+        "report/sale_order_report.xml",
+    ],
 }

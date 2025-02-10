@@ -29,10 +29,10 @@
                 <t
                 t-if="doc.company_id.sale_report_line_internal_reference_position == 'single_column'"
             >
-                    <span
-                    name="span_default_code"
-                    t-field="line.product_id.default_code"
-                /><br />
+                    <span name="span_default_code">
+                        <span t-field="line.product_id.default_code" />
+                        <br />
+                    </span>
                 </t>
             </xpath>
 
