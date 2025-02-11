@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.sale.report.line.product.internal.reference</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+
+            <block name="quotation_order_setting_container" position="inside">
+                <setting
+                    id="setting_internal_reference_positition"
+                    string="Internal Reference on SO Prints"
+                    help="How the internal reference is formatted on Sale Order prints"
+                    company_dependent="1"
+                >
+                    <div class="mt16" id="iref_pos">
+                        <div>
+                            <label for="sale_report_line_internal_reference_position" />
+                            <field
+                                name="sale_report_line_internal_reference_position"
+                            />
+                        </div>
+                    </div>
+                </setting>
+
+            </block>
+        </field>
+    </record>
+</odoo>

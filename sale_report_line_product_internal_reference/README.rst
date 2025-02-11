@@ -10,7 +10,10 @@ Sale Order report - Product's internal reference
 
 Configuration
 =============
-\-
+* In Sales settings, configure the 'Internal Reference Column 
+  Position on Sale Order Print' field according to if you want
+  the column in a separate column or in the same one with the product 
+  description field.
 
 Usage
 =====
@@ -27,6 +30,7 @@ Contributors
 ------------
 
 * Timo Kekäläinen <timo.kekalainen@tawasta.fi>
+* Timo Talvitie <timo.talvitie@futural.fi>
 
 Maintainer
 ----------
