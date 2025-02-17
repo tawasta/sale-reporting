@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [sale_report_partner_overdue_interest](sale_report_partner_overdue_interest/) | 17.0.1.0.1 |  | Sale Report Partner overdue interest
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 17.0.1.0.0 |  | Sale Order Report Partner Phonenumber
 [sale_report_payment_term_header](sale_report_payment_term_header/) | 17.0.1.0.0 |  | Sale Order report - Payment term in header
+[sale_report_separate_quotation_and_confirmation_print](sale_report_separate_quotation_and_confirmation_print/) | 17.0.1.0.0 |  | Force to use Quotation and Confirmation prints and ignore states
 [sale_report_shipping_address_top_margin](sale_report_shipping_address_top_margin/) | 17.0.1.0.0 |  | Add margin between invoicing and shipping addresses for readability
 [sale_report_show_address](sale_report_show_address/) | 17.0.1.0.1 |  | Always show shipping and invoice address on sale report.
 [sale_report_show_commitment_date](sale_report_show_commitment_date/) | 17.0.1.0.0 |  | Adds commitment date to sale order report
