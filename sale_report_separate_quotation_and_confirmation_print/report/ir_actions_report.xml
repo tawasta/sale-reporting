@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="name">Quotation</field>
+        <field name="print_report_name">'Quotation - %s' % (object.name)</field>
+    </record>
+
+    <record
+        id="sale_pdf_quote_builder.action_report_saleorder_raw"
+        model="ir.actions.report"
+    >
+        <field name="name">Confirmation</field>
+        <field name="print_report_name">'Order - %s' % (object.name)</field>
+    </record>
+</odoo>
