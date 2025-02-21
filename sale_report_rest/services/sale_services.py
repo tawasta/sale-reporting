@@ -237,7 +237,7 @@ class SaleService(Component):
                     "category": category_dict.get(rec.get("categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom"), ""),
                     "quantity": rec.get("product_uom_qty") or 0.0,
-                    "original_sale_id": rec.get("original_sale_id", ""),
+                    "original_sale_id": self.env["sale.order"].browse(rec.get("original_sale_id")).name if rec.get("original_sale_id") else "",
                     "addresses": {
                         "partner": order_dict.get(rec.get("order_id"), {}).get(
                             "partner", {}
