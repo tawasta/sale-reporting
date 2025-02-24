@@ -94,13 +94,13 @@ class InvoiceService(Component):
             tmpl_name = line.product_tmpl_id.display_name or ""
 
             # Valuutan käsittely: Tarkistetaan ja muunnetaan tarvittaessa
-            invoice_currency = line.currency_id  # Laskun valuutta
-            company_currency = line.company_id.currency_id  # Yrityksen valuutta
+            invoice_currency = line.currency_id  # Laskurivin valuutta
+            company_currency = line.company_id.currency_id  # Riviin liittyvän yrityksen valuutta
             euro_currency = self.env.ref("base.EUR")  # Kohdevaluutta EUR
 
-            converted_amount = line.price_total  # Oletusarvo: alkuperäinen arvo
+            converted_amount = line.price_subtotal  # Oletusarvo: alkuperäinen arvo
 
-            # Jos laskun valuutta != yrityksen valuutta, muunna yrityksen valuuttaan
+            # Jos laskurivin valuutta != yrityksen valuutta, muunna yrityksen valuuttaan
             if invoice_currency != company_currency:
                 converted_amount = invoice_currency._convert(
                     converted_amount, 
@@ -186,13 +186,13 @@ class InvoiceService(Component):
                     "price_unit": line.price_unit or 0.0,
                     "price_subtotal": line.price_subtotal or 0.0,
                     "price_total": line.price_total or 0.0,
+                    "euro_total": converted_amount,
                     "original_sale_id": line.move_id.sale_id.original_sale_id.name if line.move_id.sale_id.original_sale_id else False,
                     "salesperson": line.move_id.invoice_user_id.name or "",
                     "type": line.move_id.move_type or "",
                     "company": line.company_id.name or "",
                     "country": line.move_id.src_dest_country_id.name or "",
                     "journal": line.journal_id.name or "",
-                    "euro_total": converted_amount,
                     "move": line.move_id.name or "",
                     "move_id": line.move_id.id or 0,
                     "product": product_name,
