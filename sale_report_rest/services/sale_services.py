@@ -197,6 +197,33 @@ class SaleService(Component):
             if not order_dict.get(rec.get("order_id")):
                 continue
 
+            # Valuutan käsittely: Tarkistetaan ja muunnetaan tarvittaessa
+            order_currency = self.env["res.currency"].browse(rec.get("currency_id"))  # Tilauksenrivin valuutta
+            company_currency = self.env["res.company"].browse(rec.get("company_id")).currency_id  # Yrityksen valuutta
+            euro_currency = self.env.ref("base.EUR")  # Kohdevaluutta EUR
+
+            converted_amount = rec.get("price_subtotal") or 0.0  # Oletusarvo: alkuperäinen summa
+
+            # Jos tilauksenrivin valuutta != yrityksen valuutta, muunna yrityksen valuuttaan
+            if order_currency and order_currency != company_currency:
+                converted_amount = order_currency._convert(
+                    converted_amount, 
+                    company_currency,  
+                    self.env["res.company"].browse(rec.get("company_id")),  
+                    rec.get("date") or fields.Date.today(),  
+                    round=True
+                )
+
+            # Jos yrityksen valuutta != EUR, muunna EUR:ksi
+            if company_currency and company_currency != euro_currency:
+                converted_amount = company_currency._convert(
+                    converted_amount,  
+                    euro_currency,  
+                    self.env["res.company"].browse(rec.get("company_id")),  
+                    rec.get("date") or fields.Date.today(),  
+                    round=True
+                )
+
             rows.append(
                 {
                     "id": rec.get("id"),
@@ -221,6 +248,7 @@ class SaleService(Component):
                     "pricelist": pricelist_dict.get(rec.get("pricelist_id"), ""),
                     "price_subtotal": rec.get("price_subtotal") or 0.0,
                     "price_total": rec.get("price_total") or 0.0,
+                    "euro_total": converted_amount,
                     "untaxed_amount_invoiced": rec.get("untaxed_amount_invoiced")
                     or 0.0,
                     "untaxed_amount_to_invoice": rec.get("untaxed_amount_to_invoice")
@@ -237,6 +265,7 @@ class SaleService(Component):
                     "category": category_dict.get(rec.get("categ_id"), ""),
                     "uom": uom_dict.get(rec.get("product_uom"), ""),
                     "quantity": rec.get("product_uom_qty") or 0.0,
+                    "original_sale_id": self.env["sale.order"].sudo().browse(rec["original_sale_id"]).name if rec.get("original_sale_id") else "",
                     "addresses": {
                         "partner": order_dict.get(rec.get("order_id"), {}).get(
                             "partner", {}
