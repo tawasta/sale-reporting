@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.view.form.sale.report.decimal.precision</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <setting id="proforma_configuration" position="after">
+                <setting
+                    id="sale_report_decimal_precision"
+                    string="Sale Report Decimal Precision"
+                    help="Set Decimal Precision on sale report's product quantities"
+                >
+                    <field
+                        name="sale_report_decimal_precision"
+                        options="{'no_create': True}"
+                    />
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>

@@ -18,6 +18,7 @@ addon | version | maintainers | summary
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_customer_title](sale_report_customer_title/) | 17.0.1.0.0 |  | Add title to customer address
 [sale_report_hide_header](sale_report_hide_header/) | 17.0.1.0.0 |  | Hides sale report header from sale order report
+[sale_report_hide_order_date](sale_report_hide_order_date/) | 17.0.1.0.0 |  | Hides order date from sales report
 [sale_report_hide_payment_term](sale_report_hide_payment_term/) | 17.0.1.0.0 |  | Hides payment term on Sale Order Report
 [sale_report_hide_salesperson](sale_report_hide_salesperson/) | 17.0.1.0.0 |  | Hides salesperson element from Sales reports
 [sale_report_incoterm](sale_report_incoterm/) | 17.0.1.0.0 |  | Sale Order Report Incoterm
@@ -30,6 +31,7 @@ addon | version | maintainers | summary
 [sale_report_partner_phonenumber](sale_report_partner_phonenumber/) | 17.0.1.0.0 |  | Sale Order Report Partner Phonenumber
 [sale_report_payment_term_header](sale_report_payment_term_header/) | 17.0.1.0.0 |  | Sale Order report - Payment term in header
 [sale_report_proforma_info_field](sale_report_proforma_info_field/) | 17.0.1.0.0 |  | Sale reporting - Info field for Proforma print
+[sale_report_quantity_decimals](sale_report_quantity_decimals/) | 17.0.1.0.0 |  | Modifications to Sale Report' decimal precision
 [sale_report_separate_quotation_and_confirmation_print](sale_report_separate_quotation_and_confirmation_print/) | 17.0.1.0.0 |  | Force to use Quotation and Confirmation prints and ignore states
 [sale_report_shipping_address_top_margin](sale_report_shipping_address_top_margin/) | 17.0.1.0.0 |  | Add margin between invoicing and shipping addresses for readability
 [sale_report_show_address](sale_report_show_address/) | 17.0.1.0.1 |  | Always show shipping and invoice address on sale report.
