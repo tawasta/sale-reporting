@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_report_quantity_decimals
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-08 07:48+0000\n"
+"PO-Revision-Date: 2022-09-08 10:49+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fi\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model.fields,help:sale_report_quantity_decimals.field_res_company__sale_report_decimal_precision
+#: model:ir.model.fields,help:sale_report_quantity_decimals.field_res_config_settings__sale_report_decimal_precision
+msgid "Choose the number of decimal's shown on product quantities"
+msgstr "Valitse tuotteiden määrissä näytettävien desimaalien lukumäärä"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model,name:sale_report_quantity_decimals.model_res_company
+msgid "Companies"
+msgstr "Yritykset"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_company__id
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_config_settings__id
+msgid "ID"
+msgstr "Tunniste (ID)"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_company____last_update
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_config_settings____last_update
+msgid "Last Modified on"
+msgstr "Viimeksi muokattu"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model,name:sale_report_quantity_decimals.model_res_config_settings
+msgid "Procurement purchase grouping settings"
+msgstr "Procurement purchase grouping settings"
+
+#. module: sale_report_quantity_decimals
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_company__sale_report_decimal_precision
+#: model:ir.model.fields,field_description:sale_report_quantity_decimals.field_res_config_settings__sale_report_decimal_precision
+msgid "Product quantity's Decimal precision on Sale report"
+msgstr "Tuotteen määrän desimaalitarkkuus myynnin tulosteella"
+
+#. module: sale_report_quantity_decimals
+#: model_terms:ir.ui.view,arch_db:sale_report_quantity_decimals.res_config_settings_view_form
+msgid "Set Decimal Precision on sale report's product quantities"
+msgstr "Aseta desimaalitarkkuus myynnin tulosteen tuotteiden määrille"
