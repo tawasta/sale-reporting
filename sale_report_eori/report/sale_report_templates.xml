@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <template
+        id="report_saleorder_document_add_eori"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//t[@t-set='address']" position="inside">
+          <t t-if="doc.partner_id.eori">
+              EORI: <span t-field="doc.partner_id.eori" />
+          </t>
+        </xpath>
+
+        <!-- Remove whitespace below VAT so that EORI gets positioned like
+        the rest of the lines i.e. without a gap -->
+        <xpath expr="//p[@t-if='doc.partner_id.vat']" position="attributes">
+          <attribute name="class" position="add" separator=" ">mb-0 pb-0</attribute>
+        </xpath>
+
+  </template>
+</odoo>
