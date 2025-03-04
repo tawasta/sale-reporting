@@ -17,6 +17,7 @@ addon | version | maintainers | summary
 [sale_order_margin_in_tree](sale_order_margin_in_tree/) | 17.0.1.0.0 |  | Show the margin field in SO list
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_customer_title](sale_report_customer_title/) | 17.0.1.0.0 |  | Add title to customer address
+[sale_report_eori](sale_report_eori/) | 17.0.1.0.0 |  | Adds customer's EORI number to Sale Order print
 [sale_report_hide_header](sale_report_hide_header/) | 17.0.1.0.0 |  | Hides sale report header from sale order report
 [sale_report_hide_order_date](sale_report_hide_order_date/) | 17.0.1.0.0 |  | Hides order date from sales report
 [sale_report_hide_payment_term](sale_report_hide_payment_term/) | 17.0.1.0.0 |  | Hides payment term on Sale Order Report
