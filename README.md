@@ -15,6 +15,8 @@ addon | version | maintainers | summary
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 17.0.1.0.0 |  | Show sale order calendar start date as commitment date
 [sale_order_default_my](sale_order_default_my/) | 17.0.1.0.0 |  | Show my sale orders by default
 [sale_order_margin_in_tree](sale_order_margin_in_tree/) | 17.0.1.0.0 |  | Show the margin field in SO list
+[sale_pivot_report_amount_for_group](sale_pivot_report_amount_for_group/) | 17.0.1.0.0 |  | Adds a group that is used to hide amounts on sale report
+[sale_report_always_show_order_date](sale_report_always_show_order_date/) | 17.0.1.0.0 |  | Sale report - Always show Order Date
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
 [sale_report_carrier_id](sale_report_carrier_id/) | 17.0.1.0.0 |  | Add carrier id to sale report
 [sale_report_customer_title](sale_report_customer_title/) | 17.0.1.0.0 |  | Add title to customer address
