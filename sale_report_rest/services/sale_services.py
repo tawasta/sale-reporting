@@ -263,7 +263,7 @@ class SaleService(Component):
                         rec.get("product_tmpl_id"), ""
                     ),
                     "category": category_dict.get(rec.get("categ_id"), ""),
-                    "sale_type": rec.get("sale_type").name if rec.get("sale_type") else None,
+                    "sale_type": rec.get("order_id").sale_type.name if rec.get("order_id") and rec.get("order_id").sale_type else None,
                     "uom": uom_dict.get(rec.get("product_uom"), ""),
                     "quantity": rec.get("product_uom_qty") or 0.0,
                     "original_sale_id": self.env["sale.order"].sudo().browse(rec["original_sale_id"]).name if rec.get("original_sale_id") else "",
