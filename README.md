@@ -12,6 +12,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_auditlog_rules](sale_auditlog_rules/) | 17.0.1.0.0 |  | Adds audit log rules for sale order and sale order line
+[sale_confirm_group_restrict](sale_confirm_group_restrict/) | 17.0.1.0.0 |  | Show Confirm button on sale orders only for a specific user group
 [sale_order_calendar_commitment_date](sale_order_calendar_commitment_date/) | 17.0.1.0.0 |  | Show sale order calendar start date as commitment date
 [sale_order_customer_late_payment_info](sale_order_customer_late_payment_info/) | 17.0.1.0.0 |  | Filter orders by late payments and show how late they are
 [sale_order_default_my](sale_order_default_my/) | 17.0.1.0.0 |  | Show my sale orders by default
