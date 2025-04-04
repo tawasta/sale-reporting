@@ -32,7 +32,7 @@
         "sale",
     ],
     "data": [
-        'security/sale_confirm_group.xml',
-        'views/sale_order.xml',
+        "security/sale_confirm_group.xml",
+        "views/sale_order.xml",
     ],
 }

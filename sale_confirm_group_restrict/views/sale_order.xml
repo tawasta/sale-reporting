@@ -1,19 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_order_form_inherit_confirm_button_restricted" model="ir.ui.view">
         <field name="name">sale.order.form.confirm.button.restricted</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
 
             <!-- Etsitään painike #1 Confirm (ensimmäinen esiintymä) -->
             <xpath expr="(//button[@name='action_confirm'])[1]" position="attributes">
-                <attribute name="groups">sale_confirm_group_restrict.group_sale_confirm_restricted</attribute>
+                <attribute
+                    name="groups"
+                >sale_confirm_group_restrict.group_sale_confirm_restricted</attribute>
             </xpath>
 
             <!-- Etsitään painike #2 Confirm (toinen esiintymä) -->
             <xpath expr="(//button[@name='action_confirm'])[2]" position="attributes">
-                <attribute name="groups">sale_confirm_group_restrict.group_sale_confirm_restricted</attribute>
+                <attribute
+                    name="groups"
+                >sale_confirm_group_restrict.group_sale_confirm_restricted</attribute>
             </xpath>
 
         </field>
