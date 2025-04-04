@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Uusi ryhmä: Vain nämä käyttäjät näkevät "Confirm" painikkeen -->
+    <record id="group_sale_confirm_restricted" model="res.groups">
+        <field name="name">Can Confirm Sale Orders</field>
+        <field name="category_id" ref="base.module_category_sales_management"/>
+    </record>
+</odoo>
