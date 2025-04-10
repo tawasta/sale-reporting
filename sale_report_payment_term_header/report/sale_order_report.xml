@@ -4,7 +4,10 @@
         id="report_saleorder_document"
         inherit_id="sale.report_saleorder_document"
     >
-        <xpath expr="//span[@t-field='doc.user_id']/.." position="before">
+        <xpath
+            expr='//div[@t-if="doc.validity_date and doc.state in [&apos;draft&apos;, &apos;sent&apos;]"]'
+            position="after"
+        >
             <div
                 t-if="doc.payment_term_id.note"
                 name="payment-term-id"
