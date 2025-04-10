@@ -22,7 +22,7 @@
     "name": "Sale Report - Carrier ID",
     "summary": "Add carrier id to sale report",
     "category": "Sale",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
