@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [sale_report_proforma_info_field](sale_report_proforma_info_field/) | 17.0.1.0.0 |  | Sale reporting - Info field for Proforma print
 [sale_report_quantity_decimals](sale_report_quantity_decimals/) | 17.0.1.0.0 |  | Modifications to Sale Report' decimal precision
 [sale_report_remove_multicompany_rule](sale_report_remove_multicompany_rule/) | 17.0.1.0.0 |  | Sale report remove multi company rule
+[sale_report_rest](sale_report_rest/) | 17.0.1.0.0 |  | REST API for sales analysis and invoice analysis
 [sale_report_separate_quotation_and_confirmation_print](sale_report_separate_quotation_and_confirmation_print/) | 17.0.1.0.0 |  | Force to use Quotation and Confirmation prints and ignore states
 [sale_report_shipping_address_top_margin](sale_report_shipping_address_top_margin/) | 17.0.1.0.0 |  | Add margin between invoicing and shipping addresses for readability
 [sale_report_show_address](sale_report_show_address/) | 17.0.1.0.1 |  | Always show shipping and invoice address on sale report.
