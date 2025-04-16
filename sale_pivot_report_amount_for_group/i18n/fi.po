@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-29 15:56+0000\n"
-"PO-Revision-Date: 2022-07-29 15:56+0000\n"
+"POT-Creation-Date: 2025-04-16 08:10+0000\n"
+"PO-Revision-Date: 2025-04-16 08:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,24 +26,19 @@ msgid "Discount Amount"
 msgstr "Alennuksen summa"
 
 #. module: sale_pivot_report_amount_for_group
-#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__display_name
-msgid "Display Name"
-msgstr "Näyttönimi"
-
-#. module: sale_pivot_report_amount_for_group
-#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__id
-msgid "ID"
-msgstr "Tunniste (ID)"
-
-#. module: sale_pivot_report_amount_for_group
-#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report____last_update
-msgid "Last Modified on"
-msgstr "Viimeksi muokattu"
-
-#. module: sale_pivot_report_amount_for_group
 #: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__margin
 msgid "Margin"
 msgstr "Myyntikate"
+
+#. module: sale_pivot_report_amount_for_group
+#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__price_subtotal
+msgid "Price Subtotal"
+msgstr "Veroton summa"
+
+#. module: sale_pivot_report_amount_for_group
+#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__price_total
+msgid "Price Total"
+msgstr "Yhteensä"
 
 #. module: sale_pivot_report_amount_for_group
 #: model:ir.model,name:sale_pivot_report_amount_for_group.model_sale_report
@@ -56,11 +51,6 @@ msgid "Show amounts in Sale Report view"
 msgstr "Näytä määrät myyntiraportissa"
 
 #. module: sale_pivot_report_amount_for_group
-#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__price_total
-msgid "Total"
-msgstr "Yhteensä"
-
-#. module: sale_pivot_report_amount_for_group
 #: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__untaxed_amount_invoiced
 msgid "Untaxed Amount Invoiced"
 msgstr "Laskutettu veroton summa"
@@ -69,8 +59,3 @@ msgstr "Laskutettu veroton summa"
 #: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__untaxed_amount_to_invoice
 msgid "Untaxed Amount To Invoice"
 msgstr "Laskutettava veroton summa"
-
-#. module: sale_pivot_report_amount_for_group
-#: model:ir.model.fields,field_description:sale_pivot_report_amount_for_group.field_sale_report__price_subtotal
-msgid "Untaxed Total"
-msgstr "Veroton summa"
