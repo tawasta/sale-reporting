@@ -1,7 +1,7 @@
 ##############################################################################
 #
 #    Author: Oy Tawasta OS Technologies Ltd.
-#    Copyright 2021 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
+#    Copyright 2023- Oy Tawasta OS Technologies Ltd. (http://www.tawasta.fi)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,15 +19,32 @@
 ##############################################################################
 
 {
-    "name": "Sale Order report - Payment term in header",
-    "summary": "Sale Order report - Payment term in header",
-    "version": "17.0.1.0.1",
+    "name": "Sale reports REST API",
+    "summary": "REST API for sales analysis and invoice analysis",
+    "version": "17.0.1.0.0",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Tawasta",
     "license": "AGPL-3",
+    "data": [
+        "data/fastapi_endpoint_data.xml",
+        "views/carrier.xml",
+    ],
+    "depends": [
+        "fastapi",
+        "sale_pivot_report_sh_product_tag",
+        "account_invoice_pivot_report_delivery_address",
+        "account_invoice_pivot_report_delivery_address_country",
+        "account_invoice_pivot_report_product_template",
+        "sales_agent",
+        "stock_picking_invoice_link",
+    ],
+    "external_dependencies": {
+        "python": [
+            "fastapi",
+            "pydantic",
+        ]
+    },
     "application": False,
     "installable": True,
-    "depends": ["sale"],
-    "data": ["report/sale_order_report.xml"],
 }

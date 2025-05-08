@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="sale_rest_fastapi_endpoint" model="fastapi.endpoint">
+        <field name="name">Sale Rest Endpoint</field>
+        <field name="app">sale_rest</field>
+        <field name="root_path">/sale_rest_api/</field>
+    </record>
+</odoo>

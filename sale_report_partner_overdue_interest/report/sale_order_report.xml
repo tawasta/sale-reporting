@@ -4,10 +4,7 @@
         id="report_saleorder_document"
         inherit_id="sale.report_saleorder_document"
     >
-        <xpath
-            expr='//div[@t-if="doc.validity_date and doc.state in [&apos;draft&apos;, &apos;sent&apos;]"]'
-            position="after"
-        >
+        <xpath expr="//span[@t-field='doc.user_id']/.." position="before">
             <div class="col-auto col-3 mw-100 mb-2">
                 <strong>Late payment interest:</strong>
                 <p class="m-0" id="overdue-interest-field-value">
@@ -26,6 +23,7 @@
                 </t>
                 %
                 </p>
+                <br />
             </div>
         </xpath>
     </template>
