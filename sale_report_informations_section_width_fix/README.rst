@@ -6,7 +6,7 @@
 Sale Report: Information Section Width Fix
 ==========================================
 
-* Fixes the wrapping of the "informations" section on SO print which
+* Adds wrapping support for the "informations" section on SO print which
   can get squished together, if many modules add new elements to the 
   section
 
@@ -24,6 +24,8 @@ Known issues / Roadmap
   a single module. Simply targeting #informations would break the layout of 
   the section at least PO and Invoice prints, which is why this module 
   currently applies the style change to the Sale Order print only.
+* Flexbox wrapping does not work with current wkhtmltopdf, which is the reason this
+  workaround is used instead of a simple display: flex.
 
 Credits
 =======
