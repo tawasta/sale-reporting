@@ -6,15 +6,17 @@
 Sale Report Incoterm Name and Code
 ==================================
 
-* Show Incoterm name and code also on sale pdf print
+* Show Incoterm name and code also on sale pdf print, replacing the 
+  standard incoterm formatting
+* Example formatting with this module: EX WORKS (EXW)
 
 Configuration
 =============
-\-
+* None needed
 
 Usage
 =====
-\-
+* Just print an SO that has an incoterm set
 
 Known issues / Roadmap
 ======================
@@ -28,6 +30,7 @@ Contributors
 
 * Timo Kekäläinen <timo.kekalainen@tawasta.fi>
 * Kalle Rantalainen <kalle.rantalainen@futural.fi>
+* Timo Talvitie <timot.talvitie@futureal.fi>
 
 Maintainer
 ----------
