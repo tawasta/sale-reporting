@@ -4,20 +4,11 @@
         id="report_saleorder_document_inherit_sale_stock"
         inherit_id="sale_stock.report_saleorder_document_inherit_sale_stock"
     >
-        <div class="col-auto col-3 mw-100 mb-2" position="attributes">
-            <attribute name="t-if">1==0</attribute>
-        </div>
-    </template>
-
-    <template
-        id="report_saleorder_document"
-        inherit_id="sale.report_saleorder_document"
-    >
-        <xpath expr="//div[@name='expiration_date']" position="after">
+        <!-- Replace the core incoterm element with a custom one -->
+        <xpath expr="//div[@t-if='doc.incoterm']" position="after">
             <div
-                class="col-auto mw-100 mb-2"
+                class="col-auto col-3 mw-100 mb-2 incoterm-name-and-code"
                 t-if="doc.incoterm"
-                groups="sale_stock.group_display_incoterm"
             >
                 <strong>Incoterms:</strong>
                 <p>
@@ -27,5 +18,11 @@
                 </p>
             </div>
         </xpath>
+
+        <xpath expr="//div[@t-if='doc.incoterm']" position="attributes">
+            <attribute name="t-if">1==0</attribute>
+        </xpath>
+
     </template>
+
 </odoo>

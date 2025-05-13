@@ -20,8 +20,8 @@
 
 {
     "name": "Sale Report Incoterm Name and Code",
-    "summary": "Show Incoterm name and code also on sale pdf print",
-    "version": "17.0.1.0.0",
+    "summary": "Reformat Incoterm to show name and code on sale order PDF print",
+    "version": "17.0.1.0.1",
     "category": "Reporting",
     "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
     "author": "Futural",
