@@ -31,7 +31,6 @@ async def invoice_report(
 
     domain = [
         ("date_invoice", ">=", start),
-        ("exclude_from_invoice_tab", "=", False),
         ("move_id.move_type", "in", ["out_invoice", "out_refund"]),
     ]
     if end:
