@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo>
+<odoo noupdate="1">
   <record id="sale_reports_api_user" model="res.users">
     <field name="name">Sale Reports API User</field>
     <field name="login">sale_reports_api_user</field>
