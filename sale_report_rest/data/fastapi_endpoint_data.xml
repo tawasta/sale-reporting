@@ -14,7 +14,7 @@
   <record id="sale_reports_fastapi_endpoint" model="fastapi.endpoint">
     <field name="name">Sale Reports Endpoint</field>
     <field name="app">sale_reports</field>
-    <field name="root_path">/sale_reports_api</field>
+    <field name="root_path">/sale_rest_api</field>
     <field name="user_id" ref="sale_reports_api_user"/>
   </record>
 </odoo>

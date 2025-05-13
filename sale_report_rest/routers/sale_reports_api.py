@@ -225,8 +225,8 @@ async def sale_report(
                 "company": company.name,
                 "country": order.partner_id.country_id.name or "",
                 "commercial_partner": order.partner_id.commercial_partner_id.name or "",
-                "margin": 0.0,  # Täydennä jos tarvitaan
-                "delay": 0.0,   # Täydennä jos tarvitaan
+                "margin": order.margin,
+                "delay": order.delay,
                 "partner": order.partner_id.name or "",
                 "pricelist": order.pricelist_id.name or "",
                 "price_subtotal": line.price_subtotal,
