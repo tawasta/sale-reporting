@@ -23,7 +23,7 @@
     "summary": "Force to use Quotation and Confirmation prints and ignore states",
     "version": "17.0.1.0.0",
     "category": "Reporting",
-    "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
+    "website": "https://github.com/tawasta/sale-reporting",
     "author": "Futural",
     "license": "AGPL-3",
     "application": False,

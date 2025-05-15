@@ -10,9 +10,9 @@ Sale Order report - Product's internal reference
 
 Configuration
 =============
-* In Sales settings, configure the 'Internal Reference Column 
+* In Sales settings, configure the 'Internal Reference Column
   Position on Sale Order Print' field according to if you want
-  the column in a separate column or in the same one with the product 
+  the column in a separate column or in the same one with the product
   description field.
 
 Usage
@@ -29,14 +29,14 @@ Credits
 Contributors
 ------------
 
-* Timo Kekäläinen <timo.kekalainen@tawasta.fi>
+* Timo Kekäläinen <timo.kekalainen@futural.fi>
 * Timo Talvitie <timo.talvitie@futural.fi>
 
 Maintainer
 ----------
 
-.. image:: http://tawasta.fi/templates/tawastrap/images/logo.png
-   :alt: Oy Tawasta OS Technologies Ltd.
-   :target: http://tawasta.fi/
+.. image:: http://futural.fi/templates/tawastrap/images/logo.png
+   :alt: Futural Oy
+   :target: http://futural.fi/
 
-This module is maintained by Oy Tawasta OS Technologies Ltd.
+This module is maintained by Futural Oy

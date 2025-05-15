@@ -1,7 +1,7 @@
 ##############################################################################
 #
-#    Author: Tawasta
-#    Copyright 2020 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
+#    Author: Futural Oy
+#    Copyright 2020 Futural Oy (https://futural.fi)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,8 +23,8 @@
     "summary": "QWeb sale reports business code",
     "version": "17.0.1.0.0",
     "category": "Reporting",
-    "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
-    "author": "Tawasta",
+    "website": "https://github.com/tawasta/sale-reporting",
+    "author": "Futural",
     "license": "AGPL-3",
     "application": False,
     "installable": True,

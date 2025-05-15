@@ -2,13 +2,11 @@ import logging
 from datetime import datetime
 from typing import Annotated
 
-import pytz
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
 from odoo import fields
 from odoo.api import Environment
-from odoo.tools.mail import html_sanitize
 
 from odoo.addons.fastapi.dependencies import odoo_env
 
@@ -91,21 +89,21 @@ async def search_sales(env: Annotated[Environment, Depends(odoo_env)], start, en
         order_domain.append(("create_date", "<=", end))
 
     orders = env["sale.order"].search(order_domain)
-    _logger.info("Found {} orders".format(len(orders)))
+    _logger.info(f"Found {len(orders)} orders")
 
     if not orders:
         return {"error": "No sale orders found"}
 
     # Get data from view directly with SQL
     # pylint: disable=E8103
-    sql_query = """
+    sql_query = f"""
         SELECT *
         FROM sale_report
-        WHERE order_id IN {}
-    """.format(tuple(orders.ids))
+        WHERE order_id IN {tuple(orders.ids)}
+    """
     env.cr.execute(sql_query)
     records = env.cr.dictfetchall()
-    _logger.info("Found {} records".format(len(records)))
+    _logger.info(f"Found {len(records)} records")
 
     partners = env["res.partner"].with_context(active_test=False).search([])
     partner_dict = {part.id: part.name for part in partners}
@@ -310,9 +308,7 @@ async def search_sales(env: Annotated[Environment, Depends(odoo_env)], start, en
         "count": len(rows),
         "rows": rows,
     }
-    _logger.info(
-        "Sale REST API: JSON with {} rows about sale reports".format(len(rows))
-    )
+    _logger.info(f"Sale REST API: JSON with {len(rows)} rows about sale reports")
     return res
 
     # Validators
