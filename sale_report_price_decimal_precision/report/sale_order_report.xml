@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <!--Unit Price-->
+        <xpath expr="//span[@t-field='line.price_unit']" position="attributes">
+            <attribute
+                name="t-options"
+            >{'widget': 'monetary', 'display_currency': line.currency_id}</attribute>
+        </xpath>
+
+        <!--Amount-->
+        <xpath expr="//span[@t-field='line.price_subtotal']" position="attributes">
+            <attribute
+                name="t-options"
+            >{'widget': 'monetary', 'display_currency': line.currency_id}</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>
