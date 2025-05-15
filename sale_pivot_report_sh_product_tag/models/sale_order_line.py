@@ -21,7 +21,7 @@ class SaleOrderLine(models.Model):
             prod = self.sudo().env["product.product"].search([("id", "=", product)])
             tags = prod.sh_product_tag_ids
             vals["sh_product_tag_ids"] = tags and tags[0].id or False
-        return super(SaleOrderLine, self).create(vals)
+        return super().create(vals)
 
     @api.onchange("product_id")
     def onchange_sh_product_tag_ids(self):

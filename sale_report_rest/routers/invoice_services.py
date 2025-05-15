@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-##    Author: Oy Tawasta OS Technologies Ltd.
-##    Copyright 2019- Oy Tawasta OS Technologies Ltd. (http://www.tawasta.fi)
+##    Author: Futural Oy
+##    Copyright 2019- Futural Oy (http://www.futural.fi)
 ##
 ##    This program is free software: you can redistribute it and/or modify
 ##    it under the terms of the GNU Affero General Public License as
@@ -102,7 +102,8 @@
 #
 #            converted_amount = line.price_subtotal  # Oletusarvo: alkuperäinen arvo
 #
-#            # Jos laskurivin valuutta != yrityksen valuutta, muunna yrityksen valuuttaan
+#            # Jos laskurivin valuutta != yrityksen valuutta,
+#            # muunna yrityksen valuuttaan
 #            if invoice_currency != company_currency:
 #                converted_amount = invoice_currency._convert(
 #                    converted_amount,
