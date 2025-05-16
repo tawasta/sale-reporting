@@ -26,25 +26,49 @@ async def invoice_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating invoice report (BaseREST-compatible)")
+    _logger.info("Generating invoice report using RAW SQL from account.invoice.report")
     rows = []
 
+    # Hae invoice move:t annetulla aikavälillä
     move_domain = [("create_date", ">=", start)]
     if end:
         move_domain.append(("create_date", "<=", end))
 
     moves = env["account.move"].search(move_domain)
     move_ids = moves.ids
-
     if not move_ids:
         return {"count": 0, "rows": []}
 
-    report_domain = [("move_id", "in", move_ids)]
-    records = env["account.invoice.report"].search(report_domain)
+    # Generoi raw SQL kysely account.invoice.report näkymään
+    table_query = env["account.invoice.report"]._table_query
+    sql_query = f"""
+        {table_query}
+        AND line.move_id IN %s
+    """
+    env.cr.execute(sql_query, (tuple(move_ids),))
+    records = env.cr.dictfetchall()
 
-    if not records:
-        return {"count": 0, "rows": []}
+    # Datahakua varten lookup-tietorakenteet
+    currencies = env["res.currency"].search([])
+    currency_dict = {cur.id: cur.name for cur in currencies}
+    partners = env["res.partner"].with_context(active_test=False).search([])
+    partner_dict = {p.id: p.name for p in partners}
+    users = env["res.users"].with_context(active_test=False).search([])
+    user_dict = {u.id: u.name for u in users}
+    countries = env["res.country"].search([])
+    country_dict = {c.id: c.name for c in countries}
+    companies = env["res.company"].search([])
+    company_dict = {c.id: c.name for c in companies}
+    journals = env["account.journal"].search([])
+    journal_dict = {j.id: j.name for j in journals}
+    products = env["product.product"].with_context(active_test=False).search([])
+    product_dict = {p.id: p for p in products}
+    categories = env["product.category"].with_context(active_test=False).search([])
+    category_dict = {c.id: c.name for c in categories}
+    uoms = env["uom.uom"].search([])
+    uom_dict = {u.id: u.name for u in uoms}
 
+    # Hae oheen myös move:t (tilaukset, partnerit jne.)
     move_dict = {}
     for move in moves:
         move_dict[move.id] = {
@@ -72,51 +96,55 @@ async def invoice_report(
                 "country": move.partner_shipping_id.country_id.name or "",
             },
             "carriers": [],
-            "tags": [],
             "sales_agent": {
                 "id": move.sales_agent.id or 0,
                 "name": move.sales_agent.name or "",
                 "invoicing": move.sales_agent.customer_default_invoice_address or "",
-            }
+            },
+            "tags": [{"id": tag.id, "name": tag.name or ""} for tag in move.sale_id.tag_ids] or [{"id": 0, "name": ""}],
         }
+
         for pick in move.stock_picking_ids:
-            carrier = pick.carrier_id or env["delivery.carrier"].search([("is_alternative_carrier", "=", True)], limit=1)
+            carrier = pick.carrier_id or env["delivery.carrier"].search(
+                [("is_alternative_carrier", "=", True)], limit=1)
             if carrier:
                 move_dict[move.id]["carriers"].append({"id": carrier.id, "name": carrier.name})
         if not move_dict[move.id]["carriers"]:
             move_dict[move.id]["carriers"].append({"id": 0, "name": ""})
 
-        for tag in move.sale_id.tag_ids:
-            move_dict[move.id]["tags"].append({"id": tag.id, "name": tag.name or ""})
-        if not move.sale_id.tag_ids:
-            move_dict[move.id]["tags"].append({"id": 0, "name": ""})
-
+    # Rakenna vastaus
     for rec in records:
-        move_info = move_dict.get(rec.move_id.id, {})
+        move_id = rec.get("move_id")
+        move_info = move_dict.get(move_id, {})
+
+        product = product_dict.get(rec.get("product_id"))
+        product_name = product.display_name if product else ""
+        product_template = product.product_tmpl_id.display_name if product else ""
+
         rows.append({
-            "id": rec.id,
-            "currency": rec.currency_id.name or "",
-            "date": rec.invoice_date.isoformat() if rec.invoice_date else "",
-            "date_due": rec.invoice_date_due.isoformat() if rec.invoice_date_due else "",
-            "state": rec.state,
-            "commercial_partner": rec.commercial_partner_id.name or "",
-            "partner": rec.partner_id.name or "",
-            "price_average": rec.price_average or 0.0,
-            "price_subtotal": rec.price_subtotal or 0.0,
-            "price_total": rec.price_total or 0.0,
-            "price_margin": rec.price_margin or 0.0,
-            "salesperson": rec.invoice_user_id.name or "",
-            "type": rec.move_type,
-            "company": rec.company_id.name or "",
-            "country": rec.country_id.name or "",
-            "journal": rec.journal_id.name or "",
+            "id": rec.get("id"),
+            "currency": currency_dict.get(rec.get("currency_id"), ""),
+            "date": rec.get("invoice_date").isoformat() if rec.get("invoice_date") else "",
+            "date_due": rec.get("invoice_date_due").isoformat() if rec.get("invoice_date_due") else "",
+            "state": rec.get("state"),
+            "commercial_partner": partner_dict.get(rec.get("commercial_partner_id"), ""),
+            "partner": partner_dict.get(rec.get("partner_id"), ""),
+            "price_average": rec.get("price_average", 0.0),
+            "price_subtotal": rec.get("price_subtotal", 0.0),
+            "price_total": rec.get("price_total", 0.0),
+            "price_margin": rec.get("price_margin", 0.0),
+            "salesperson": user_dict.get(rec.get("invoice_user_id"), ""),
+            "type": rec.get("move_type"),
+            "company": company_dict.get(rec.get("company_id"), ""),
+            "country": country_dict.get(rec.get("country_id"), ""),
+            "journal": journal_dict.get(rec.get("journal_id"), ""),
             "move": move_info.get("name", ""),
-            "move_id": rec.move_id.id if rec.move_id else 0,
-            "product": rec.product_id.display_name or "",
-            "product_template": rec.product_id.product_tmpl_id.display_name or "",
-            "quantity": rec.quantity or 0.0,
-            "category": rec.product_categ_id.name or "",
-            "uom": rec.product_uom_id.name or "",
+            "move_id": move_id or 0,
+            "product": product_name,
+            "product_template": product_template,
+            "quantity": rec.get("quantity", 0.0),
+            "category": category_dict.get(rec.get("product_categ_id"), ""),
+            "uom": uom_dict.get(rec.get("product_uom_id"), ""),
             "order_ref": move_info.get("order_ref", ""),
             "addresses": {
                 "partner": move_info.get("partner", {}),
@@ -130,6 +158,7 @@ async def invoice_report(
 
     _logger.info("Invoice report generated with %d rows", len(rows))
     return {"count": len(rows), "rows": rows}
+
 
 
 @router.get("/sale/report", response_model=ReportResponse)
