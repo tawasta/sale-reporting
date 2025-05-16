@@ -7,6 +7,8 @@ class SaleOrder(models.Model):
 
     delay = fields.Float(string="Delay (days)", compute="_compute_delay", store=True)
 
+    weight = fields.Float(string="Total Weight", compute="_compute_weight", store=True)
+
     volume = fields.Float(string="Total Volume", compute="_compute_volume", store=True)
 
     @api.depends("date_order", "create_date")
@@ -27,3 +29,12 @@ class SaleOrder(models.Model):
                     # Kerro rivin tuotteen tilavuus määrällä
                     total_volume += line.product_id.volume * line.product_uom_qty
             order.volume = total_volume
+
+    @api.depends("order_line.product_id", "order_line.product_uom_qty")
+    def _compute_weight(self):
+        for order in self:
+            order.weight = sum(
+                line.product_id.weight * line.product_uom_qty
+                for line in order.order_line
+                if line.product_id
+            )
