@@ -36,7 +36,7 @@ async def invoice_report(
     if end:
         move_domain.append(("date_invoice", "<=", end))
 
-    move_lines = env["account.move.line"].search(move_domain)
+    move_lines = env["account.move.line"].sudo().search(move_domain)
     _logger.info("Found %d move lines", len(move_lines))
 
     if not move_lines:
@@ -160,7 +160,8 @@ async def sale_report(
     if end:
         order_domain.append(("create_date", "<=", end))
 
-    orders = env["sale.order"].search(order_domain)
+    orders = env["sale.order"].sudo().search(order_domain)
+    _logger.info("Found %d orders", len(orders))
     if not orders:
         return {"count": 0, "rows": []}
 
