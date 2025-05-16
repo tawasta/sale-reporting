@@ -26,20 +26,25 @@ async def invoice_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating invoice report (view-based)")
+    _logger.info("Generating invoice report (BaseREST-compatible)")
     rows = []
 
-    domain = [("invoice_date", ">=", start)]
+    move_domain = [("create_date", ">=", start)]
     if end:
-        domain.append(("invoice_date", "<=", end))
-    domain += [("move_type", "in", ["out_invoice", "out_refund"])]
+        move_domain.append(("create_date", "<=", end))
 
-    records = env["account.invoice.report"].search(domain)
+    moves = env["account.move"].search(move_domain)
+    move_ids = moves.ids
+
+    if not move_ids:
+        return {"count": 0, "rows": []}
+
+    report_domain = [("move_id", "in", move_ids)]
+    records = env["account.invoice.report"].search(report_domain)
+
     if not records:
         return {"count": 0, "rows": []}
 
-    move_ids = [rec.move_id.id for rec in records if rec.move_id]
-    moves = env["account.move"].browse(move_ids)
     move_dict = {}
     for move in moves:
         move_dict[move.id] = {
@@ -133,16 +138,66 @@ async def sale_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating sale report (view-based)")
+    _logger.info("Generating sale report (BaseREST-compatible)")
     rows = []
 
-    domain = [("date", ">=", start)]
+    order_domain = [("create_date", ">=", start)]
     if end:
-        domain.append(("date", "<=", end))
+        order_domain.append(("create_date", "<=", end))
 
-    records = env["sale.report"].search(domain)
+    orders = env["sale.order"].search(order_domain)
+    order_ids = orders.ids
+
+    if not order_ids:
+        return {"count": 0, "rows": []}
+
+    report_domain = [("order_id", "in", order_ids)]
+    records = env["sale.report"].search(report_domain)
+
+    order_dict = {}
+    for order in orders:
+        order_dict[order.id] = {
+            "partner": {
+                "name": order.partner_id.name or "",
+                "street": order.partner_id.street or "",
+                "city": order.partner_id.city or "",
+                "zip": order.partner_id.zip or "",
+                "country": order.partner_id.country_id.name or "",
+            },
+            "invoice": {
+                "name": order.partner_invoice_id.name or "",
+                "street": order.partner_invoice_id.street or "",
+                "city": order.partner_invoice_id.city or "",
+                "zip": order.partner_invoice_id.zip or "",
+                "country": order.partner_invoice_id.country_id.name or "",
+            },
+            "shipping": {
+                "name": order.partner_shipping_id.name or "",
+                "street": order.partner_shipping_id.street or "",
+                "city": order.partner_shipping_id.city or "",
+                "zip": order.partner_shipping_id.zip or "",
+                "country": order.partner_shipping_id.country_id.name or "",
+            },
+            "carriers": [],
+            "sales_agent": {
+                "id": order.sales_agent.id or 0,
+                "name": order.sales_agent.name or "",
+                "invoicing": order.sales_agent.customer_default_invoice_address or "",
+            }
+        }
+
+        for pick in order.picking_ids:
+            carrier = pick.carrier_id or env["delivery.carrier"].search([("is_alternative_carrier", "=", True)], limit=1)
+            if carrier:
+                order_dict[order.id]["carriers"].append({"id": carrier.id, "name": carrier.name})
+        if not order_dict[order.id]["carriers"]:
+            order_dict[order.id]["carriers"].append({"id": 0, "name": ""})
 
     for rec in records:
+        order_info = order_dict.get(rec.order_id.id)
+        if not order_info:
+            continue
+
         rows.append({
             "id": rec.id,
             "name": rec.name,
@@ -176,9 +231,13 @@ async def sale_report(
             "sale_type": "",
             "line_count": rec.nbr,
             "commitment_date": "",
-            "addresses": {},
-            "carriers": [],
-            "sales_agent": {},
+            "addresses": {
+                "partner": order_info.get("partner", {}),
+                "invoice": order_info.get("invoice", {}),
+                "shipping": order_info.get("shipping", {}),
+            },
+            "carriers": order_info.get("carriers", []),
+            "sales_agent": order_info.get("sales_agent", {}),
         })
 
     _logger.info("Sale report generated with %d rows", len(rows))
