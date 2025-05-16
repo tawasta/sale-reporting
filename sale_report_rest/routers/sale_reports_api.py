@@ -146,17 +146,18 @@ async def sale_report(
         order_domain.append(("create_date", "<=", end))
 
     orders = env["sale.order"].search(order_domain)
-    order_ids = orders.ids
-    if not order_ids:
+    if not orders:
         return {"count": 0, "rows": []}
 
-    # Get the dynamically generated SQL for the sale_report view
+    # Generate order_reference list in 'sale.order,123' format
+    order_refs = tuple(f"sale.order,{oid}" for oid in orders.ids)
+
     table_query = env["sale.report"]._table_query
     sql_query = f"""
         SELECT * FROM ({table_query}) AS sale_report
-        WHERE order_id IN %s
+        WHERE order_reference IN %s
     """
-    env.cr.execute(sql_query, (tuple(order_ids),))
+    env.cr.execute(sql_query, (order_refs,))
     records = env.cr.dictfetchall()
 
     # Dictionaries for lookup
@@ -179,7 +180,6 @@ async def sale_report(
     uoms = env["uom.uom"].search([])
     uom_dict = {u.id: u.name for u in uoms}
 
-    # Order-related metadata
     order_dict = {}
     for order in orders:
         order_dict[order.id] = {
@@ -213,16 +213,23 @@ async def sale_report(
         }
 
         for pick in order.picking_ids:
-            carrier = pick.carrier_id or env["delivery.carrier"].search([("is_alternative_carrier", "=", True)], limit=1)
+            carrier = pick.carrier_id or env["delivery.carrier"].search(
+                [("is_alternative_carrier", "=", True)], limit=1)
             if carrier:
                 order_dict[order.id]["carriers"].append({"id": carrier.id, "name": carrier.name})
         if not order_dict[order.id]["carriers"]:
             order_dict[order.id]["carriers"].append({"id": 0, "name": ""})
 
-    # Final result rows
     for rec in records:
-        oid = rec.get("order_id")
-        if not order_dict.get(oid):
+        order_ref = rec.get("order_reference")  # 'sale.order,123'
+        if not order_ref:
+            continue
+        try:
+            order_id = int(order_ref.split(",")[1])
+        except (IndexError, ValueError):
+            continue
+
+        if not order_dict.get(order_id):
             continue
 
         rows.append({
@@ -257,9 +264,9 @@ async def sale_report(
             "category": category_dict.get(rec.get("categ_id"), ""),
             "uom": uom_dict.get(rec.get("product_uom"), ""),
             "quantity": rec.get("product_uom_qty") or 0.0,
-            "addresses": order_dict[oid].get("addresses", {}),
-            "carriers": order_dict[oid].get("carriers", []),
-            "sales_agent": order_dict[oid].get("sales_agent", {}),
+            "addresses": order_dict[order_id].get("addresses", {}),
+            "carriers": order_dict[order_id].get("carriers", []),
+            "sales_agent": order_dict[order_id].get("sales_agent", {}),
         })
 
     _logger.info("Sale report generated with %d rows", len(rows))
