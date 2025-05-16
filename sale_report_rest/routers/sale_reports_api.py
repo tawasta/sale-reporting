@@ -138,7 +138,7 @@ async def sale_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating sale report (BaseREST-compatible)")
+    _logger.info("Generating sale report using SQL")
     rows = []
 
     order_domain = [("create_date", ">=", start)]
@@ -147,12 +147,35 @@ async def sale_report(
 
     orders = env["sale.order"].search(order_domain)
     order_ids = orders.ids
-
     if not order_ids:
         return {"count": 0, "rows": []}
 
-    report_domain = [("order_id", "in", order_ids)]
-    records = env["sale.report"].search(report_domain)
+    sql_query = """
+        SELECT *
+        FROM sale_report
+        WHERE order_id IN %s
+    """
+    env.cr.execute(sql_query, (tuple(order_ids),))
+    records = env.cr.dictfetchall()
+
+    partners = env["res.partner"].with_context(active_test=False).search([])
+    partner_dict = {part.id: part.name for part in partners}
+    users = env["res.users"].with_context(active_test=False).search([])
+    users_dict = {user.id: user.name for user in users}
+    companies = env["res.company"].search([])
+    company_dict = {comp.id: comp.name for comp in companies}
+    countries = env["res.country"].search([])
+    country_dict = {country.id: country.name for country in countries}
+    pricelists = env["product.pricelist"].search([])
+    pricelist_dict = {pr.id: pr.name for pr in pricelists}
+    products = env["product.product"].with_context(active_test=False).search([])
+    product_dict = {prod.id: prod.display_name for prod in products}
+    templates = env["product.template"].with_context(active_test=False).search([])
+    template_dict = {tmpl.id: tmpl.display_name for tmpl in templates}
+    categories = env["product.category"].with_context(active_test=False).search([])
+    category_dict = {cat.id: cat.name for cat in categories}
+    uoms = env["uom.uom"].search([])
+    uom_dict = {u.id: u.name for u in uoms}
 
     order_dict = {}
     for order in orders:
@@ -185,7 +208,6 @@ async def sale_report(
                 "invoicing": order.sales_agent.customer_default_invoice_address or "",
             }
         }
-
         for pick in order.picking_ids:
             carrier = pick.carrier_id or env["delivery.carrier"].search([("is_alternative_carrier", "=", True)], limit=1)
             if carrier:
@@ -194,50 +216,44 @@ async def sale_report(
             order_dict[order.id]["carriers"].append({"id": 0, "name": ""})
 
     for rec in records:
-        order_info = order_dict.get(rec.order_id.id)
-        if not order_info:
+        if not order_dict.get(rec.get("order_id")):
             continue
 
         rows.append({
-            "id": rec.id,
-            "name": rec.name,
-            "date": rec.date.isoformat() if rec.date else "",
-            "state": rec.state,
-            "salesperson": rec.user_id.name or "",
-            "volume": rec.volume,
-            "weight": rec.weight,
-            "company": rec.company_id.name or "",
-            "country": rec.country_id.name or "",
-            "commercial_partner": rec.commercial_partner_id.name or "",
-            "margin": rec.untaxed_amount_invoiced - rec.inventory_value,
-            "delay": "",
-            "partner": rec.partner_id.name or "",
-            "pricelist": rec.pricelist_id.name or "",
-            "price_subtotal": rec.price_subtotal,
-            "price_total": rec.price_total,
-            "euro_total": rec.price_total,
-            "untaxed_amount_invoiced": rec.untaxed_amount_invoiced,
-            "untaxed_amount_to_invoice": rec.untaxed_amount_to_invoice,
-            "discount": rec.discount,
-            "discount_amount": rec.discount_amount,
-            "qty_delivered": rec.qty_delivered,
-            "qty_invoiced": rec.qty_invoiced,
-            "qty_to_invoice": rec.qty_to_invoice,
-            "product": rec.product_id.display_name or "",
-            "product_template": rec.product_tmpl_id.display_name or "",
-            "category": rec.categ_id.name or "",
-            "uom": rec.product_uom.name or "",
-            "quantity": rec.product_uom_qty,
-            "sale_type": "",
-            "line_count": rec.nbr,
-            "commitment_date": "",
-            "addresses": {
-                "partner": order_info.get("partner", {}),
-                "invoice": order_info.get("invoice", {}),
-                "shipping": order_info.get("shipping", {}),
-            },
-            "carriers": order_info.get("carriers", []),
-            "sales_agent": order_info.get("sales_agent", {}),
+            "id": rec.get("id"),
+            "name": rec.get("name"),
+            "line_count": rec.get("nbr") or 0,
+            "state": rec.get("state"),
+            "date": rec.get("date") and rec.get("date").isoformat() or "",
+            "commitment_date": rec.get("commitment_date") and rec.get("commitment_date").isoformat() or "",
+            "salesperson": users_dict.get(rec.get("user_id"), ""),
+            "volume": rec.get("volume"),
+            "weight": rec.get("weight"),
+            "company": company_dict.get(rec.get("company_id"), ""),
+            "country": country_dict.get(rec.get("country_id"), ""),
+            "commercial_partner": partner_dict.get(rec.get("commercial_partner_id"), ""),
+            "margin": rec.get("untaxed_amount_invoiced") - rec.get("inventory_value", 0.0),
+            "delay": rec.get("delay", ""),
+            "partner": partner_dict.get(rec.get("partner_id"), ""),
+            "pricelist": pricelist_dict.get(rec.get("pricelist_id"), ""),
+            "price_subtotal": rec.get("price_subtotal") or 0.0,
+            "price_total": rec.get("price_total") or 0.0,
+            "euro_total": rec.get("price_total") or 0.0,
+            "untaxed_amount_invoiced": rec.get("untaxed_amount_invoiced") or 0.0,
+            "untaxed_amount_to_invoice": rec.get("untaxed_amount_to_invoice") or 0.0,
+            "discount": rec.get("discount") or 0.0,
+            "discount_amount": rec.get("discount_amount") or 0.0,
+            "qty_delivered": rec.get("qty_delivered") or 0.0,
+            "qty_invoiced": rec.get("qty_invoiced") or 0.0,
+            "qty_to_invoice": rec.get("qty_to_invoice") or 0.0,
+            "product": product_dict.get(rec.get("product_id"), ""),
+            "product_template": template_dict.get(rec.get("product_tmpl_id"), ""),
+            "category": category_dict.get(rec.get("categ_id"), ""),
+            "uom": uom_dict.get(rec.get("product_uom"), ""),
+            "quantity": rec.get("product_uom_qty") or 0.0,
+            "addresses": order_dict.get(rec.get("order_id"), {}).get("addresses", {}),
+            "carriers": order_dict.get(rec.get("order_id"), {}).get("carriers", []),
+            "sales_agent": order_dict.get(rec.get("order_id"), {}).get("sales_agent", {}),
         })
 
     _logger.info("Sale report generated with %d rows", len(rows))
