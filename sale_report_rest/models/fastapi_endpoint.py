@@ -3,6 +3,7 @@ from ..routers import sale_report_router
 
 APP_NAME = "sale_reports"
 
+
 class FastapiEndpoint(models.Model):
     _inherit = "fastapi.endpoint"
 
