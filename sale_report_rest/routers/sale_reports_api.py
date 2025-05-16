@@ -138,7 +138,7 @@ async def sale_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating sale report using SQL")
+    _logger.info("Generating sale report using SQL from sale.report._table_query")
     rows = []
 
     order_domain = [("create_date", ">=", start)]
@@ -150,33 +150,36 @@ async def sale_report(
     if not order_ids:
         return {"count": 0, "rows": []}
 
-    sql_query = """
-        SELECT *
-        FROM sale_report
+    # Get the dynamically generated SQL for the sale_report view
+    table_query = env["sale.report"]._table_query
+    sql_query = f"""
+        SELECT * FROM ({table_query}) AS sale_report
         WHERE order_id IN %s
     """
     env.cr.execute(sql_query, (tuple(order_ids),))
     records = env.cr.dictfetchall()
 
+    # Dictionaries for lookup
     partners = env["res.partner"].with_context(active_test=False).search([])
-    partner_dict = {part.id: part.name for part in partners}
+    partner_dict = {p.id: p.name for p in partners}
     users = env["res.users"].with_context(active_test=False).search([])
-    users_dict = {user.id: user.name for user in users}
+    users_dict = {u.id: u.name for u in users}
     companies = env["res.company"].search([])
-    company_dict = {comp.id: comp.name for comp in companies}
+    company_dict = {c.id: c.name for c in companies}
     countries = env["res.country"].search([])
-    country_dict = {country.id: country.name for country in countries}
+    country_dict = {c.id: c.name for c in countries}
     pricelists = env["product.pricelist"].search([])
-    pricelist_dict = {pr.id: pr.name for pr in pricelists}
+    pricelist_dict = {pl.id: pl.name for pl in pricelists}
     products = env["product.product"].with_context(active_test=False).search([])
-    product_dict = {prod.id: prod.display_name for prod in products}
+    product_dict = {p.id: p.display_name for p in products}
     templates = env["product.template"].with_context(active_test=False).search([])
-    template_dict = {tmpl.id: tmpl.display_name for tmpl in templates}
+    template_dict = {t.id: t.display_name for t in templates}
     categories = env["product.category"].with_context(active_test=False).search([])
-    category_dict = {cat.id: cat.name for cat in categories}
+    category_dict = {c.id: c.name for c in categories}
     uoms = env["uom.uom"].search([])
     uom_dict = {u.id: u.name for u in uoms}
 
+    # Order-related metadata
     order_dict = {}
     for order in orders:
         order_dict[order.id] = {
@@ -208,6 +211,7 @@ async def sale_report(
                 "invoicing": order.sales_agent.customer_default_invoice_address or "",
             }
         }
+
         for pick in order.picking_ids:
             carrier = pick.carrier_id or env["delivery.carrier"].search([("is_alternative_carrier", "=", True)], limit=1)
             if carrier:
@@ -215,8 +219,10 @@ async def sale_report(
         if not order_dict[order.id]["carriers"]:
             order_dict[order.id]["carriers"].append({"id": 0, "name": ""})
 
+    # Final result rows
     for rec in records:
-        if not order_dict.get(rec.get("order_id")):
+        oid = rec.get("order_id")
+        if not order_dict.get(oid):
             continue
 
         rows.append({
@@ -232,7 +238,7 @@ async def sale_report(
             "company": company_dict.get(rec.get("company_id"), ""),
             "country": country_dict.get(rec.get("country_id"), ""),
             "commercial_partner": partner_dict.get(rec.get("commercial_partner_id"), ""),
-            "margin": rec.get("untaxed_amount_invoiced") - rec.get("inventory_value", 0.0),
+            "margin": rec.get("untaxed_amount_invoiced", 0.0) - rec.get("inventory_value", 0.0),
             "delay": rec.get("delay", ""),
             "partner": partner_dict.get(rec.get("partner_id"), ""),
             "pricelist": pricelist_dict.get(rec.get("pricelist_id"), ""),
@@ -251,9 +257,9 @@ async def sale_report(
             "category": category_dict.get(rec.get("categ_id"), ""),
             "uom": uom_dict.get(rec.get("product_uom"), ""),
             "quantity": rec.get("product_uom_qty") or 0.0,
-            "addresses": order_dict.get(rec.get("order_id"), {}).get("addresses", {}),
-            "carriers": order_dict.get(rec.get("order_id"), {}).get("carriers", []),
-            "sales_agent": order_dict.get(rec.get("order_id"), {}).get("sales_agent", {}),
+            "addresses": order_dict[oid].get("addresses", {}),
+            "carriers": order_dict[oid].get("carriers", []),
+            "sales_agent": order_dict[oid].get("sales_agent", {}),
         })
 
     _logger.info("Sale report generated with %d rows", len(rows))
