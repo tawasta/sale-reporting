@@ -26,134 +26,120 @@ async def invoice_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating invoice report using RAW SQL from account.invoice.report")
+    _logger.info("Generating invoice report")
     rows = []
 
-    # Hae invoice move:t annetulla aikavälillä
-    move_domain = [("create_date", ">=", start)]
+    move_domain = [
+        ("date_invoice", ">=", start),
+        ("move_id.move_type", "in", ["out_invoice", "out_refund"]),
+    ]
     if end:
-        move_domain.append(("create_date", "<=", end))
+        move_domain.append(("date_invoice", "<=", end))
 
-    moves = env["account.move"].search(move_domain)
-    move_ids = moves.ids
-    if not move_ids:
+    move_lines = env["account.move.line"].search(move_domain)
+    _logger.info("Found %d move lines", len(move_lines))
+
+    if not move_lines:
         return {"count": 0, "rows": []}
 
-    # Generoi raw SQL kysely account.invoice.report näkymään
-    table_query = env["account.invoice.report"]._table_query
-    sql_query = f"""
-        {table_query}
-        AND line.move_id IN %s
-    """
-    env.cr.execute(sql_query, (tuple(move_ids),))
-    records = env.cr.dictfetchall()
+    other_carrier = env["delivery.carrier"].search([("is_alternative_carrier", "=", True)], limit=1)
+    euro_currency = env.ref("base.EUR")
 
-    # Datahakua varten lookup-tietorakenteet
-    currencies = env["res.currency"].search([])
-    currency_dict = {cur.id: cur.name for cur in currencies}
-    partners = env["res.partner"].with_context(active_test=False).search([])
-    partner_dict = {p.id: p.name for p in partners}
-    users = env["res.users"].with_context(active_test=False).search([])
-    user_dict = {u.id: u.name for u in users}
-    countries = env["res.country"].search([])
-    country_dict = {c.id: c.name for c in countries}
-    companies = env["res.company"].search([])
-    company_dict = {c.id: c.name for c in companies}
-    journals = env["account.journal"].search([])
-    journal_dict = {j.id: j.name for j in journals}
-    products = env["product.product"].with_context(active_test=False).search([])
-    product_dict = {p.id: p for p in products}
-    categories = env["product.category"].with_context(active_test=False).search([])
-    category_dict = {c.id: c.name for c in categories}
-    uoms = env["uom.uom"].search([])
-    uom_dict = {u.id: u.name for u in uoms}
+    for line in move_lines:
+        product = line.product_id
+        tmpl = line.product_tmpl_id
 
-    # Hae oheen myös move:t (tilaukset, partnerit jne.)
-    move_dict = {}
-    for move in moves:
-        move_dict[move.id] = {
-            "name": move.name or "",
-            "order_ref": move.sale_id.name or "",
-            "partner": {
-                "name": move.sale_partner_id.name or "",
-                "street": move.sale_partner_id.street or "",
-                "city": move.sale_partner_id.city or "",
-                "zip": move.sale_partner_id.zip or "",
-                "country": move.sale_partner_id.country_id.name or "",
-            },
-            "invoice": {
-                "name": move.partner_id.name or "",
-                "street": move.partner_id.street or "",
-                "city": move.partner_id.city or "",
-                "zip": move.partner_id.zip or "",
-                "country": move.partner_id.country_id.name or "",
-            },
-            "shipping": {
-                "name": move.partner_shipping_id.name or "",
-                "street": move.partner_shipping_id.street or "",
-                "city": move.partner_shipping_id.city or "",
-                "zip": move.partner_shipping_id.zip or "",
-                "country": move.partner_shipping_id.country_id.name or "",
-            },
-            "carriers": [],
-            "sales_agent": {
-                "id": move.sales_agent.id or 0,
-                "name": move.sales_agent.name or "",
-                "invoicing": move.sales_agent.customer_default_invoice_address or "",
-            },
-            "tags": [{"id": tag.id, "name": tag.name or ""} for tag in move.sale_id.tag_ids] or [{"id": 0, "name": ""}],
-        }
+        invoice_currency = line.currency_id
+        company_currency = line.company_id.currency_id
+        converted_amount = line.price_subtotal
 
-        for pick in move.stock_picking_ids:
-            carrier = pick.carrier_id or env["delivery.carrier"].search(
-                [("is_alternative_carrier", "=", True)], limit=1)
+        if invoice_currency != company_currency:
+            converted_amount = invoice_currency._convert(
+                converted_amount,
+                company_currency,
+                line.company_id,
+                line.date or fields.Date.today(),
+                round=True
+            )
+        if company_currency != euro_currency:
+            converted_amount = company_currency._convert(
+                converted_amount,
+                euro_currency,
+                line.company_id,
+                line.date or fields.Date.today(),
+                round=True
+            )
+
+        tag_ids = [{"id": tag.id, "name": tag.name} for tag in line.sale_order_id.tag_ids] or [{"id": 0, "name": ""}]
+
+        carriers = []
+        for pick in line.move_id.picking_ids:
+            carrier = pick.carrier_id or other_carrier
             if carrier:
-                move_dict[move.id]["carriers"].append({"id": carrier.id, "name": carrier.name})
-        if not move_dict[move.id]["carriers"]:
-            move_dict[move.id]["carriers"].append({"id": 0, "name": ""})
+                carriers.append({"id": carrier.id, "name": carrier.name})
+        if not carriers:
+            carriers.append({"id": 0, "name": ""})
 
-    # Rakenna vastaus
-    for rec in records:
-        move_id = rec.get("move_id")
-        move_info = move_dict.get(move_id, {})
-
-        product = product_dict.get(rec.get("product_id"))
-        product_name = product.display_name if product else ""
-        product_template = product.product_tmpl_id.display_name if product else ""
+        quantity = -line.quantity if line.move_id.move_type == "out_refund" else line.quantity or 0.0
 
         rows.append({
-            "id": rec.get("id"),
-            "currency": currency_dict.get(rec.get("currency_id"), ""),
-            "date": rec.get("invoice_date").isoformat() if rec.get("invoice_date") else "",
-            "date_due": rec.get("invoice_date_due").isoformat() if rec.get("invoice_date_due") else "",
-            "state": rec.get("state"),
-            "commercial_partner": partner_dict.get(rec.get("commercial_partner_id"), ""),
-            "partner": partner_dict.get(rec.get("partner_id"), ""),
-            "price_average": rec.get("price_average", 0.0),
-            "price_subtotal": rec.get("price_subtotal", 0.0),
-            "price_total": rec.get("price_total", 0.0),
-            "price_margin": rec.get("price_margin", 0.0),
-            "salesperson": user_dict.get(rec.get("invoice_user_id"), ""),
-            "type": rec.get("move_type"),
-            "company": company_dict.get(rec.get("company_id"), ""),
-            "country": country_dict.get(rec.get("country_id"), ""),
-            "journal": journal_dict.get(rec.get("journal_id"), ""),
-            "move": move_info.get("name", ""),
-            "move_id": move_id or 0,
-            "product": product_name,
-            "product_template": product_template,
-            "quantity": rec.get("quantity", 0.0),
-            "category": category_dict.get(rec.get("product_categ_id"), ""),
-            "uom": uom_dict.get(rec.get("product_uom_id"), ""),
-            "order_ref": move_info.get("order_ref", ""),
+            "id": line.id,
+            "currency": line.currency_id.name,
+            "date": line.date.isoformat() if line.date else "",
+            "date_invoice": line.date_invoice.isoformat() if line.date_invoice else "",
+            "date_due": line.date_maturity.isoformat() if line.date_maturity else "",
+            "state": line.state,
+            "commercial_partner": line.commercial_partner_id.name,
+            "partner": line.move_partner_id.name,
+            "price_unit": line.price_unit or 0.0,
+            "price_subtotal": line.price_subtotal or 0.0,
+            "price_total": line.price_total or 0.0,
+            "euro_total": converted_amount,
+            "original_sale_id": line.move_id.sale_id.original_sale_id.name if line.move_id.sale_id.original_sale_id else False,
+            "salesperson": line.move_id.invoice_user_id.name or "",
+            "type": line.move_id.move_type or "",
+            "company": line.company_id.name or "",
+            "country": line.move_id.src_dest_country_id.name or "",
+            "journal": line.journal_id.name or "",
+            "move": line.move_id.name or "",
+            "move_id": line.move_id.id or 0,
+            "product": product.display_name if product else "",
+            "product_template": tmpl.display_name if tmpl else "",
+            "quantity": quantity,
+            "category": line.product_categ_id.name or "",
+            "uom": line.product_uom_id.name or "",
+            "order_ref": line.sale_order_id.name or "",
             "addresses": {
-                "partner": move_info.get("partner", {}),
-                "invoice": move_info.get("invoice", {}),
-                "shipping": move_info.get("shipping", {}),
+                "partner": {
+                    "name": line.move_id.sale_partner_id.name or "",
+                    "street": line.move_id.sale_partner_id.street or "",
+                    "city": line.move_id.sale_partner_id.city or "",
+                    "zip": line.move_id.sale_partner_id.zip or "",
+                    "country": line.move_id.sale_partner_id.country_id.name or "",
+                },
+                "invoice": {
+                    "name": line.move_id.partner_id.name or "",
+                    "street": line.move_id.partner_id.street or "",
+                    "city": line.move_id.partner_id.city or "",
+                    "zip": line.move_id.partner_id.zip or "",
+                    "country": line.move_id.partner_id.country_id.name or "",
+                },
+                "shipping": {
+                    "name": line.move_id.partner_shipping_id.name or "",
+                    "street": line.move_id.partner_shipping_id.street or "",
+                    "city": line.move_id.partner_shipping_id.city or "",
+                    "zip": line.move_id.partner_shipping_id.zip or "",
+                    "country": line.move_id.partner_shipping_id.country_id.name or "",
+                },
             },
-            "carriers": move_info.get("carriers", []),
-            "sales_agent": move_info.get("sales_agent", {}),
-            "tags": move_info.get("tags", []),
+            "carriers": carriers,
+            "sales_agent": {
+                "id": line.sales_agent.id if line.sales_agent else 0,
+                "name": line.sales_agent.name if line.sales_agent else "",
+                "invoicing": line.sales_agent.customer_default_invoice_address if line.sales_agent else "",
+            },
+            "tags": tag_ids,
+            "sale_type": line.sale_order_id.sale_type.code if line.sale_order_id and line.sale_order_id.sale_type else "",
         })
 
     _logger.info("Invoice report generated with %d rows", len(rows))
@@ -167,7 +153,7 @@ async def sale_report(
     start: str = Query(...),
     end: Optional[str] = Query(None),
 ):
-    _logger.info("Generating sale report using SQL from sale.report._table_query")
+    _logger.info("Generating sale report from sale.order directly")
     rows = []
 
     order_domain = [("create_date", ">=", start)]
@@ -178,18 +164,6 @@ async def sale_report(
     if not orders:
         return {"count": 0, "rows": []}
 
-    # Generate order_reference list in 'sale.order,123' format
-    order_refs = tuple(f"sale.order,{oid}" for oid in orders.ids)
-
-    table_query = env["sale.report"]._table_query
-    sql_query = f"""
-        SELECT * FROM ({table_query}) AS sale_report
-        WHERE order_reference IN %s
-    """
-    env.cr.execute(sql_query, (order_refs,))
-    records = env.cr.dictfetchall()
-
-    # Dictionaries for lookup
     partners = env["res.partner"].with_context(active_test=False).search([])
     partner_dict = {p.id: p.name for p in partners}
     users = env["res.users"].with_context(active_test=False).search([])
@@ -200,103 +174,94 @@ async def sale_report(
     country_dict = {c.id: c.name for c in countries}
     pricelists = env["product.pricelist"].search([])
     pricelist_dict = {pl.id: pl.name for pl in pricelists}
-    products = env["product.product"].with_context(active_test=False).search([])
-    product_dict = {p.id: p.display_name for p in products}
-    templates = env["product.template"].with_context(active_test=False).search([])
-    template_dict = {t.id: t.display_name for t in templates}
     categories = env["product.category"].with_context(active_test=False).search([])
     category_dict = {c.id: c.name for c in categories}
     uoms = env["uom.uom"].search([])
     uom_dict = {u.id: u.name for u in uoms}
+    products = env["product.product"].with_context(active_test=False).search([])
+    product_dict = {p.id: p for p in products}
 
-    order_dict = {}
     for order in orders:
-        order_dict[order.id] = {
-            "partner": {
-                "name": order.partner_id.name or "",
-                "street": order.partner_id.street or "",
-                "city": order.partner_id.city or "",
-                "zip": order.partner_id.zip or "",
-                "country": order.partner_id.country_id.name or "",
-            },
-            "invoice": {
-                "name": order.partner_invoice_id.name or "",
-                "street": order.partner_invoice_id.street or "",
-                "city": order.partner_invoice_id.city or "",
-                "zip": order.partner_invoice_id.zip or "",
-                "country": order.partner_invoice_id.country_id.name or "",
-            },
-            "shipping": {
-                "name": order.partner_shipping_id.name or "",
-                "street": order.partner_shipping_id.street or "",
-                "city": order.partner_shipping_id.city or "",
-                "zip": order.partner_shipping_id.zip or "",
-                "country": order.partner_shipping_id.country_id.name or "",
-            },
-            "carriers": [],
-            "sales_agent": {
-                "id": order.sales_agent.id or 0,
-                "name": order.sales_agent.name or "",
-                "invoicing": order.sales_agent.customer_default_invoice_address or "",
+        for line in order.order_line:
+            product = product_dict.get(line.product_id.id)
+            template = product.product_tmpl_id if product else None
+            category = template.categ_id if template else None
+
+            carriers = [
+                {"id": pick.carrier_id.id, "name": pick.carrier_id.name}
+                for pick in order.picking_ids if pick.carrier_id
+            ] or [{"id": 0, "name": ""}]
+
+            addresses = {
+                "partner": {
+                    "name": order.partner_id.name or "",
+                    "street": order.partner_id.street or "",
+                    "city": order.partner_id.city or "",
+                    "zip": order.partner_id.zip or "",
+                    "country": order.partner_id.country_id.name or "",
+                },
+                "invoice": {
+                    "name": order.partner_invoice_id.name or "",
+                    "street": order.partner_invoice_id.street or "",
+                    "city": order.partner_invoice_id.city or "",
+                    "zip": order.partner_invoice_id.zip or "",
+                    "country": order.partner_invoice_id.country_id.name or "",
+                },
+                "shipping": {
+                    "name": order.partner_shipping_id.name or "",
+                    "street": order.partner_shipping_id.street or "",
+                    "city": order.partner_shipping_id.city or "",
+                    "zip": order.partner_shipping_id.zip or "",
+                    "country": order.partner_shipping_id.country_id.name or "",
+                },
             }
-        }
 
-        for pick in order.picking_ids:
-            carrier = pick.carrier_id or env["delivery.carrier"].search(
-                [("is_alternative_carrier", "=", True)], limit=1)
-            if carrier:
-                order_dict[order.id]["carriers"].append({"id": carrier.id, "name": carrier.name})
-        if not order_dict[order.id]["carriers"]:
-            order_dict[order.id]["carriers"].append({"id": 0, "name": ""})
+            sales_agent = order.sales_agent
+            sales_agent_data = {
+                "id": sales_agent.id if sales_agent else 0,
+                "name": sales_agent.name if sales_agent else "",
+                "invoicing": sales_agent.customer_default_invoice_address if sales_agent else "",
+            }
 
-    for rec in records:
-        order_ref = rec.get("order_reference")  # 'sale.order,123'
-        if not order_ref:
-            continue
-        try:
-            order_id = int(order_ref.split(",")[1])
-        except (IndexError, ValueError):
-            continue
+            discount_amount = (line.price_unit * line.product_uom_qty) * (line.discount / 100)
 
-        if not order_dict.get(order_id):
-            continue
-
-        rows.append({
-            "id": rec.get("id"),
-            "name": rec.get("name"),
-            "line_count": rec.get("nbr") or 0,
-            "state": rec.get("state"),
-            "date": rec.get("date") and rec.get("date").isoformat() or "",
-            "commitment_date": rec.get("commitment_date") and rec.get("commitment_date").isoformat() or "",
-            "salesperson": users_dict.get(rec.get("user_id"), ""),
-            "volume": rec.get("volume"),
-            "weight": rec.get("weight"),
-            "company": company_dict.get(rec.get("company_id"), ""),
-            "country": country_dict.get(rec.get("country_id"), ""),
-            "commercial_partner": partner_dict.get(rec.get("commercial_partner_id"), ""),
-            "margin": rec.get("untaxed_amount_invoiced", 0.0) - rec.get("inventory_value", 0.0),
-            "delay": rec.get("delay", ""),
-            "partner": partner_dict.get(rec.get("partner_id"), ""),
-            "pricelist": pricelist_dict.get(rec.get("pricelist_id"), ""),
-            "price_subtotal": rec.get("price_subtotal") or 0.0,
-            "price_total": rec.get("price_total") or 0.0,
-            "euro_total": rec.get("price_total") or 0.0,
-            "untaxed_amount_invoiced": rec.get("untaxed_amount_invoiced") or 0.0,
-            "untaxed_amount_to_invoice": rec.get("untaxed_amount_to_invoice") or 0.0,
-            "discount": rec.get("discount") or 0.0,
-            "discount_amount": rec.get("discount_amount") or 0.0,
-            "qty_delivered": rec.get("qty_delivered") or 0.0,
-            "qty_invoiced": rec.get("qty_invoiced") or 0.0,
-            "qty_to_invoice": rec.get("qty_to_invoice") or 0.0,
-            "product": product_dict.get(rec.get("product_id"), ""),
-            "product_template": template_dict.get(rec.get("product_tmpl_id"), ""),
-            "category": category_dict.get(rec.get("categ_id"), ""),
-            "uom": uom_dict.get(rec.get("product_uom"), ""),
-            "quantity": rec.get("product_uom_qty") or 0.0,
-            "addresses": order_dict[order_id].get("addresses", {}),
-            "carriers": order_dict[order_id].get("carriers", []),
-            "sales_agent": order_dict[order_id].get("sales_agent", {}),
-        })
+            rows.append({
+                "id": order.id,
+                "name": order.name,
+                "line_count": len(order.order_line),
+                "state": order.state,
+                "date": order.date_order.isoformat() if order.date_order else "",
+                "commitment_date": order.commitment_date.isoformat() if order.commitment_date else "",
+                "salesperson": users_dict.get(order.user_id.id, ""),
+                "volume": order.volume,
+                "weight": order.weight,
+                "company": company_dict.get(order.company_id.id, ""),
+                "country": country_dict.get(order.partner_id.country_id.id, ""),
+                "commercial_partner": partner_dict.get(order.partner_id.commercial_partner_id.id, ""),
+                "margin": (line.price_subtotal - line.purchase_price * line.product_uom_qty) if line.purchase_price else 0.0,
+                "delay": (order.date_order - order.create_date).days if order.create_date and order.date_order else "",
+                "partner": partner_dict.get(order.partner_id.id, ""),
+                "pricelist": pricelist_dict.get(order.pricelist_id.id, ""),
+                "price_subtotal": line.price_subtotal,
+                "price_total": line.price_total,
+                "euro_total": line.price_total,
+                "untaxed_amount_invoiced": order.amount_untaxed_signed,
+                "untaxed_amount_to_invoice": order.amount_untaxed - order.amount_untaxed_signed,
+                "discount": line.discount,
+                "discount_amount": discount_amount,
+                "qty_delivered": line.qty_delivered,
+                "qty_invoiced": line.qty_invoiced,
+                "qty_to_invoice": line.qty_to_invoice,
+                "product": product.display_name if product else "",
+                "product_template": template.display_name if template else "",
+                "category": category_dict.get(category.id, "") if category else "",
+                "uom": uom_dict.get(line.product_uom.id, ""),
+                "quantity": line.product_uom_qty,
+                "addresses": addresses,
+                "carriers": carriers,
+                "sales_agent": sales_agent_data,
+            })
 
     _logger.info("Sale report generated with %d rows", len(rows))
     return {"count": len(rows), "rows": rows}
+
