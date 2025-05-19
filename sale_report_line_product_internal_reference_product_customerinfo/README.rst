@@ -9,7 +9,7 @@ Sale Order report - Product's internal reference / Customer Code integration
 * Further Product's internal reference and name customizations on sale order report,
   based on features provided by OCA's 'Product Supplierinfo for Customers' module
 
-  * When 'Single Column' setting is selected, company's own code and name are shown only 
+  * When 'Single Column' setting is selected, company's own code and name are shown only
     if they differ from the customer's product code and name
 
 Configuration
@@ -35,8 +35,8 @@ Contributors
 Maintainer
 ----------
 
-.. image:: http://tawasta.fi/templates/tawastrap/images/logo.png
-   :alt: Oy Tawasta OS Technologies Ltd.
-   :target: http://tawasta.fi/
+.. image:: http://futural.fi/templates/tawastrap/images/logo.png
+   :alt: Futural Oy
+   :target: http://futural.fi/
 
-This module is maintained by Oy Tawasta OS Technologies Ltd.
+This module is maintained by Futural Oy
