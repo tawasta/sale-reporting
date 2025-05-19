@@ -1,14 +1,15 @@
 import logging
-from typing import Annotated, Optional
 from datetime import datetime
+from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
 
 from odoo import fields
 from odoo.api import Environment
-from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+
+from odoo.addons.fastapi.dependencies import odoo_env
 
 router = APIRouter()
 _logger = logging.getLogger(__name__)
@@ -26,8 +27,8 @@ class ReportResponse(BaseModel):
 @router.get("/invoice/report", response_model=ReportResponse)
 async def invoice_report(
     env: Annotated[Environment, Depends(odoo_env)],
-    start: str = Query(...),
-    end: Optional[str] = Query(None),
+    start: str = Query(...),  # noqa
+    end: Optional[str] = Query(None),  # noqa
 ):
     _logger.info("Generating invoice report")
     rows = []
@@ -174,7 +175,7 @@ async def invoice_report(
 async def sale_report(
     env: Annotated[Environment, Depends(odoo_env)],
     start: str = Query(...),
-    end: Optional[str] = Query(None),
+    end: Optional[str] = Query(None),  # noqa
 ):
     _logger.info("Generating sale report from sale.order directly")
     rows = []

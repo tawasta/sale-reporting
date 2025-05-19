@@ -1,4 +1,5 @@
 from odoo import fields, models
+
 from ..routers import sale_report_router
 
 APP_NAME = "sale_reports"

@@ -6,7 +6,7 @@
 Sale Report Incoterm Name and Code
 ==================================
 
-* Show Incoterm name and code also on sale pdf print, replacing the 
+* Show Incoterm name and code also on sale pdf print, replacing the
   standard incoterm formatting
 * Example formatting with this module: EX WORKS (EXW)
 
@@ -28,15 +28,15 @@ Credits
 Contributors
 ------------
 
-* Timo Kekäläinen <timo.kekalainen@tawasta.fi>
+* Timo Kekäläinen <timo.kekalainen@futural.fi>
 * Kalle Rantalainen <kalle.rantalainen@futural.fi>
 * Timo Talvitie <timot.talvitie@futureal.fi>
 
 Maintainer
 ----------
 
-.. image:: http://tawasta.fi/templates/tawastrap/images/logo.png
-   :alt: Oy Tawasta OS Technologies Ltd.
-   :target: http://tawasta.fi/
+.. image:: http://futural.fi/templates/tawastrap/images/logo.png
+   :alt: Futural Oy
+   :target: http://futural.fi/
 
 This module is maintained by Futural Oy.

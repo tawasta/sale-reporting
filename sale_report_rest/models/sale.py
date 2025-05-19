@@ -1,5 +1,4 @@
-from odoo import models, fields, api
-from datetime import datetime
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
