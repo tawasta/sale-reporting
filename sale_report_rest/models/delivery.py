@@ -6,14 +6,12 @@ class DeliveryCarrier(models.Model):
     _inherit = "delivery.carrier"
 
     is_default_carrier = fields.Boolean(
-        "Is Default Carrier",
         default=False,
-        help="Check this if the carrier is the default carrier for standard deliveries.",
+        help="Check this for standard deliveries default carrier",
     )
     is_alternative_carrier = fields.Boolean(
-        "Is Alternative Carrier",
         default=False,
-        help="Check this if the carrier should be used as an alternative in specific cases.",
+        help="Check this to use carrier as alternative in spesific cases",
     )
 
     @api.constrains("is_default_carrier", "is_alternative_carrier")

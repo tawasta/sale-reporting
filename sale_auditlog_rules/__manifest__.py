@@ -1,7 +1,7 @@
 ##############################################################################
 #
-#    Author: Oy Tawasta OS Technologies Ltd.
-#    Copyright 2019 Oy Tawasta OS Technologies Ltd. (https://tawasta.fi)
+#    Author: Futural Oy
+#    Copyright 2019 Futural Oy (https://futural.fi)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,9 +21,9 @@
 {
     "name": "Audit Log Rules - Sales",
     "summary": "Adds audit log rules for sale order and sale order line",
-    "author": "Tawasta",
+    "author": "Futural",
     "license": "AGPL-3",
-    "website": "https://gitlab.com/tawasta/odoo/sale-reporting",
+    "website": "https://github.com/tawasta/sale-reporting",
     "category": "Logging",
     "application": False,
     "installable": True,

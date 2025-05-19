@@ -26,15 +26,15 @@ Credits
 Contributors
 ------------
 
-* Timo Kekäläinen <timo.kekalainen@tawasta.fi>
-* Miika Nissi <miika.nissi@tawasta.fi>
+* Timo Kekäläinen <timo.kekalainen@futural.fi>
+* Miika Nissi <miika.nissi@futural.fi>
 * Kalle Rantalainen <kalle.rantalainen@futural.fi>
 
 Maintainer
 ----------
 
-.. image:: http://tawasta.fi/templates/tawastrap/images/logo.png
-   :alt: Oy Tawasta OS Technologies Ltd.
-   :target: http://tawasta.fi/
+.. image:: http://futural.fi/templates/tawastrap/images/logo.png
+   :alt: Futural Oy
+   :target: http://futural.fi/
 
 This module is maintained by Futural Oy.
