@@ -9,12 +9,12 @@
             position="after"
         >
             <div
-                t-if="doc.payment_term_id.note"
+                t-if="doc.sudo().payment_term_id.note"
                 name="payment-term-id"
                 class="col-auto col-3 mw-100 mb-2"
             >
                 <strong>Payment Terms:</strong>
-                <p class="m-0" t-field="doc.payment_term_id.note" />
+                <p class="m-0" t-field="doc.sudo().payment_term_id.note" />
             </div>
         </xpath>
     </template>
