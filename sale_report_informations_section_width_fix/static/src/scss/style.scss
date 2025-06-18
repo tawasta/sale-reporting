@@ -1,8 +1,11 @@
 #informations.sale-order-informations {
-    /* Make the elements wrap, with 4 columns per row */
+    /* Make the elements wrap, with max 4 columns per row.
+    min-width keeps the divs from shrinking horizontally
+    in the cases where there are only few columns being showed */
     > div {
         display: inline-block !important;
         width: 24% !important;
+        min-width: 170px !important;
         box-sizing: border-box !important;
         vertical-align: top !important;
     }
