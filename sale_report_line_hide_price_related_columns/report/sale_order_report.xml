@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+            <!-- Headings -->
+            <xpath expr="//th[@name='th_priceunit']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+            <xpath expr="//th[@name='th_discount']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+            <xpath expr="//th[@name='th_taxes']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+            <xpath expr="//th[@name='th_subtotal']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+
+            <!-- Lines -->
+            <xpath
+            expr="//tbody[hasclass('sale_tbody')]//td[@name='td_priceunit']"
+            position="attributes"
+        >
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+            <xpath
+            expr="//tbody[hasclass('sale_tbody')]//td[@t-if='display_discount']"
+            position="attributes"
+        >
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+            <xpath
+            expr="//tbody[hasclass('sale_tbody')]//td[@name='td_taxes']"
+            position="attributes"
+        >
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+            <xpath
+            expr="//tbody[hasclass('sale_tbody')]//td[@name='td_subtotal']"
+            position="attributes"
+        >
+                <attribute name="t-if">False</attribute>
+            </xpath>
+
+    </template>
+</odoo>
