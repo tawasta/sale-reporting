@@ -5,12 +5,13 @@
         <field name="name">Sale order</field>
         <field name="model_id" ref="sale.model_sale_order" />
         <field name="state">subscribed</field>
+        <field name="log_type">fast</field>
     </record>
 
     <record model="auditlog.rule" id="auditlog-rule-sale-2">
         <field name="name">Sale order line</field>
         <field name="model_id" ref="sale.model_sale_order_line" />
         <field name="state">subscribed</field>
+        <field name="log_type">fast</field>
     </record>
-
 </odoo>
