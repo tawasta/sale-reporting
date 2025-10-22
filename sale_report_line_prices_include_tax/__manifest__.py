@@ -21,7 +21,7 @@
 {
     "name": "Sale Report: Line Prices Include Tax",
     "summary": "Show SO Line prices with tax instead of without",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.1.0",
     "category": "Reporting",
     "website": "https://github.com/tawasta/sale-reporting",
     "author": "Futural",
