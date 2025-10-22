@@ -15,5 +15,34 @@
                 <span t-field="line.price_total" />
             </td>
         </xpath>
+
+        <xpath expr="//t[@t-foreach='lines_to_report']" position="before">
+            <t t-set="current_total_taxed" t-value="0" />
+        </xpath>
+
+        <xpath expr="//td[@name='td_name']/../.." position="before">
+            <t
+                t-set="current_total_taxed"
+                t-value="current_total_taxed + line.price_total"
+            />
+        </xpath>
+
+        <xpath expr="//td[@name='td_section_line']" position="after">
+            <t t-set="current_total_taxed" t-value="0" />
+        </xpath>
+
+        <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_section_subtotal']" position="after">
+            <td name="td_section_total_taxed" colspan="99">
+                <strong class="mr16">Subtotal</strong>
+                <span
+                    t-out="current_total_taxed"
+                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+                >31.05</span>
+            </td>
+        </xpath>
     </template>
 </odoo>

@@ -7,10 +7,11 @@ Sale Report: Line Prices Include Tax
 ====================================
 
 * Show Sale Order Line prices with tax instead of without tax
+* Subtotals under sections are also shown with tax
 
 Configuration
 =============
-\-
+None needed
 
 Usage
 =====
@@ -18,7 +19,8 @@ Usage
 
 Known issues / Roadmap
 ======================
-\-
+Other modules may try to modify same elements which are used
+in this module.
 
 Credits
 =======
@@ -27,6 +29,7 @@ Contributors
 ------------
 
 * Timo Talvitie <timo.talvitie@futural.fi>
+* Timo Kekäläinen <timo.kekalainen@tawasta.fi>
 
 Maintainer
 ----------
