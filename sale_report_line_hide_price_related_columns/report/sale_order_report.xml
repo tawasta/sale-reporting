@@ -51,5 +51,13 @@
                 <attribute name="t-if">False</attribute>
             </xpath>
 
+            <!-- Subtotal line when using subheading -->
+             <xpath
+            expr="//tbody[hasclass('sale_tbody')]//tr[hasclass('is-subtotal')]"
+            position="attributes"
+        >
+                <attribute name="t-if">False</attribute>
+             </xpath>
+
     </template>
 </odoo>
