@@ -1,1 +1,0 @@
-https://github.com/tawasta/account-invoicing/archive/refs/heads/19.0.zip#subdirectory=account_invoice_overdue_interest
