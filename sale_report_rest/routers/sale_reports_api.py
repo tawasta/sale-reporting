@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 from typing import Annotated, Optional
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from pydantic import BaseModel
 
 from odoo import fields
@@ -22,6 +22,13 @@ def parse_date(val: str) -> datetime:
     return datetime.strptime(val, DEFAULT_SERVER_DATE_FORMAT)
 
 
+def _get_client_ip(request: Request) -> str:
+    xff = request.headers.get("x-forwarded-for", "")
+    if xff:
+        return xff.split(",")[0].strip()
+    return request.client.host if request.client else ""
+
+
 class ReportResponse(BaseModel):
     count: int
     rows: list[dict]
@@ -29,11 +36,13 @@ class ReportResponse(BaseModel):
 
 @router.get("/invoice/report", response_model=ReportResponse)
 async def invoice_report(
+    request: Request,
     env: Annotated[Environment, Depends(authenticated_env_by_auth_api_key)],
     start: str = Query(...),  # noqa
     end: Optional[str] = Query(None),  # noqa
 ):
     rows = []
+    client_ip = _get_client_ip(request)
 
     move_domain = [
         ("date_invoice", ">=", start),
@@ -53,6 +62,7 @@ async def invoice_report(
             payload={"start": start, "end": end},
             response=result,
             status_code=200,
+            ip_address=client_ip,
         )
         return result
 
@@ -187,17 +197,20 @@ async def invoice_report(
         payload={"start": start, "end": end},
         response=result,
         status_code=200,
+        ip_address=client_ip,
     )
     return result
 
 
 @router.get("/sale/report", response_model=ReportResponse)
 async def sale_report(
+    request: Request,
     env: Annotated[Environment, Depends(authenticated_env_by_auth_api_key)],
     start: str = Query(...),
     end: Optional[str] = Query(None),  # noqa
 ):
     rows = []
+    client_ip = _get_client_ip(request)
 
     order_domain = [("create_date", ">=", start)]
     if end:
@@ -213,6 +226,7 @@ async def sale_report(
             payload={"start": start, "end": end},
             response=result,
             status_code=200,
+            ip_address=client_ip,
         )
         return result
 
@@ -321,7 +335,7 @@ async def sale_report(
                     "qty_invoiced": line.qty_invoiced,
                     "qty_to_invoice": line.qty_to_invoice,
                     "product": product.display_name if product else "",
-                    "product_template": template.display_name if template else "",
+                    "product_template": template.display_name if product else "",
                     "category": category_dict.get(category.id, "") if category else "",
                     "uom": uom_dict.get(line.product_uom.id, ""),
                     "quantity": line.product_uom_qty,
@@ -339,5 +353,6 @@ async def sale_report(
         payload={"start": start, "end": end},
         response=result,
         status_code=200,
+        ip_address=client_ip,
     )
     return result
