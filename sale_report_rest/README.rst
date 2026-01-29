@@ -109,11 +109,6 @@ Default header name::
 
     HTTP-API-KEY
 
-Example request using ``curl``::
-
-    curl -H "HTTP-API-KEY: YOUR_API_KEY" \
-      "http://localhost:8069/sale_rest_api/sale/report?start=2025-01-01"
-
 Required query parameters:
 
 * ``start`` – Start date in ``YYYY-MM-DD`` format
