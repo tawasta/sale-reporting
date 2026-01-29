@@ -13,9 +13,7 @@ from odoo.addons.fastapi_auth_api_key.dependencies import (
     authenticated_env_by_auth_api_key,
 )
 
-router = APIRouter(
-    dependencies=[Depends(authenticated_env_by_auth_api_key)]
-)
+router = APIRouter(dependencies=[Depends(authenticated_env_by_auth_api_key)])
 _logger = logging.getLogger(__name__)
 
 
@@ -103,8 +101,12 @@ async def invoice_report(
                 "id": line.id,
                 "currency": line.currency_id.name,
                 "date": line.date.isoformat() if line.date else "",
-                "date_invoice": line.date_invoice.isoformat() if line.date_invoice else "",
-                "date_due": line.date_maturity.isoformat() if line.date_maturity else "",
+                "date_invoice": line.date_invoice.isoformat()
+                if line.date_invoice
+                else "",
+                "date_due": line.date_maturity.isoformat()
+                if line.date_maturity
+                else "",
                 "state": line.state,
                 "commercial_partner": line.commercial_partner_id.name,
                 "partner": line.move_partner_id.name,
@@ -148,7 +150,8 @@ async def invoice_report(
                         "street": line.move_id.partner_shipping_id.street or "",
                         "city": line.move_id.partner_shipping_id.city or "",
                         "zip": line.move_id.partner_shipping_id.zip or "",
-                        "country": line.move_id.partner_shipping_id.country_id.name or "",
+                        "country": line.move_id.partner_shipping_id.country_id.name
+                        or "",
                     },
                 },
                 "carriers": carriers,
@@ -250,7 +253,9 @@ async def sale_report(
                 else "",
             }
 
-            discount_amount = (line.price_unit * line.product_uom_qty) * (line.discount / 100)
+            discount_amount = (line.price_unit * line.product_uom_qty) * (
+                line.discount / 100
+            )
 
             rows.append(
                 {
