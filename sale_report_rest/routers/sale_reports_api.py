@@ -9,9 +9,13 @@ from odoo import fields
 from odoo.api import Environment
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
-from odoo.addons.fastapi.dependencies import odoo_env
+from odoo.addons.fastapi_auth_api_key.dependencies import (
+    authenticated_env_by_auth_api_key,
+)
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(authenticated_env_by_auth_api_key)]
+)
 _logger = logging.getLogger(__name__)
 
 
@@ -26,7 +30,7 @@ class ReportResponse(BaseModel):
 
 @router.get("/invoice/report", response_model=ReportResponse)
 async def invoice_report(
-    env: Annotated[Environment, Depends(odoo_env)],
+    env: Annotated[Environment, Depends(authenticated_env_by_auth_api_key)],
     start: str = Query(...),  # noqa
     end: Optional[str] = Query(None),  # noqa
 ):
@@ -40,7 +44,7 @@ async def invoice_report(
     if end:
         move_domain.append(("date_invoice", "<=", end))
 
-    move_lines = env["account.move.line"].sudo().search(move_domain)
+    move_lines = env["account.move.line"].search(move_domain)
     _logger.info("Found %d move lines", len(move_lines))
 
     if not move_lines:
@@ -99,12 +103,8 @@ async def invoice_report(
                 "id": line.id,
                 "currency": line.currency_id.name,
                 "date": line.date.isoformat() if line.date else "",
-                "date_invoice": line.date_invoice.isoformat()
-                if line.date_invoice
-                else "",
-                "date_due": line.date_maturity.isoformat()
-                if line.date_maturity
-                else "",
+                "date_invoice": line.date_invoice.isoformat() if line.date_invoice else "",
+                "date_due": line.date_maturity.isoformat() if line.date_maturity else "",
                 "state": line.state,
                 "commercial_partner": line.commercial_partner_id.name,
                 "partner": line.move_partner_id.name,
@@ -148,8 +148,7 @@ async def invoice_report(
                         "street": line.move_id.partner_shipping_id.street or "",
                         "city": line.move_id.partner_shipping_id.city or "",
                         "zip": line.move_id.partner_shipping_id.zip or "",
-                        "country": line.move_id.partner_shipping_id.country_id.name
-                        or "",
+                        "country": line.move_id.partner_shipping_id.country_id.name or "",
                     },
                 },
                 "carriers": carriers,
@@ -173,7 +172,7 @@ async def invoice_report(
 
 @router.get("/sale/report", response_model=ReportResponse)
 async def sale_report(
-    env: Annotated[Environment, Depends(odoo_env)],
+    env: Annotated[Environment, Depends(authenticated_env_by_auth_api_key)],
     start: str = Query(...),
     end: Optional[str] = Query(None),  # noqa
 ):
@@ -184,7 +183,7 @@ async def sale_report(
     if end:
         order_domain.append(("create_date", "<=", end))
 
-    orders = env["sale.order"].sudo().search(order_domain)
+    orders = env["sale.order"].search(order_domain)
     _logger.info("Found %d orders", len(orders))
     if not orders:
         return {"count": 0, "rows": []}
@@ -251,9 +250,7 @@ async def sale_report(
                 else "",
             }
 
-            discount_amount = (line.price_unit * line.product_uom_qty) * (
-                line.discount / 100
-            )
+            discount_amount = (line.price_unit * line.product_uom_qty) * (line.discount / 100)
 
             rows.append(
                 {

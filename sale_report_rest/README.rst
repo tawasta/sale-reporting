@@ -6,91 +6,126 @@
 Sale reports REST API
 =====================
 
-This Odoo module provides REST API endpoints for sales and invoice analysis using FastAPI.
+This Odoo module provides **secured REST API endpoints** for sales and invoice
+analysis using **FastAPI**.
+
+The API is **not public**. All endpoints require authentication using **API keys**
+provided via HTTP headers.
 
 Key Features
 ============
 
-* REST API endpoints for `sale.order` and `account.move.line` data
-* Includes converted monetary values in euros
-* Detailed partner, carrier, and address information
-* Tag and sales agent metadata
+* REST API endpoints for ``sale.order`` and ``account.move.line`` data
+* API key based authentication using ``fastapi_auth_api_key``
+* Endpoint-level access control via API key groups
+* Includes converted monetary values in euros (EUR)
+* Detailed partner, carrier, address, tag, and sales agent information
 * Enforces single default and alternative delivery carriers
-* Access controlled via FastAPI groups and users
+* Read-only access (no write operations)
 
 Endpoints
 =========
 
-The module registers two FastAPI endpoints:
+The module registers two FastAPI endpoints under the root path ``/sale_rest_api``:
 
-* ``GET /sale_rest_api/invoice/report`` – Returns invoice line reports
-* ``GET /sale_rest_api/sale/report`` – Returns sales order line reports
+* ``GET /sale_rest_api/invoice/report``  
+  Returns invoice line level reporting data.
 
-All endpoints require valid authentication and appropriate user permissions.
+* ``GET /sale_rest_api/sale/report``  
+  Returns sales order line level reporting data.
+
+All endpoints require a valid API key.
 
 Installation
 ============
 
-Dependencies:
+Python dependencies:
 
-* `fastapi`
-* `pydantic`
+* ``fastapi``
+* ``pydantic``
 
 Ensure the following Odoo modules are installed:
 
-* `fastapi`
-* `sale_pivot_report_sh_product_tag`
-* `account_invoice_pivot_report_delivery_address`
-* `account_invoice_pivot_report_delivery_address_country`
-* `account_invoice_pivot_report_product_template`
-* `sales_agent`
-* `stock_picking_invoice_link`
+* ``fastapi``
+* ``fastapi_auth_api_key``
+* ``auth_api_key``
+* ``sale_pivot_report_sh_product_tag``
+* ``account_invoice_pivot_report_delivery_address``
+* ``account_invoice_pivot_report_delivery_address_country``
+* ``account_invoice_pivot_report_product_template``
+* ``sales_agent``
+* ``stock_picking_invoice_link``
 
 Configuration
 =============
 
-1. Create an integration user (e.g. *Sale Reports API User*)
-2. Assign the user to the *Sale Reports FastAPI Group*
-3. Create a FastAPI Endpoint record:
-   * App: `sale_reports`
-   * Root path: `/sale_rest_api`
-   * User: integration user
+After installing the module, configure access as follows:
+
+1. **Integration User**
+
+   The module creates a technical user:
+
+   * ``Sale Report REST API User``
+
+   This user is used to execute API requests.
+
+2. **API Key Group**
+
+   The module defines an API key group:
+
+   * ``Sale Report REST API Keys``
+
+   Only API keys belonging to this group are allowed to access the endpoints.
+
+3. **FastAPI Endpoint**
+
+   A FastAPI endpoint record is created with the following configuration:
+
+   * App: ``sale_reports``
+   * Root path: ``/sale_rest_api``
+   * User: ``Sale Report REST API User``
+   * API key group: ``Sale Report REST API Keys``
+
+4. **API Key**
+
+   Create an API key in Odoo:
+
+   * User: ``Sale Report REST API User``
+   * Group: ``Sale Report REST API Keys``
+
+   Store the generated key securely. It will be required for all API requests.
 
 Optional fields for delivery carriers:
 
-* `Is Default Carrier`: Only one carrier can be marked as default.
-* `Is Alternative Carrier`: Only one carrier can be marked as alternative.
+* ``Is Default Carrier``: Only one carrier can be marked as default.
+* ``Is Alternative Carrier``: Only one carrier can be marked as alternative.
 
 Usage
 =====
 
-Send HTTP GET requests with required query parameters (`start`, optionally `end`) to the configured endpoints. You must authenticate using Odoo's FastAPI authentication mechanism (e.g. API keys or session-based).
+All requests must include an API key in the HTTP headers.
 
-Example:
-::
+Default header name::
 
-    GET /sale_rest_api/sale/report?start=2024-01-01&end=2024-01-31
+    HTTP-API-KEY
 
-Response:
-::
+Example request using ``curl``::
 
-    {
-        "count": 42,
-        "rows": [
-            {
-                "id": 123,
-                "name": "SO0001",
-                ...
-            },
-            ...
-        ]
-    }
+    curl -H "HTTP-API-KEY: YOUR_API_KEY" \
+      "http://localhost:8069/sale_rest_api/sale/report?start=2025-01-01"
+
+Required query parameters:
+
+* ``start`` – Start date in ``YYYY-MM-DD`` format
+* ``end`` – Optional end date in ``YYYY-MM-DD`` format
+
+Example::
+
+    GET /sale_rest_api/invoice/report?start=2025-01-01&end=2025-01-31
 
 Known Issues / Roadmap
 ======================
-
-* Currently supports only read access
-* More endpoints and filtering options may be added in future
+\-
 
 Credits
 =======

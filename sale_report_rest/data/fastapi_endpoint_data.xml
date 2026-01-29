@@ -1,24 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
-  <record
-        id="sale_reports_api_user"
-        model="res.users"
-        context="{'no_reset_password': True}"
-    >
-    <field name="name">Sale Reports API User</field>
-    <field name="login">sale_reports_api_user</field>
-    <field name="groups_id" eval="[(6, 0, [])]" />
+
+  <record id="sale_report_rest_api_user" model="res.users" context="{'no_reset_password': True}">
+    <field name="name">Sale Report REST API User</field>
+    <field name="login">sale_report_rest_api_user</field>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="active">True</field>
   </record>
 
   <record id="fastapi_sale_reports_group" model="res.groups">
-    <field name="name">Sale Reports FastAPI Group</field>
-    <field name="users" eval="[(4, ref('sale_reports_api_user'))]" />
+    <field name="name">Sale Report REST FastAPI Group</field>
+    <field name="users" eval="[(4, ref('sale_report_rest.sale_report_rest_api_user'))]"/>
   </record>
 
-  <record id="sale_reports_fastapi_endpoint" model="fastapi.endpoint">
-    <field name="name">Sale Reports Endpoint</field>
+  <record id="sale_report_rest_auth_api_key_group" model="auth.api.key.group">
+    <field name="name">Sale Report REST API Keys</field>
+    <field name="code">sale_report_rest</field>
+  </record>
+
+  <record id="sale_report_rest_fastapi_endpoint" model="fastapi.endpoint">
+    <field name="name">Sale Report REST Endpoint</field>
     <field name="app">sale_reports</field>
     <field name="root_path">/sale_rest_api</field>
-    <field name="user_id" ref="sale_reports_api_user" />
+    <field name="user_id" ref="sale_report_rest.sale_report_rest_api_user"/>
+    <field name="auth_api_key_group_id" ref="sale_report_rest.sale_report_rest_auth_api_key_group"/>
   </record>
 </odoo>
