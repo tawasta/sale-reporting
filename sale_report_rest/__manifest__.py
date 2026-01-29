@@ -36,6 +36,7 @@
         "account_invoice_pivot_report_product_template",
         "sales_agent",
         "stock_picking_invoice_link",
+        "fastapi_rest_log",
     ],
     "data": [
         "data/fastapi_endpoint_data.xml",
