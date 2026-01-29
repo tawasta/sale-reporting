@@ -19,32 +19,30 @@
 ##############################################################################
 
 {
-    "name": "Sale reports REST API",
-    "summary": "REST API for sales analysis and invoice analysis",
+    "name": "Sale Report REST (FastAPI)",
+    "summary": "FastAPI endpoints for sales & invoice reporting (API key protected)",
     "version": "17.0.1.0.0",
     "category": "Reporting",
-    "website": "https://github.com/tawasta/sale-reporting",
     "author": "Futural",
+    "website": "https://github.com/tawasta/sale-reporting",
     "license": "AGPL-3",
-    "data": [
-        "data/fastapi_endpoint_data.xml",
-        "views/carrier.xml",
-    ],
     "depends": [
         "fastapi",
+        "fastapi_auth_api_key",
+        "auth_api_key",
         "sale_pivot_report_sh_product_tag",
         "account_invoice_pivot_report_delivery_address",
         "account_invoice_pivot_report_delivery_address_country",
         "account_invoice_pivot_report_product_template",
         "sales_agent",
         "stock_picking_invoice_link",
+        "fastapi_rest_log",
     ],
-    "external_dependencies": {
-        "python": [
-            "fastapi",
-            "pydantic",
-        ]
-    },
-    "application": False,
+    "data": [
+        "data/fastapi_endpoint_data.xml",
+        "views/carrier.xml",
+    ],
+    "external_dependencies": {"python": ["fastapi", "pydantic"]},
     "installable": True,
+    "application": False,
 }

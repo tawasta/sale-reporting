@@ -9,9 +9,12 @@ from odoo import fields
 from odoo.api import Environment
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
-from odoo.addons.fastapi.dependencies import odoo_env
+from odoo.addons.fastapi_auth_api_key.dependencies import (
+    authenticated_env_by_auth_api_key,
+)
+from odoo.addons.fastapi_rest_log.services.rest_logger import log_fastapi_call
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(authenticated_env_by_auth_api_key)])
 _logger = logging.getLogger(__name__)
 
 
@@ -26,11 +29,10 @@ class ReportResponse(BaseModel):
 
 @router.get("/invoice/report", response_model=ReportResponse)
 async def invoice_report(
-    env: Annotated[Environment, Depends(odoo_env)],
+    env: Annotated[Environment, Depends(authenticated_env_by_auth_api_key)],
     start: str = Query(...),  # noqa
     end: Optional[str] = Query(None),  # noqa
 ):
-    _logger.info("Generating invoice report")
     rows = []
 
     move_domain = [
@@ -40,11 +42,19 @@ async def invoice_report(
     if end:
         move_domain.append(("date_invoice", "<=", end))
 
-    move_lines = env["account.move.line"].sudo().search(move_domain)
-    _logger.info("Found %d move lines", len(move_lines))
+    move_lines = env["account.move.line"].search(move_domain)
 
     if not move_lines:
-        return {"count": 0, "rows": []}
+        result = {"count": 0, "rows": []}
+        log_fastapi_call(
+            env,
+            method="GET",
+            path="/sale_rest_api/invoice/report",
+            payload={"start": start, "end": end},
+            response=result,
+            status_code=200,
+        )
+        return result
 
     other_carrier = env["delivery.carrier"].search(
         [("is_alternative_carrier", "=", True)], limit=1
@@ -169,27 +179,42 @@ async def invoice_report(
             }
         )
 
-    _logger.info("Invoice report generated with %d rows", len(rows))
-    return {"count": len(rows), "rows": rows}
+    result = {"count": len(rows), "rows": rows}
+    log_fastapi_call(
+        env,
+        method="GET",
+        path="/sale_rest_api/invoice/report",
+        payload={"start": start, "end": end},
+        response=result,
+        status_code=200,
+    )
+    return result
 
 
 @router.get("/sale/report", response_model=ReportResponse)
 async def sale_report(
-    env: Annotated[Environment, Depends(odoo_env)],
+    env: Annotated[Environment, Depends(authenticated_env_by_auth_api_key)],
     start: str = Query(...),
     end: Optional[str] = Query(None),  # noqa
 ):
-    _logger.info("Generating sale report from sale.order directly")
     rows = []
 
     order_domain = [("create_date", ">=", start)]
     if end:
         order_domain.append(("create_date", "<=", end))
 
-    orders = env["sale.order"].sudo().search(order_domain)
-    _logger.info("Found %d orders", len(orders))
+    orders = env["sale.order"].search(order_domain)
     if not orders:
-        return {"count": 0, "rows": []}
+        result = {"count": 0, "rows": []}
+        log_fastapi_call(
+            env,
+            method="GET",
+            path="/sale_rest_api/sale/report",
+            payload={"start": start, "end": end},
+            response=result,
+            status_code=200,
+        )
+        return result
 
     partners = env["res.partner"].with_context(active_test=False).search([])
     partner_dict = {p.id: p.name for p in partners}
@@ -306,5 +331,13 @@ async def sale_report(
                 }
             )
 
-    _logger.info("Sale report generated with %d rows", len(rows))
-    return {"count": len(rows), "rows": rows}
+    result = {"count": len(rows), "rows": rows}
+    log_fastapi_call(
+        env,
+        method="GET",
+        path="/sale_rest_api/sale/report",
+        payload={"start": start, "end": end},
+        response=result,
+        status_code=200,
+    )
+    return result
