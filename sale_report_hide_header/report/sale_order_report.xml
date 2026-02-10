@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <template id="external_layout_striped" inherit_id="web.external_layout_striped">
+    <xpath expr="//h2[@t-out='layout_document_title']" position="attributes">
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath expr="//h2[@t-out='layout_document_title']" position="after">
+      <br />
+    </xpath>
+  </template>
+
+  <template id="external_layout_boxed" inherit_id="web.external_layout_boxed">
+    <xpath expr="//h2[@t-out='layout_document_title']" position="attributes">
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath expr="//h2[@t-out='layout_document_title']" position="after">
+      <br />
+    </xpath>
+  </template>
+
+  <template id="external_layout_bold" inherit_id="web.external_layout_bold">
+    <xpath expr="//h2[@t-out='layout_document_title']" position="attributes">
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath expr="//h2[@t-out='layout_document_title']" position="after">
+      <br />
+    </xpath>
+  </template>
+
+  <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+    <xpath expr="//h2[@t-out='layout_document_title']" position="attributes">
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath expr="//h2[@t-out='layout_document_title']" position="after">
+      <br />
+    </xpath>
+  </template>
+
+  <template id="external_layout_folder" inherit_id="web.external_layout_folder">
+    <xpath
+      expr="//div[hasclass('o_folder_adaptative_shape', 'd-flex', 'flex-start', 'position-relative')]//h2"
+      position="attributes"
+    >
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath
+      expr="//div[hasclass('o_folder_adaptative_shape', 'd-flex', 'flex-start', 'position-relative')]//h2"
+      position="after"
+    >
+      <br />
+    </xpath>
+  </template>
+
+  <template id="external_layout_wave" inherit_id="web.external_layout_wave">
+    <xpath expr="//h2[@t-out='layout_document_title']" position="attributes">
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath expr="//h2[@t-out='layout_document_title']" position="after">
+      <br />
+    </xpath>
+  </template>
+
+  <template id="external_layout_bubble" inherit_id="web.external_layout_bubble">
+    <xpath expr="//h2[@t-out='layout_document_title']" position="attributes">
+      <attribute name="style">display: none;</attribute>
+    </xpath>
+    <xpath expr="//h2[@t-out='layout_document_title']" position="after">
+      <br />
+    </xpath>
+  </template>
+</odoo>
