@@ -114,6 +114,8 @@ async def invoice_report(
             else line.quantity or 0.0
         )
 
+        discount_amount = (line.price_unit * line.quantity) * (line.discount / 100)
+
         rows.append(
             {
                 "id": line.id,
@@ -128,6 +130,9 @@ async def invoice_report(
                 "state": line.state,
                 "commercial_partner": line.commercial_partner_id.name,
                 "partner": line.move_partner_id.name,
+                "discount": line.discount or 0.0,
+                "discount_amount": discount_amount,
+                "discount_amount_currency": line.discount_amount_currency or 0.0,
                 "price_unit": line.price_unit or 0.0,
                 "price_subtotal": line.price_subtotal or 0.0,
                 "price_total": line.price_total or 0.0,
