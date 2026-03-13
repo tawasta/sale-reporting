@@ -29,6 +29,5 @@
     "application": False,
     "installable": True,
     "depends": ["account_invoice_overdue_interest", "sale", "account"],
-    "data": ["report/sale_order_report.xml",
-             'views/res_config_settings_view.xml'],
+    "data": ["report/sale_order_report.xml", "views/res_config_settings_view.xml"],
 }

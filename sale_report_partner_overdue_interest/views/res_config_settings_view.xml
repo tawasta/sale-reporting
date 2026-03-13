@@ -9,7 +9,7 @@
                     id="invoice_report_show_overdue_interest"
                     help="If selected, displays overdue interest in the sale order report"
                 >
-                    <field name="show_overdue_interest"/>
+                    <field name="show_overdue_interest" />
                 </setting>
             </block>
 
