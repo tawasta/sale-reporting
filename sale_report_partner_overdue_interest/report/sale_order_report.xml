@@ -6,7 +6,7 @@
         inherit_id="sale.report_saleorder_document"
     >
         <xpath expr="//span[@t-field='doc.user_id']/.." position="before">
-            <t t-if="not doc.show_overdue_interest_flag()">
+            <t t-if="not doc.hide_overdue_interest_flag()">
                 <div class="col-auto col-3 mw-100 mb-2">
                     <strong>Late payment interest:</strong>
                     <p class="m-0" id="overdue-interest-field-value">

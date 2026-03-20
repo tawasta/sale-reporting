@@ -7,13 +7,13 @@ from odoo import models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def show_overdue_interest_flag(self):
+    def hide_overdue_interest_flag(self):
         # Read the toggle from settings
         return (
             self.env["ir.config_parameter"]
             .sudo()
             .get_param(
-                "sale_report_partner_overdue_interest.show_overdue_interest",
+                "sale_report_partner_overdue_interest.hide_overdue_interest",
                 default="False",
             )
             == "True"
