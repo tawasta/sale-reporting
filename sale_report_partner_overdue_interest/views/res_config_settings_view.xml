@@ -7,7 +7,7 @@
             <block id="pay_invoice_online_setting_container" position="inside">
                 <setting
                     id="invoice_report_show_overdue_interest"
-                    help="If selected, displays overdue interest in the sale order report"
+                    help="If selected, hides overdue interest in the sale order report"
                 >
                     <field name="show_overdue_interest" />
                 </setting>

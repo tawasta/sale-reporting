@@ -29,10 +29,10 @@ msgstr "<strong>Viivästyskorko:</strong>"
 
 #. module: sale_report_partner_overdue_interest
 #: model:ir.model.fields,field_description:sale_report_partner_overdue_interest.field_res_config_settings__show_overdue_interest
-msgid "Show overdue interest in sale report"
-msgstr "Näytä viivästyskorko myyntitarjouksessa"
+msgid "Hide overdue interest in sale report"
+msgstr "Piilota viivästyskorko myyntitilauksessa"
 
 #. module: sale_report_partner_overdue_interest
 #: model_terms:ir.ui.view,arch_db:sale_report_partner_overdue_interest.view_res_config_settings_inherit_account_overdue
-msgid "If selected, displays overdue interest in the sale order report"
-msgstr "Jos valittu, näyttää viivästyskoron myyntitarjouksessa"
+msgid "If selected, hides overdue interest in the sale order report"
+msgstr "Jos valittu, piilottaa viivästyskoron myyntitilauksessa"
