@@ -28,11 +28,11 @@ msgid "<strong>Late payment interest:</strong>"
 msgstr "<strong>Taux de pénalité de retard:</strong>"
 
 #. module: sale_report_partner_overdue_interest
-#: model:ir.model.fields,field_description:sale_report_partner_overdue_interest.field_res_config_settings__show_overdue_interest
-msgid "Show overdue interest in sale report"
-msgstr "Montrez un intérêt tardif pour le rapport de vente"
+#: model:ir.model.fields,field_description:sale_report_partner_overdue_interest.field_res_config_settings__hide_overdue_interest
+msgid "Hide overdue interest in sale report"
+msgstr "Masquer les intérêts en retard dans le rapport de vente"
 
 #. module: sale_report_partner_overdue_interest
 #: model_terms:ir.ui.view,arch_db:sale_report_partner_overdue_interest.view_res_config_settings_inherit_account_overdue
-msgid "If selected, displays overdue interest in the sale order report"
-msgstr "Si cette option est sélectionnée, affiche les intérêts en retard dans le rapport de commande."
+msgid "If selected, hides overdue interest in the sale order report"
+msgstr "Si cette option est sélectionnée, masque les intérêts en retard dans le rapport de commande de vente"
