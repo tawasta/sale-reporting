@@ -21,13 +21,13 @@
 {
     "name": "Sale Report Partner overdue interest",
     "summary": "Sale Report Partner overdue interest",
-    "version": "17.0.1.0.3",
+    "version": "17.0.1.0.4",
     "category": "Reporting",
     "website": "https://github.com/tawasta/sale-reporting",
     "author": "Futural",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["account_invoice_overdue_interest", "sale"],
-    "data": ["report/sale_order_report.xml"],
+    "depends": ["account_invoice_overdue_interest", "sale", "account"],
+    "data": ["report/sale_order_report.xml", "views/res_config_settings_view.xml"],
 }

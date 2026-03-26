@@ -25,3 +25,13 @@ msgstr "<span>0,00</span>"
 #: model_terms:ir.ui.view,arch_db:sale_report_partner_overdue_interest.report_saleorder_document
 msgid "<strong>Late payment interest:</strong>"
 msgstr "<strong>Dröjsmålsränta:</strong>"
+
+#. module: sale_report_partner_overdue_interest
+#: model:ir.model.fields,field_description:sale_report_partner_overdue_interest.field_res_config_settings__hide_overdue_interest
+msgid "Hide overdue interest in sale report"
+msgstr "Dölj förfallet intresse i försäljningsrapporten"
+
+#. module: sale_report_partner_overdue_interest
+#: model_terms:ir.ui.view,arch_db:sale_report_partner_overdue_interest.view_res_config_settings_inherit_account_overdue
+msgid "If selected, hides overdue interest in the sale order report"
+msgstr "Om valt döljs förfallna räntor i försäljningsorderrapporten"

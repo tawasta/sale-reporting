@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+
     <template
         id="report_saleorder_document"
         inherit_id="sale.report_saleorder_document"
     >
         <xpath expr="//span[@t-field='doc.user_id']/.." position="before">
-            <div class="col-auto col-3 mw-100 mb-2">
-                <strong>Late payment interest:</strong>
-                <p class="m-0" id="overdue-interest-field-value">
-                <t t-if="'overdue_interest' in doc.partner_id.fields_get()">
-                    <span
-                            t-if="doc.partner_id.overdue_interest"
-                            t-field="doc.partner_id.overdue_interest"
-                        />
-                    <span
-                            t-if="not doc.partner_id.overdue_interest"
-                            t-field="doc.company_id.overdue_interest"
-                        />
-                </t>
-                <t t-if="'overdue_interest' not in doc.partner_id.fields_get()">
-                    <span>0,00</span>
-                </t>
-                %
-                </p>
-                <br />
-            </div>
+            <t t-if="not doc.hide_overdue_interest_flag()">
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Late payment interest:</strong>
+                    <p class="m-0" id="overdue-interest-field-value">
+                    <t t-if="'overdue_interest' in doc.partner_id.fields_get()">
+                        <span
+                                t-if="doc.partner_id.overdue_interest"
+                                t-field="doc.partner_id.overdue_interest"
+                            />
+                        <span
+                                t-if="not doc.partner_id.overdue_interest"
+                                t-field="doc.company_id.overdue_interest"
+                            />
+                    </t>
+                    <t t-if="'overdue_interest' not in doc.partner_id.fields_get()">
+                        <span>0,00</span>
+                    </t>
+                    %
+                    </p>
+                    <br />
+                </div>
+            </t>
         </xpath>
     </template>
 </odoo>
