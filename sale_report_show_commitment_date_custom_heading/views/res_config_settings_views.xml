@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record
+        id="res_config_settings_view_form_inherit_commitment_label"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.sale.commitment.label</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block name="quotation_order_setting_container" position="inside">
+
+                <setting
+                    string="Commitment Date Label"
+                    company_dependent="1"
+                    help="Label used for the commitment date on the sales order PDF report."
+                >
+                    <field name="sale_report_commitment_date_label" />
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>
