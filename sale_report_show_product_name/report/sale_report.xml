@@ -5,7 +5,9 @@
         inherit_id="sale.report_saleorder_document"
     >
         <xpath expr="//span[@t-field='line.name']" position="before">
-            <strong t-field="line.product_id" /><br />
+            <t t-if="line.product_id.display_name != line.name">
+                <strong t-field="line.product_id" /><br />
+            </t>
         </xpath>
 
     </template>

@@ -6,15 +6,19 @@
 Sale Report: show product on lines
 ==================================
 
-Always show product on SO print lines
+* Always show product on SO print lines
+* Appends the product's name to the line, as long the SO line's description
+  is not already identical to the product's name (to avoid showing the same 
+  text twice)
+
 
 Configuration
 =============
-\-
+* None needed
 
 Usage
 =====
-\-
+* Just print a quotation / order confirmation
 
 Known issues / Roadmap
 ======================
@@ -27,6 +31,7 @@ Contributors
 ------------
 
 * Jarmo Kortetjärvi <jarmo.kortetjarvi@futural.fi>
+* Timo Talvitie <timo.talvitie@futural.fi>
 
 Maintainer
 ----------
