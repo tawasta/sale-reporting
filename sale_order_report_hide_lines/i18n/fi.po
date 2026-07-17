@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_report_hide_lines
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-17 09:32+0000\n"
+"PO-Revision-Date: 2026-07-17 09:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_report_hide_lines
+#: model_terms:ir.ui.view,arch_db:sale_order_report_hide_lines.res_config_settings_view_form_inherit_report_line_mode
+msgid ""
+"Choose the default way product lines are displayed on sale order PDF "
+"reports."
+msgstr ""
+"Valitse oletustapa, jolla tuoterivit näytetään myyntitilausten PDF-"
+"raporteissa."
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model,name:sale_order_report_hide_lines.model_res_company
+msgid "Companies"
+msgstr "Yritykset"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model,name:sale_order_report_hide_lines.model_res_config_settings
+msgid "Config Settings"
+msgstr "Asetukset"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields,help:sale_order_report_hide_lines.field_sale_order__report_line_mode
+msgid "Controls how product lines are shown on the PDF report for this order."
+msgstr "Määrittää, miten tuoterivit näytetään tämän tilauksen PDF-raportissa."
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_res_company__sale_report_line_mode
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_res_config_settings__sale_report_line_mode
+msgid "Default Sale Report Line Mode"
+msgstr "Oletus rivitila myyntitilauksella"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields,help:sale_order_report_hide_lines.field_res_company__sale_report_line_mode
+#: model:ir.model.fields,help:sale_order_report_hide_lines.field_res_config_settings__sale_report_line_mode
+msgid "Default display mode for product lines on sale order PDF reports."
+msgstr "Tuoterivien oletusnäyttötila myyntitilausten PDF-raporteissa."
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_res_company__id
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_sale_order__id
+msgid "ID"
+msgstr "Tunnus"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__res_company__sale_report_line_mode__no_line_prices
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__sale_order__report_line_mode__no_line_prices
+msgid "No Line Prices"
+msgstr "Ei rivihintoja"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__res_company__sale_report_line_mode__no_lines
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__sale_order__report_line_mode__no_lines
+msgid "No Lines"
+msgstr "Ei rivejä"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__res_company__sale_report_line_mode__normal
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__sale_order__report_line_mode__normal
+msgid "Normal"
+msgstr "Normaali"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_sale_order__report_line_mode
+msgid "Report Line Mode"
+msgstr "Raportin rivitila"
+
+#. module: sale_order_report_hide_lines
+#: model_terms:ir.ui.view,arch_db:sale_order_report_hide_lines.res_config_settings_view_form_inherit_report_line_mode
+msgid "Sale Report Line Mode"
+msgstr "Myyntiraportin rivitila"
+
+#. module: sale_order_report_hide_lines
+#: model:ir.model,name:sale_order_report_hide_lines.model_sale_order
+msgid "Sales Order"
+msgstr "Myyntitilaus"
