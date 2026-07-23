@@ -9,6 +9,7 @@ class ResCompany(models.Model):
             ("normal", "Normal"),
             ("no_lines", "No Lines"),
             ("no_line_prices", "No Line Prices"),
+            ("only_headers", "Show only headers"),
         ],
         string="Default Sale Report Line Mode",
         default="normal",
