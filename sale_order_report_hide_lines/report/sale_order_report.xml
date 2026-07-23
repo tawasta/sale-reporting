@@ -9,6 +9,13 @@
     </xpath>
 
     <xpath
+      expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']"
+      position="attributes"
+    >
+      <attribute name="t-if">doc.report_line_mode != 'only_headers'</attribute>
+    </xpath>
+
+    <xpath
       expr="//table[hasclass('o_main_table')]//th[@name='th_priceunit']"
       position="attributes"
     >
@@ -82,6 +89,13 @@
     </xpath>
 
     <xpath
+      expr="//table[hasclass('o_main_table')]//tr[@name='tr_combo']"
+      position="attributes"
+    >
+      <attribute name="t-if">doc.report_line_mode != 'only_headers'</attribute>
+    </xpath>
+
+    <xpath
       expr="//table[hasclass('o_main_table')]//tr[@name='tr_combo']/td[@name='td_combo_price']"
       position="attributes"
     >
@@ -92,7 +106,9 @@
       expr="//table[hasclass('o_main_table')]//tr[@name='tr_section_group']"
       position="attributes"
     >
-      <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute>
+      <attribute
+        name="t-if"
+      >doc.report_line_mode not in ('no_line_prices', 'only_headers')</attribute>
     </xpath>
   </template>
 </odoo>

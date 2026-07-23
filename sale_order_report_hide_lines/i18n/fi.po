@@ -84,6 +84,12 @@ msgid "Normal"
 msgstr "Normaali"
 
 #. module: sale_order_report_hide_lines
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__res_company__sale_report_line_mode__only_headers
+#: model:ir.model.fields.selection,name:sale_order_report_hide_lines.selection__sale_order__report_line_mode__only_headers
+msgid "Show only headers"
+msgstr "Näytä vain otsikot"
+
+#. module: sale_order_report_hide_lines
 #: model:ir.model.fields,field_description:sale_order_report_hide_lines.field_sale_order__report_line_mode
 msgid "Report Line Mode"
 msgstr "Raportin rivitila"

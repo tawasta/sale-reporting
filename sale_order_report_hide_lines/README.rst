@@ -7,14 +7,16 @@ Sale Order Report Hide Lines
 ==================================
 
 * Hide product lines or product line prices from sale order reports.
+* Show only section/header lines and hide product lines.
 
 Configuration
 =============
 * Install module
 * Configure the report line mode in the sale order report wizard:
-  * 'all_lines' (default) - show all lines and prices
+  * 'normal' (default) - show all lines and prices
   * 'no_lines' - hide all product lines and prices
   * 'no_line_prices' - show product lines but hide all price-related information
+  * 'only_headers' - show section/header lines, hide product and combo lines
 
 Usage
 =====

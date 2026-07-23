@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
             ("normal", "Normal"),
             ("no_lines", "No Lines"),
             ("no_line_prices", "No Line Prices"),
+            ("only_headers", "Show only headers"),
         ],
         default=lambda self: self.env.company.sale_report_line_mode or "normal",
         required=True,
