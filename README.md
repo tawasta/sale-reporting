@@ -34,6 +34,7 @@ addon | version | maintainers | summary
 [sale_report_incoterm_name](sale_report_incoterm_name/) | 17.0.1.0.0 |  | Show Incoterm name instead of code on Sale Report
 [sale_report_incoterms_name_and_code](sale_report_incoterms_name_and_code/) | 17.0.1.0.1 |  | Reformat Incoterm to show name and code on sale order PDF print
 [sale_report_informations_section_width_fix](sale_report_informations_section_width_fix/) | 17.0.1.2.2 |  | Adds wrapping support for the 'informations' section on SO print
+[sale_report_line_discount_hide_decimals](sale_report_line_discount_hide_decimals/) | 17.0.1.0.0 |  | Hide decimals from discount in lines of sale order PDF print
 [sale_report_line_hide_price_related_columns](sale_report_line_hide_price_related_columns/) | 17.0.1.1.1 |  | Price info is only shown as a total below the lines
 [sale_report_line_hide_tax](sale_report_line_hide_tax/) | 17.0.1.0.0 |  | Hide taxes in lines of sale order PDF print
 [sale_report_line_hide_uom](sale_report_line_hide_uom/) | 17.0.1.0.0 |  | Hide Unit of Measure from Quantity in lines of sale order PDF print
