@@ -9,10 +9,10 @@
         </xpath>
         <xpath expr="//span[@t-field='line.name']" position="before">
             <t t-if="line.product_id.display_name != line.name">
-                <strong t-field="line.product_id"/><br/>
+                <strong t-field="line.product_id" /><br />
             </t>
             <t t-else="">
-                <strong t-field="line.product_id"/><br/>
+                <strong t-field="line.product_id" /><br />
             </t>
         </xpath>
 
