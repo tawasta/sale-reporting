@@ -35,6 +35,7 @@ addon | version | maintainers | summary
 [sale_report_incoterms_name_and_code](sale_report_incoterms_name_and_code/) | 17.0.1.0.1 |  | Reformat Incoterm to show name and code on sale order PDF print
 [sale_report_informations_section_width_fix](sale_report_informations_section_width_fix/) | 17.0.1.2.2 |  | Adds wrapping support for the 'informations' section on SO print
 [sale_report_line_hide_price_related_columns](sale_report_line_hide_price_related_columns/) | 17.0.1.1.1 |  | Price info is only shown as a total below the lines
+[sale_report_line_hide_tax](sale_report_line_hide_tax/) | 17.0.1.0.0 |  | Hide taxes in lines of sale order PDF print
 [sale_report_line_prices_include_tax](sale_report_line_prices_include_tax/) | 17.0.1.1.0 |  | Show SO Line prices with tax instead of without
 [sale_report_line_product_internal_reference](sale_report_line_product_internal_reference/) | 17.0.1.1.1 |  | Sale Order report - Product's internal reference
 [sale_report_line_product_internal_reference_product_customerinfo](sale_report_line_product_internal_reference_product_customerinfo/) | 17.0.1.0.0 |  | Integrate with OCA's 'Product Supplierinfo for Customers' module
