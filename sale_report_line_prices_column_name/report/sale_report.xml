@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//th[@name='th_subtotal']/span" position="attributes">
+            <attribute
+                name="t-if"
+            >not doc.company_id.use_sale_report_price_name</attribute>
+        </xpath>
+
+        <xpath expr="//th[@name='th_subtotal']/span" position="after">
+            <span
+                t-field="doc.company_id.sale_report_price_name"
+                t-if="doc.company_id.use_sale_report_price_name"
+            />
+        </xpath>
+    </template>
+</odoo>
