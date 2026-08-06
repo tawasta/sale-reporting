@@ -19,20 +19,20 @@
 ##############################################################################
 
 {
-    'name': 'Sale Report view of products with or without sales',
-    'summary': 'Sale Report view of products with or without sales',
-    'version': '17.0.1.0.0',
-    'category': 'Reporting',
-    'website': 'https://tawasta.fi',
-    'author': 'Futural',
-    'license': 'AGPL-3',
-    'application': False,
-    'installable': True,
-    'depends': [
-        'sale',
+    "name": "Sale Report view of products with or without sales",
+    "summary": "Sale Report view of products with or without sales",
+    "version": "17.0.1.0.0",
+    "category": "Reporting",
+    "website": "https://github.com/tawasta/sale-reporting",
+    "author": "Futural",
+    "license": "AGPL-3",
+    "application": False,
+    "installable": True,
+    "depends": [
+        "sale",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'report/sale_report_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "report/sale_report_views.xml",
     ],
 }
