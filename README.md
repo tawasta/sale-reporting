@@ -20,6 +20,7 @@ addon | version | maintainers | summary
 [sale_pivot_report_amount_for_group](sale_pivot_report_amount_for_group/) | 17.0.1.0.0 |  | Adds a group that is used to hide amounts on sale report
 [sale_pivot_report_currency_symbol](sale_pivot_report_currency_symbol/) | 17.0.1.0.0 |  | Show currency symbol in sales analysis view
 [sale_pivot_report_ignore_currency_company](sale_pivot_report_ignore_currency_company/) | 17.0.1.0.0 |  | Modification to Sales Analysis to ignore currency company
+[sale_pivot_report_null_sales_view](sale_pivot_report_null_sales_view/) | 17.0.1.0.0 |  | Sale Report view of products with or without sales
 [sale_pivot_report_sh_product_tag](sale_pivot_report_sh_product_tag/) | 17.0.1.0.1 |  | Group by SH product tags in Sale analysis pivot report
 [sale_report_always_show_order_date](sale_report_always_show_order_date/) | 17.0.1.0.0 |  | Sale report - Always show Order Date
 [sale_report_business_code](sale_report_business_code/) | 17.0.1.0.0 |  | QWeb sale reports business code
