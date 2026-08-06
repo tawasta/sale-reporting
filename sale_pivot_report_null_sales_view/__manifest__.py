@@ -19,123 +19,20 @@
 ##############################################################################
 
 {
-    'name': 'Null sales views',
-    'summary': 'Module summary for public use. This is an important part to fill!',
+    'name': 'Sale Report view of products with or without sales',
+    'summary': 'Sale Report view of products with or without sales',
     'version': '17.0.1.0.0',
-    'category': 'Uncategorized',
+    'category': 'Reporting',
     'website': 'https://tawasta.fi',
     'author': 'Futural',
     'license': 'AGPL-3',
     'application': False,
     'installable': True,
-    'external_dependencies': {
-        'python': [],
-        'bin': [],
-    },
     'depends': [
         'sale',
     ],
     'data': [
         'security/ir.model.access.csv',
-        'models/sale_report_views.xml',
-    ],
-    'demo': [
+        'report/sale_report_views.xml',
     ],
 }
-
-##############################################################################
-#
-#    AVAILABLE CATEGORIES - PLEASE REMOVE THIS AFTER SELECTING CATEGORY
-#
-# Accounting
-# Accounting & Finance
-# Account
-# Account Charts
-# Administration
-# Appraisals
-# Association
-# Attendance
-# Authentication
-# Base
-# Blog
-# Company Data
-# Configuration
-# Connector
-# Contacts
-# Contract
-# Contract Management
-# CRM
-# Discuss
-# Document Management
-# Documentation
-# eCommerce
-# Education
-# Employees
-# Events
-# Expenses
-# Extra Rights
-# Extra Tools
-# Finance
-# Financial Management
-# Gamification
-# Generic
-# Hardware Drivers
-# Health
-# Holidays
-# HR
-# Human Resources
-# Human Resources Survey
-# Inventory
-# Invoicing
-# Invoicing & Payments
-# Lead Automation
-# Links
-# Localization
-# Mail
-# Maintenance
-# Manufacturing
-# Marketing
-# Mass Mailing
-# Monitoring
-# MRP
-# Other
-# Other Extra Rights
-# Partner Management
-# Payment Acquirer
-# Payroll
-# Personalization
-# Planner
-# Point of Sale
-# Portal
-# Procurements
-# Product
-# Productivity
-# Project
-# Projects & Services
-# Purchase
-# Purchase Workflow
-# Purchases
-# Recruitment
-# Reporting
-# Sale
-# Sale Management
-# Sale Workflow
-# Sales
-# Server Tools
-# Social
-# Social Network
-# Specific Industry Applications
-# Stock
-# Survey
-# Technical
-# Technical Settings
-# Tests
-# Theme
-# Timesheets
-# Tools
-# User roles
-# Warehouse
-# Web
-# Website
-#
-##############################################################################

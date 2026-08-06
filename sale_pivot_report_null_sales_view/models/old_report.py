@@ -6,8 +6,16 @@ class SaleReport(models.Model):
 
     _inherit = 'sale.report'
 
-    product_no_sale_id = fields.Many2one(
-        comodel_name='product.product', string="Product Variant ALL", readonly=True)
+    has_sales = fields.Boolean(
+        string="Has Sales",
+        readonly=True,
+    )
+    no_sales = fields.Boolean(
+        string="No Sales",
+        readonly=True,
+    )
+    #product_no_sale_id = fields.Many2one(
+    #    comodel_name='product.product', string="Product Variant ALL", readonly=True)
 
     def _from_sale(self):
         from_string = super()._from_sale()
@@ -21,37 +29,48 @@ class SaleReport(models.Model):
         #    "LEFT JOIN product_product p ON l.product_id=p.id",
         #    "LEFT JOIN product_product p ON 1=1"
         #)
-        from_string = from_string.replace(
-            "LEFT JOIN product_template t ON p.product_tmpl_id=t.id",
-            "LEFT JOIN product_template t ON 1=1"
-        )
+        #from_string = from_string.replace(
+        #    "LEFT JOIN product_template t ON p.product_tmpl_id=t.id",
+        #    "LEFT JOIN product_template t ON 1=1"
+        #)
         #from_string += " LEFT JOIN product_product pp_no_sale"
         #from_string += " LEFT JOIN product_product pp_no_sale ON (pp_no_sale.id != l.product_id)"
-        from_string += " LEFT JOIN product_product pp_no_sale ON (1=1)"
+        #from_string += " LEFT JOIN product_product pp_no_sale ON (1=1)"
 
-        print("FROM STRING", from_string)
+        _from =  """
+            product_product pp
+            LEFT JOIN ({from_string}) AS sr
+                ON sr.product_id = pp.id
+        """.format(from_string=from_string)
 
-        return from_string
+        print("FROM", _from)
 
-    def _group_by_sale(self):
-        group_string = super()._group_by_sale()
+        return _from
 
-        group_string = group_string.replace("l.product_id,", "pp_no_sale.id,\np.id,\nl.product_id,")
+    #def _group_by_sale(self):
+    #    group_string = super()._group_by_sale()
 
-        return group_string
+    #    group_string = group_string.replace("l.product_id,", "pp_no_sale.id,\np.id,\nl.product_id,")
 
-    def _where_sale(self):
-        where_string = super()._where_sale()
+    #    return group_string
 
-        #where_string += " OR p.id IS NOT NULL"
+    #def _where_sale(self):
+    #    where_string = super()._where_sale()
 
-        return where_string
+    #    #where_string += " OR p.id IS NOT NULL"
+
+    #    return where_string
 
     def _select_sale(self):
         select_string = super()._select_sale()
 
-        select_string = select_string.replace("l.product_id AS product_id,", "p.id AS product_id,")
-        select_string += ", pp_no_sale.id AS product_no_sale_id"
+        #select_string = select_string.replace("l.product_id AS product_id,", "p.id AS product_id,")
+        #select_string += ", pp_no_sale.id AS product_no_sale_id"
+
+        #select_string += ", (sr.product_id IS NULL) AS no_sales"
+        #select_string += ", (sr.product_id IS NOT NULL) AS has_sales"
+        select_string += ", (l.product_id IS NULL) AS no_sales"
+        select_string += ", (l.product_id IS NOT NULL) AS has_sales"
 
         return select_string
 
