@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_pivot_report_null_sales_view
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0-20250131\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-06 08:40+0000\n"
+"PO-Revision-Date: 2026-08-06 11:42+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__display_name
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#. module: sale_pivot_report_null_sales_view
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_search
+msgid "Group By"
+msgstr "Ryhmittele"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__has_sales
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_search
+msgid "Has Sales"
+msgstr "On myyntejä"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__no_sales
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_search
+msgid "No Sales"
+msgstr "Ei myyntejä"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__price_subtotal
+msgid "Price Subtotal"
+msgstr "Välisumma"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__product_id
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_search
+msgid "Product"
+msgstr "Tuotevariantti"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__product_tmpl_id
+msgid "Product Tmpl"
+msgstr "Tuote"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model.fields,field_description:sale_pivot_report_null_sales_view.field_sale_report_all__product_uom_qty
+msgid "Product Uom Qty"
+msgstr "Tilattu määrä"
+
+#. module: sale_pivot_report_null_sales_view
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_search
+msgid "Product Variant"
+msgstr "Tuotevariantti"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.actions.act_window,name:sale_pivot_report_null_sales_view.report_all_channels_sales_action
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_search
+msgid "Sales Analysis"
+msgstr "Myyntianalyysi"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.actions.act_window,name:sale_pivot_report_null_sales_view.action_order_report_all_products
+#: model:ir.ui.menu,name:sale_pivot_report_null_sales_view.menu_order_report_all
+msgid "Sales Analysis - All products"
+msgstr "Myyntianalyysi – Kaikki tuotteet"
+
+#. module: sale_pivot_report_null_sales_view
+#: model_terms:ir.ui.view,arch_db:sale_pivot_report_null_sales_view.view_order_product_pivot
+msgid "Sales Analysis – All products"
+msgstr "Myyntianalyysi – Kaikki tuotteet"
+
+#. module: sale_pivot_report_null_sales_view
+#: model:ir.model,name:sale_pivot_report_null_sales_view.model_sale_report_all
+msgid "Sales Report of Products with or without Sales"
+msgstr "Myyntianalyysi tuotteista myynneillä tai ilman"
