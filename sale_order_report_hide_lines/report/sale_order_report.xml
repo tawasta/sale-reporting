@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-  <template
-    id="report_saleorder_document_hide_lines"
-    inherit_id="sale.report_saleorder_document"
-  >
-    <xpath expr="//table[hasclass('o_main_table')]" position="attributes">
-      <attribute name="t-if">doc.report_line_mode != 'no_lines'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'only_headers'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//th[@name='th_priceunit']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//th[@name='th_discount']"
-      position="attributes"
-    >
-      <attribute
-        name="t-if"
-      >display_discount and doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//th[@name='th_taxes']"
-      position="attributes"
-    >
-      <attribute
-        name="t-if"
-      >display_taxes and doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//th[@name='th_subtotal']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_priceunit']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_discount']"
-      position="attributes"
-    >
-      <attribute
-        name="t-if"
-      >display_discount and doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_taxes']"
-      position="attributes"
-    >
-      <attribute
-        name="t-if"
-      >display_taxes and doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_subtotal']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_section']//t[@t-set='show_section_total']"
-      position="attributes"
-    >
-      <attribute
-        name="t-value"
-      >((is_section or not line.parent_id.collapse_prices) and not line.is_downpayment) and doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_combo']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'only_headers'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_combo']/td[@name='td_combo_price']"
-      position="attributes"
-    >
-      <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute>
-    </xpath>
-
-    <xpath
-      expr="//table[hasclass('o_main_table')]//tr[@name='tr_section_group']"
-      position="attributes"
-    >
-      <attribute
-        name="t-if"
-      >doc.report_line_mode not in ('no_line_prices', 'only_headers')</attribute>
-    </xpath>
-  </template>
+  <!--   <template -->
+  <!--     id="report_saleorder_document_hide_lines" -->
+  <!--     inherit_id="sale.report_saleorder_document" -->
+  <!--   > -->
+  <!--     <xpath expr="//table[hasclass('o_main_table')]" position="attributes"> -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'no_lines'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'only_headers'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//th[@name='th_priceunit']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//th[@name='th_discount']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute -->
+  <!--         name="t-if" -->
+  <!--       >display_discount and doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//th[@name='th_taxes']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute -->
+  <!--         name="t-if" -->
+  <!--       >display_taxes and doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//th[@name='th_subtotal']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_priceunit']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_discount']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute -->
+  <!--         name="t-if" -->
+  <!--       >display_discount and doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_taxes']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute -->
+  <!--         name="t-if" -->
+  <!--       >display_taxes and doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_product']/td[@name='td_product_subtotal']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_section']//t[@t-set='show_section_total']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute -->
+  <!--         name="t-value" -->
+  <!--       >((is_section or not line.parent_id.collapse_prices) and not line.is_downpayment) and doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_combo']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'only_headers'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_combo']/td[@name='td_combo_price']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute name="t-if">doc.report_line_mode != 'no_line_prices'</attribute> -->
+  <!--     </xpath> -->
+  <!--  -->
+  <!--     <xpath -->
+  <!--       expr="//table[hasclass('o_main_table')]//tr[@name='tr_section_group']" -->
+  <!--       position="attributes" -->
+  <!--     > -->
+  <!--       <attribute -->
+  <!--         name="t-if" -->
+  <!--       >doc.report_line_mode not in ('no_line_prices', 'only_headers')</attribute> -->
+  <!--     </xpath> -->
+  <!--   </template> -->
 </odoo>
