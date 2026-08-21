@@ -34,7 +34,7 @@ msgstr "Yritykset"
 #. module: sale_order_report_hide_lines
 #: model:ir.model,name:sale_order_report_hide_lines.model_res_config_settings
 msgid "Config Settings"
-msgstr "Kokoonpanoasetukset"
+msgstr "Asetukset"
 
 #. module: sale_order_report_hide_lines
 #: model:ir.model.fields,help:sale_order_report_hide_lines.field_sale_order__report_line_mode
