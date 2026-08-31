@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.form.sale.price.name</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+    <field name="arch" type="xml">
+      <setting id="proforma_configuration" position="after">
+        <setting
+          id="sale_report_price_column_name"
+          help="Edit Price column name in Sale PDF print"
+        >
+          <field
+            name="use_sale_report_price_name"
+            help="Use Price column name below in Sale PDF print"
+          />
+          <field name="sale_report_price_name" />
+        </setting>
+      </setting>
+    </field>
+  </record>
+</odoo>
