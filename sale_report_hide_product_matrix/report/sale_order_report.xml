@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <template
+    id="grid_report_saleorder_inherit"
+    inherit_id="sale_product_matrix.grid_report_saleorder_inherit"
+  >
+    <xpath expr="//t[@t-call='product_matrix.matrix']" position="attributes">
+      <attribute name="t-if">False</attribute>
+    </xpath>
+  </template>
+</odoo>
