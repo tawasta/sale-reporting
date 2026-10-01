@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale_report_show_product_name.report_saleorder_document"
+    >
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']/strong"
+            position="attributes"
+        >
+            <attribute name="t-field">line.name</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']/following-sibling::t[@t-else][1]/strong"
+            position="attributes"
+        >
+            <attribute name="t-field">line.name</attribute>
+        </xpath>
+    </template>
+</odoo>
