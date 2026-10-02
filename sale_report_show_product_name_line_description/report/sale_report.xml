@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document"
+        inherit_id="sale_report_show_product_name.report_saleorder_document"
+    >
+        <!-- The WooCommerce integration (woo_commerce_ept) is optional: without
+             it the field does not exist and the line description is used -->
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']"
+            position="before"
+        >
+            <t
+                t-set="is_woo_order"
+                t-value="'woo_instance_id' in line.order_id._fields and bool(line.order_id.woo_instance_id)"
+            />
+        </xpath>
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']/strong"
+            position="attributes"
+        >
+            <attribute name="t-if">not is_woo_order</attribute>
+            <attribute name="t-field">line.name</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']/strong"
+            position="after"
+        >
+            <strong t-else="" t-field="line.product_id" />
+        </xpath>
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']/following-sibling::t[@t-else][1]/strong"
+            position="attributes"
+        >
+            <attribute name="t-if">not is_woo_order</attribute>
+            <attribute name="t-field">line.name</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-if='line.product_id.display_name != line.name']/following-sibling::t[@t-else][1]/strong"
+            position="after"
+        >
+            <strong t-else="" t-field="line.product_id" />
+        </xpath>
+    </template>
+</odoo>
