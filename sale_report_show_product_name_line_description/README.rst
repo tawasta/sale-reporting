@@ -9,6 +9,9 @@ Sale Report: show line description instead of product
 * Extends ``sale_report_show_product_name``
 * Shows the SO line description in bold on print lines, instead of the
   product name
+* Orders imported from WooCommerce (``woo_commerce_ept``, order has a Woo
+  instance) keep showing the product name. The WooCommerce integration is
+  optional: without it, the line description is always shown
 
 Configuration
 =============
