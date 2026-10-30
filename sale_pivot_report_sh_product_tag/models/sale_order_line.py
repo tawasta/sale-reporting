@@ -28,32 +28,29 @@ class SaleOrderLine(models.Model):
         tags = self.product_id.sh_product_tag_ids
         self.sh_product_tag_ids = tags and tags[0].id or False
 
-    def _cron_sale_order_sh_product_tags(self, batch):
-        lines = self.env["sale.order.line"].search([("id", "in", batch)])
+    def _cron_sale_order_sh_product_tags(self, lines):
         for line in lines:
             tags = line.product_id.sh_product_tag_ids
             line.sh_product_tag_ids = tags and tags[0].id or False
-        return batch, "Success"
+        return lines, "Success"
+
+    def get_sale_line_to_update_sh_tags(self):
+        products = self.env["product.product"].search(
+            [("sh_product_tag_ids", "!=", False)]
+        )
+        lines = self.env["sale.order.line"].search([("product_id", "in", products.ids)])
+
+        for start in range(0, len(lines), 50):
+            yield lines[start : start + 50]
 
     def cron_compute_sh_product_tag_ids(self):
         """Computes all Sale Order lines sh_product_tag_ids values"""
-        lines = (
-            self.env["sale.order.line"]
-            .search([])
-            .filtered(lambda t: t.product_id.sh_product_tag_ids)
-            .ids
-        )
+        lines = self.get_sale_line_to_update_sh_tags()
 
-        batch_lines = list()
-        interval = 50
-
-        for x in range(0, len(lines), interval):
-            batch_lines.append(lines[x : x + interval])
-
-        for batch in batch_lines:
-            job_desc = _("Assign SH product tags to lines: {}").format(batch)
+        for batch in lines:
+            job_desc = _(f"Assign SH product tags to sale lines: {batch.ids}")
             self.with_delay(description=job_desc)._cron_sale_order_sh_product_tags(
                 batch
             )
 
-        _logger.info(_("Cron Compute SH product tags completed"))
+        _logger.info("Cron Compute SH product tags for SO lines completed")
