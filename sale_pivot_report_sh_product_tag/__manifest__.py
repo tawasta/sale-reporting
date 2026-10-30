@@ -21,7 +21,7 @@
 {
     "name": "Sale Analysis - Group by SH product tags",
     "summary": "Group by SH product tags in Sale analysis pivot report",
-    "version": "17.0.1.0.1",
+    "version": "17.0.1.0.2",
     "category": "Reporting",
     "website": "https://github.com/tawasta/sale-reporting",
     "author": "Futural",
