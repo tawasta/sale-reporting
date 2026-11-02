@@ -21,7 +21,7 @@
 {
     "name": "Sale Report Show Address",
     "summary": "Always show shipping and invoice address on sale report.",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "category": "Sales",
     "website": "https://github.com/tawasta/sale-reporting",
     "author": "Futural",
