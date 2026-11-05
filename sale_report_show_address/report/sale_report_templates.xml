@@ -3,8 +3,8 @@
   <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
     <xpath
       expr="//t[@t-if='doc.partner_shipping_id == doc.partner_invoice_id
-                             and doc.partner_invoice_id != doc.partner_id
-                             or doc.partner_shipping_id != doc.partner_invoice_id']"
+                               and doc.partner_invoice_id != doc.partner_id
+                               or doc.partner_shipping_id != doc.partner_invoice_id']"
       position="attributes"
     >
       <attribute name="t-if">1 == 1</attribute>
@@ -14,18 +14,18 @@
       expr="//t[@t-if='doc.partner_shipping_id == doc.partner_invoice_id']"
       position="attributes"
     >
-      <attribute name="t-if">1 == 0</attribute>
+      <attribute name="style">display: none;</attribute>
     </xpath>
 
     <xpath
-      expr="//t[@t-if='doc.partner_shipping_id != doc.partner_invoice_id']/strong"
+      expr="//div[@t-if='doc.partner_id != doc.partner_shipping_id']/strong"
       position="before"
     >
       <br />
     </xpath>
 
-    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id" position="attributes">
+    <div t-if="doc.partner_id != doc.partner_shipping_id" position="attributes">
       <attribute name="t-if">1 == 1</attribute>
-    </t>
+    </div>
   </template>
 </odoo>
