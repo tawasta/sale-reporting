@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
   <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
-    <xpath
-      expr="//t[@t-if='doc.partner_shipping_id == doc.partner_invoice_id
-                               and doc.partner_invoice_id != doc.partner_id
-                               or doc.partner_shipping_id != doc.partner_invoice_id']"
-      position="attributes"
-    >
+    <xpath expr="//t[@t-set='information_block']/.." position="attributes">
       <attribute name="t-if">1 == 1</attribute>
     </xpath>
 
-    <xpath
-      expr="//t[@t-if='doc.partner_shipping_id == doc.partner_invoice_id']"
-      position="attributes"
-    >
-      <attribute name="style">display: none;</attribute>
+    <xpath expr="//t[@t-set='information_block']/t" position="attributes">
+      <attribute name="t-if">1 == 0</attribute>
     </xpath>
 
-    <xpath
-      expr="//div[@t-if='doc.partner_id != doc.partner_shipping_id']/strong"
-      position="before"
-    >
-      <br />
-    </xpath>
-
-    <div t-if="doc.partner_id != doc.partner_shipping_id" position="attributes">
+    <xpath expr="//t[@t-set='information_block']/div" position="attributes">
       <attribute name="t-if">1 == 1</attribute>
-    </div>
+    </xpath>
+
+    <xpath expr="//t[@t-set='information_block']/div/div[1]" position="attributes">
+      <attribute name="t-if">1 == 1</attribute>
+      <attribute name="t-att-class">'col-6 pe-1'</attribute>
+    </xpath>
+
+    <xpath expr="//t[@t-set='information_block']/div/div[1]/div" position="attributes">
+      <attribute name="t-if">1 == 1</attribute>
+      <attribute name="t-att-class">'col-7 pe-1'</attribute>
+    </xpath>
+
+    <xpath expr="//t[@t-set='information_block']/div/div[2]" position="attributes">
+      <attribute name="t-if">1 == 1</attribute>
+      <attribute name="t-att-class">'col-7 ps-1'</attribute>
+    </xpath>
   </template>
 </odoo>
