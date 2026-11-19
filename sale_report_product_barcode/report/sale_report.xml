@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <template
+    id="report_saleorder_document_product_barcode"
+    inherit_id="sale.report_saleorder_document"
+  >
+    <!-- sudo: report rendering users may not have read access to system parameters. -->
+    <xpath expr="//div[hasclass('page')]" position="before">
+      <t
+        t-set="barcode_as_image"
+        t-value="env['ir.config_parameter'].sudo().get_param('sale_report_product_barcodes.sale_order_product_barcodes') == 'True'"
+      />
+    </xpath>
+
+    <xpath
+      expr="//table[hasclass('o_main_table')]//th[@name='th_quantity']"
+      position="before"
+    >
+      <th name="th_barcode" class="text-center">
+        <t t-set="colspan_count" t-value="colspan_count + 1" />
+        <span>EAN</span>
+      </th>
+    </xpath>
+
+    <xpath
+      expr="//table[hasclass('o_main_table')]//td[@name='td_product_quantity']"
+      position="before"
+    >
+      <td name="td_barcode" class="text-center">
+        <span
+          t-if="barcode_as_image"
+          t-field="line.product_id.barcode"
+          t-options="{'widget': 'barcode', 'symbology': 'auto', 'width': 200, 'height': 46, 'humanreadable': 1}"
+        />
+        <span t-else="" t-field="line.product_id.barcode" />
+      </td>
+    </xpath>
+  </template>
+</odoo>

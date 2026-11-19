@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_report_product_barcode
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260908\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-19 12:39+0000\n"
+"PO-Revision-Date: 2026-11-19 12:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_report_product_barcode
+#: model_terms:ir.ui.view,arch_db:sale_report_product_barcode.report_saleorder_document_product_barcode
+msgid "<span>EAN</span>"
+msgstr "<span>EAN</span>"
+
+#. module: sale_report_product_barcode
+#: model:ir.model,name:sale_report_product_barcode.model_res_config_settings
+msgid "Config Settings"
+msgstr "Asetukset"
+
+#. module: sale_report_product_barcode
+#: model:ir.model.fields,field_description:sale_report_product_barcode.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#. module: sale_report_product_barcode
+#: model:ir.model.fields,field_description:sale_report_product_barcode.field_res_config_settings__id
+msgid "ID"
+msgstr "Tunnus"
+
+#. module: sale_report_product_barcode
+#: model_terms:ir.ui.view,arch_db:sale_report_product_barcode.res_config_settings_view_form
+msgid ""
+"If enabled, show product barcodes as barcodes in the sale order print. If "
+"not enabled, just the numeric value of the barcode will be shown."
+msgstr ""
+"Jos valittu, näytetään viivakoodin skannattava kuvamuoto numeerisen arvon "
+"lisäksi. Ei valittuna näytetään ainoastaan viivakoodin numeerinen arvo."
+
+#. module: sale_report_product_barcode
+#: model:ir.model.fields,field_description:sale_report_product_barcode.field_res_config_settings__sale_order_product_barcodes
+msgid "Sale Order Product Barcodes"
+msgstr "Myyntitilaus Tuotteiden Viivakoodit"
+
+#. module: sale_report_product_barcode
+#: model_terms:ir.ui.view,arch_db:sale_report_product_barcode.res_config_settings_view_form
+msgid "Show Scannable Product Barcodes On Sale Order Print"
+msgstr "Näytä Skannattava Viivakoodi Tuotteille Myyntitilauksen Tulosteella"
