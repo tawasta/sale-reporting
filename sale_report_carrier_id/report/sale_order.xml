@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <template
+    id="sale_report_carrier_id_saleorder_document"
+    inherit_id="sale.report_saleorder_document"
+  >
+    <xpath expr="//div[@id='informations']" position="inside">
+      <div t-if="doc.carrier_id" class="col" name="informations_carrier">
+        <strong>Delivery Method</strong>
+        <div t-field="doc.carrier_id" />
+      </div>
+    </xpath>
+  </template>
+</odoo>
